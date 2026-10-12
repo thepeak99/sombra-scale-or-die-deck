@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="robots" content="noindex, nofollow">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scale or Die — Sombra: post-quantum privacy on Solana</title>
+  <meta name="description" content="Sombra: quantum-safe privacy for existing Solana liquidity.">
+  <link rel="icon" href="assets/sombra-mark.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="vendor/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="vendor/reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="theme/sombra.css">
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-sol" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9945ff"/>
+      <stop offset="0.55" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#14f195"/>
+    </linearGradient>
+    <linearGradient id="g-line" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#a78bfa" stop-opacity="0"/>
+      <stop offset="0.15" stop-color="#a78bfa" stop-opacity="0.7"/>
+      <stop offset="0.85" stop-color="#67e8f9" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#67e8f9" stop-opacity="0"/>
+    </linearGradient>
+    <radialGradient id="g-corona" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0.62" stop-color="#a78bfa" stop-opacity="0"/>
+      <stop offset="0.78" stop-color="#a78bfa" stop-opacity="0.55"/>
+      <stop offset="0.86" stop-color="#6d3cf0" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#6d3cf0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g-pool" cx="0.5" cy="0.35" r="0.75">
+      <stop offset="0" stop-color="#6d3cf0" stop-opacity="0.30"/>
+      <stop offset="1" stop-color="#110f25" stop-opacity="0.92"/>
+    </radialGradient>
+    <filter id="f-glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="f-soft" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="22"/>
+    </filter>
+    <marker id="m-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#a78bfa"/>
+    </marker>
+    <marker id="m-arrow-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#67e8f9"/>
+    </marker>
+  </defs>
+
+  <symbol id="mark" viewBox="0 0 100 100">
+    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#g-sol)" stroke-width="6"/>
+    <circle cx="57" cy="44" r="38" fill="#05040b"/>
+  </symbol>
+
+  <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="i-unlock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.8"/></symbol>
+  <symbol id="i-archive" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="4" rx="1"/><path d="M5 8v11h14V8M10 12h4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.4 8.3-8 9-4.6-.7-8-4.5-8-9V6l8-3z"/></symbol>
+  <symbol id="i-hash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4L7 20M17 4l-2 16M4 9h16M3 15h16"/></symbol>
+  <symbol id="i-coins" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="7" ry="3"/><path d="M5 6v6c0 1.7 3.1 3 7 3s7-1.3 7-3V6M5 12v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/></symbol>
+  <symbol id="i-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h11M10 8l4 4-4 4M15 4h5v16h-5"/></symbol>
+  <symbol id="i-code" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M13.5 5l-3 14"/></symbol>
+  <symbol id="i-fee" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V8l5-4 5 4v12M14 11h3l3 3v6h-6M8 20v-5h2v5"/></symbol>
+  <symbol id="i-swap" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h15l-3-3M20 16H5l3 3"/></symbol>
+  <symbol id="i-stake" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16zM4 20l8-8"/></symbol>
+  <symbol id="i-key" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M16.5 6.5l3 3"/></symbol>
+  <symbol id="i-scope" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M16 16l5 5M8 11h6"/></symbol>
+  <symbol id="i-tree" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><circle cx="6" cy="19" r="2"/><circle cx="18" cy="19" r="2"/><path d="M12 7v5l-6 5M12 12l6 5"/></symbol>
+  <symbol id="i-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8v6l-4-2v-4L3 5z"/></symbol>
+  <symbol id="i-solana" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6h14l-2 3H4zM4 10.5h14l2 3H6zM6 15h14l-2 3H4z"/></symbol>
+</svg>
+
+<div class="reveal">
+  <div class="deck-chrome" aria-hidden="true">
+    <svg><use href="#mark"/></svg><b>Sombra</b><span>·</span><span>Scale or Die</span>
+  </div>
+
+  <div class="slides">
+
+    <section class="s-title" data-state="no-chrome">
+      <div class="frame">
+        <svg class="eclipse-hero" viewBox="0 0 1000 1000" aria-hidden="true">
+          <circle cx="500" cy="500" r="470" fill="url(#g-corona)"/>
+          <circle cx="500" cy="500" r="360" fill="none" stroke="url(#g-sol)" stroke-width="3" filter="url(#f-glow)"/>
+          <circle cx="548" cy="452" r="352" fill="#05040b"/>
+          <circle cx="548" cy="452" r="352" fill="none" stroke="rgba(176,160,255,0.10)" stroke-width="1"/>
+        </svg>
+        <div class="kicker"><b>Scale or Die</b> &nbsp;/&nbsp; Post-quantum privacy on Solana</div>
+        <h1>Sombra</h1>
+        <p class="subtitle">Privacy built to <em>endure</em> the quantum age — <strong>for the Solana liquidity you already use.</strong></p>
+        <div class="meta"><span>docs.sombra.tech</span><span>Post-quantum privacy</span></div>
+      </div>
+    </section>
+
+    <section class="s-agenda">
+      <div class="frame">
+        <div class="eyebrow">The next 20 minutes</div>
+        <h2>Agenda</h2>
+        <ol class="agenda">
+          <li><span class="n">01</span><span>Why privacy — and why today's is fragile</span><span class="d">the quantum gap</span></li>
+          <li><span class="n">02</span><span>Enter Sombra</span><span class="d">what it is, what it isn't</span></li>
+          <li><span class="n">03</span><span>How it works</span><span class="d">and how it compares</span></li>
+          <li><span class="n">04</span><span>Integration architecture</span><span class="d">private access to Solana liquidity</span></li>
+          <li><span class="n">05</span><span>Demo &amp; call to action</span><span class="d">what to prep</span></li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="s-divider">
+      <div class="frame">
+        <div class="arc"></div>
+        <div class="num" aria-hidden="true">01</div>
+        <div class="eyebrow">Part one</div>
+        <h2>Why privacy matters — and why today's is <em>fragile</em></h2>
+        <p class="lede">The quantum information gap.</p>
+      </div>
+    </section>
+
+    <section class="s-statement">
+      <div class="frame">
+        <div class="eyebrow">The default today</div>
+        <p class="statement">On-chain finance is <em>transparent by default.</em></p>
+        <div class="cols-3 support">
+          <div class="card fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-eye"/></svg></div>
+            <h3>Everything, forever</h3>
+            <p>Balances, payments and positions are public — and they never expire.</p>
+          </div>
+          <div class="card fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-coins"/></svg></div>
+            <h3>Broken use cases</h3>
+            <p>Payroll, treasury, trading and commerce don't work when every counterparty can read your books.</p>
+          </div>
+          <div class="card fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-shield"/></svg></div>
+            <h3>Personal safety</h3>
+            <p>As AI and surveillance scale, linking wallets to people gets cheaper and more automatic.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-diagram" data-auto-animate>
+      <div class="frame">
+        <div class="eyebrow" data-id="eb-q">Harvest now, decrypt later</div>
+        <h2 data-id="h-q">Breakable tomorrow is <em>not private today.</em></h2>
+        <div class="stage">
+          <div class="tl">
+            <div class="tl-line" data-id="tl-line"></div>
+            <div class="tl-node" data-id="tl-today" style="left:60px">
+              <div class="tl-dot"><svg><use href="#i-lock"/></svg></div>
+              <div class="tl-k">Today</div>
+              <div class="tl-t">You transact &ldquo;privately&rdquo;</div>
+              <div class="tl-s">encrypted data lands on a public ledger</div>
+            </div>
+            <div class="tl-node fragment rise" data-id="tl-harvest" style="left:640px">
+              <div class="tl-dot"><svg><use href="#i-archive"/></svg></div>
+              <div class="tl-k">Every day after</div>
+              <div class="tl-t">The ciphertext is harvested</div>
+              <div class="tl-s">public chains are a perfect, permanent archive</div>
+            </div>
+            <div class="tl-node fragment rise" style="left:1220px">
+              <div class="tl-dot qday-dot" data-id="tl-qday"><svg><use href="#i-unlock"/></svg></div>
+              <div class="tl-k warn">Q-Day</div>
+              <div class="tl-t">…and decrypted</div>
+              <div class="tl-s">every past &ldquo;private&rdquo; transfer, at once</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-diagram" data-auto-animate>
+      <div class="frame">
+        <div class="eyebrow" data-id="eb-q">Q-Day is a moving target</div>
+        <h2 data-id="h-q">You won't know it happened <em>until long after.</em></h2>
+        <div class="stage">
+          <div class="tl">
+            <div class="tl-line" data-id="tl-line"></div>
+            <div class="tl-node" data-id="tl-today" style="left:60px">
+              <div class="tl-dot"><svg><use href="#i-lock"/></svg></div>
+              <div class="tl-k">Today</div>
+              <div class="tl-t">Data encrypted</div>
+              <div class="tl-s">and archived on-chain</div>
+            </div>
+            <div class="qday-band" data-id="tl-qday"></div>
+            <div class="tl-band-label">
+              <div class="tl-k warn">Q-Day</div>
+              <div class="tl-t">Somewhere in here?</div>
+              <div class="tl-s">first capable machine — quietly</div>
+            </div>
+            <div class="tl-node" style="left:1300px">
+              <div class="tl-dot pub-dot"><svg><use href="#i-eye"/></svg></div>
+              <div class="tl-k cyan">Public</div>
+              <div class="tl-t">We find out</div>
+              <div class="tl-s">long after the fact</div>
+            </div>
+            <div class="tl-window fragment rise">
+              <span>Unobservable impact window</span>
+            </div>
+          </div>
+        </div>
+        <div class="card ok glow payoff fragment rise">
+          <svg class="icon"><use href="#i-shield"/></svg>
+          <p><strong>With Sombra, your privacy is safe from quantum attacks</strong> — <br>what&rsquo;s sealed today <em>stays sealed</em> after Q-Day.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-divider">
+      <div class="frame">
+        <div class="arc"></div>
+        <div class="num" aria-hidden="true">02</div>
+        <div class="eyebrow">Part two</div>
+        <h2>Enter <em>Sombra</em></h2>
+        <p class="lede">Privacy built to endure the quantum age.</p>
+      </div>
+    </section>
+
+    <section class="s-two-col">
+      <div class="frame">
+        <div class="eyebrow">What Sombra is</div>
+        <h2>Quantum-safe privacy, <em>native to Solana.</em></h2>
+        <div class="cols-3" style="margin-top:22px">
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-lock"/></svg><span class="badge live">Live · devnet</span></div>
+            <h3>Sealed notes</h3>
+            <p>Value lives in encrypted notes, sealed to the recipient with <span class="mono">ML-KEM-768</span> (NIST FIPS 203) + <span class="mono">ChaCha20-Poly1305</span>. Harvested ciphertext stays sealed.</p>
+          </div>
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-hash"/></svg><span class="badge live">Live · devnet</span></div>
+            <h3>Hash-based proofs</h3>
+            <p>Ownership and validity are proven with <span class="mono">RISC0</span> zkVM <strong>STARKs</strong> — hash-based, no trusted setup, and no pairing-based wrapper a quantum adversary could forge.</p>
+          </div>
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-solana"/></svg><span class="badge live">Live · devnet</span></div>
+            <h3>Solana-native</h3>
+            <p>SPL tokens in, SPL tokens out. Not a new chain — a privacy extension for the liquidity you already have.</p>
+          </div>
+        </div>
+        <p class="lede after" style="max-width:none">Built for a world with quantum computers <em>and</em> AI-scale surveillance.</p>
+      </div>
+    </section>
+
+    <section class="s-two-col">
+      <div class="frame">
+        <div class="eyebrow">Precise about "post-quantum"</div>
+        <h2>What's quantum-safe — <em>and what isn’t yet.</em></h2>
+        <div class="cols">
+          <div class="card ok">
+            <div class="card-top"><h3>Quantum-safe in Sombra</h3><span class="badge live">PQ</span></div>
+            <ul class="lux ok small">
+              <li><strong>Note contents</strong> — ML-KEM-768 + ChaCha20-Poly1305. Harvested ciphertext stays sealed.</li>
+              <li><strong>Ownership &amp; spend proofs</strong> — hash-based STARKs over SHA-256 commitments.</li>
+              <li><strong>No signature to spend</strong> — authority is knowledge of your key, proven in zero knowledge.</li>
+              <li><strong>Service links</strong> — ML-DSA (FIPS 204) authentication, hybrid ML-KEM TLS.</li>
+            </ul>
+          </div>
+          <div class="card warn fragment rise">
+            <div class="card-top"><h3>Still classical — Solana layer</h3><span class="badge caution">Ed25519</span></div>
+            <ul class="lux warn small">
+              <li><strong>Settlement &amp; consensus</strong> on Solana.</li>
+              <li><strong>Transaction signing &amp; fee payers.</strong></li>
+              <li><strong>Prover-node voting keys</strong> — rotated after every use to limit exposure.</li>
+            </ul>
+            <div class="rule"></div>
+            <p class="small" style="color:var(--text)">Our rule: <em>if the authorization path is Ed25519, we don’t call it post-quantum.</em></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-two-col">
+      <div class="frame">
+        <div class="eyebrow">Compliance posture</div>
+        <h2>Privacy with accountability — <em>not a mixer.</em></h2>
+        <div class="cols" style="gap:30px 40px; grid-template-rows:auto auto">
+          <div class="card fragment rise">
+            <div class="card-top"><h3>Public edges</h3><svg class="icon"><use href="#i-door"/></svg></div>
+            <p>Deposits and withdrawals are public. Value entering and leaving the pool is always visible and auditable.</p>
+          </div>
+          <div class="card fragment rise">
+            <div class="card-top"><h3>Scoped disclosure</h3><span class="badge design">V2 design</span></div>
+            <p>Read keys rotate weekly, so you can disclose a date range — never a forever key. Auditors scan and trial-decrypt, so nothing can be quietly left off a list.</p>
+          </div>
+          <div class="card fragment rise">
+            <div class="card-top"><h3>Lineage by design</h3><span class="badge design">V2 design</span></div>
+            <p>Every note carries the origin of the deposit it descends from — derived by the program, never chosen by the user.</p>
+          </div>
+          <div class="card fragment rise">
+            <div class="card-top"><h3>Association sets</h3><span class="badge roadmap">Roadmap</span></div>
+            <p>Planned: screening at deposit, plus in-proof association-set membership (Privacy-Pools-style). Direction, not shipped.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-divider">
+      <div class="frame">
+        <div class="arc"></div>
+        <div class="num" aria-hidden="true">03</div>
+        <div class="eyebrow">Part three</div>
+        <h2>How it works — <em>and how it compares</em></h2>
+        <p class="lede">Enough architecture to trust it. Not a blueprint.</p>
+      </div>
+    </section>
+
+    <section class="s-diagram">
+      <div class="frame">
+        <div class="row" style="justify-content:space-between; align-items:flex-start">
+          <div>
+            <div class="eyebrow">Value flow</div>
+            <h2>In, around, and out of the <em>shielded pool.</em></h2>
+          </div>
+          <span class="badge design" style="margin-top:6px">Sombra V2 design</span>
+        </div>
+        <div class="stage">
+          <svg viewBox="0 0 1640 660" role="img" aria-label="Value enters the shielded pool via onramp, moves privately inside it, and exits via offramp. Components: wallet, prover, prover nodes, indexer, Solana program.">
+            <g>
+              <rect class="d-box" x="0" y="70" width="270" height="380" rx="24"/>
+              <text class="d-mono" x="28" y="116" font-size="18">Solana</text>
+              <text class="d-label" x="28" y="164" font-size="29">Public liquidity</text>
+              <text class="d-sub" x="28" y="198" font-size="20">any registered SPL token</text>
+              <g transform="translate(0 300)">
+                <circle cx="66" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+                <circle cx="135" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+                <circle cx="204" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+                <text class="d-mono" x="66" y="6" font-size="15" text-anchor="middle">SPL</text>
+                <text class="d-mono" x="135" y="6" font-size="15" text-anchor="middle">SPL</text>
+                <text class="d-mono" x="204" y="6" font-size="15" text-anchor="middle">LST</text>
+              </g>
+              <text class="d-sub" x="28" y="404" font-size="20">wallets · DEXs · LSTs</text>
+            </g>
+
+            <g>
+              <rect x="440" y="30" width="760" height="460" rx="36" fill="url(#g-pool)" stroke="#a78bfa" stroke-opacity="0.55" stroke-width="2"/>
+              <text class="d-mono" x="480" y="80" font-size="18">Shielded pool</text>
+              <text class="d-label" x="480" y="124" font-size="32">Global commitment tree</text>
+              <text class="d-sub" x="480" y="158" font-size="21">anonymity set = every note in the tree</text>
+              <g stroke="rgba(176,160,255,0.28)" stroke-width="1.5" fill="none">
+                <path d="M820 215L680 280M820 215L960 280"/>
+                <path d="M680 280L610 345M680 280L750 345M960 280L890 345M960 280L1030 345"/>
+                <path d="M610 345L575 409M610 345L645 409M750 345L715 409M750 345L785 409M890 345L855 409M890 345L925 409M1030 345L995 409M1030 345L1065 409"/>
+              </g>
+              <g fill="#2a2457" stroke="#a78bfa" stroke-opacity="0.6" stroke-width="1.5">
+                <circle cx="820" cy="215" r="9"/>
+                <circle cx="680" cy="280" r="8"/><circle cx="960" cy="280" r="8"/>
+                <circle cx="610" cy="345" r="7"/><circle cx="750" cy="345" r="7"/><circle cx="890" cy="345" r="7"/><circle cx="1030" cy="345" r="7"/>
+              </g>
+              <g fill="#a78bfa" filter="url(#f-glow)">
+                <circle cx="645" cy="409" r="10"/><circle cx="715" cy="409" r="10"/><circle cx="785" cy="409" r="10"/>
+                <circle cx="855" cy="409" r="10"/><circle cx="995" cy="409" r="10"/><circle cx="1065" cy="409" r="10"/>
+              </g>
+              <text class="d-mono" x="820" y="199" font-size="13" text-anchor="middle">root</text>
+            </g>
+
+            <g class="fragment" data-fragment-index="1">
+              <path class="d-flow-c d-dash d-pulse" d="M270 262 C 390 262, 500 300, 567 397" marker-end="url(#m-arrow-c)"/>
+              <circle cx="575" cy="409" r="12" fill="#67e8f9" filter="url(#f-glow)"/>
+              <text class="d-mono d-cyan" x="355" y="186" font-size="18" text-anchor="middle">Onramp</text>
+              <text class="d-sub" x="355" y="216" font-size="18" text-anchor="middle">public: depositor,</text>
+              <text class="d-sub" x="355" y="240" font-size="18" text-anchor="middle">token, amount</text>
+            </g>
+
+            <g class="fragment" data-fragment-index="2">
+              <circle cx="715" cy="409" r="13" fill="#110f25" stroke="#f5b94a" stroke-width="2.5"/>
+              <path d="M709 403l12 12M721 403l-12 12" stroke="#f5b94a" stroke-width="2"/>
+              <path class="d-flow" d="M722 392 C 770 322, 870 322, 918 392" marker-end="url(#m-arrow)"/>
+              <circle cx="925" cy="409" r="12" fill="#d4c8ff" filter="url(#f-glow)"/>
+              <text class="d-mono d-knock" x="820" y="318" font-size="16" text-anchor="middle">private transfer</text>
+              <text class="d-sub d-amber" x="715" y="458" font-size="17" text-anchor="middle">nullifier marks spent</text>
+              <text class="d-sub d-mint" x="925" y="458" font-size="17" text-anchor="middle">new encrypted note</text>
+              <text class="d-sub" x="820" y="530" font-size="21" text-anchor="middle">hidden: sender · recipient · amount · which note was spent</text>
+            </g>
+
+            <g class="fragment" data-fragment-index="3">
+              <circle cx="1065" cy="409" r="13" fill="#110f25" stroke="#f5b94a" stroke-width="2.5"/>
+              <path d="M1059 403l12 12M1071 403l-12 12" stroke="#f5b94a" stroke-width="2"/>
+              <path class="d-flow-c d-dash d-pulse" d="M1073 396 C 1140 300, 1250 262, 1368 262" marker-end="url(#m-arrow-c)"/>
+              <text class="d-mono d-cyan" x="1285" y="186" font-size="18" text-anchor="middle">Offramp</text>
+              <text class="d-sub" x="1285" y="216" font-size="18" text-anchor="middle">public: amount,</text>
+              <text class="d-sub" x="1285" y="240" font-size="18" text-anchor="middle">destination</text>
+            </g>
+
+            <g>
+              <rect class="d-box" x="1370" y="70" width="270" height="380" rx="24"/>
+              <text class="d-mono" x="1398" y="116" font-size="18">Solana</text>
+              <text class="d-label" x="1398" y="164" font-size="29">Any SPL account</text>
+              <text class="d-sub" x="1398" y="198" font-size="20">plain SPL tokens out</text>
+              <circle cx="1505" cy="300" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+              <text class="d-mono" x="1505" y="306" font-size="15" text-anchor="middle">SPL</text>
+              <text class="d-sub" x="1398" y="404" font-size="20">back into DeFi</text>
+            </g>
+
+            <g class="fragment" data-fragment-index="4">
+              <g transform="translate(0 566)">
+                <rect class="d-box" x="0" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="150" y="38" font-size="24" text-anchor="middle">Wallet / client</text>
+                <text class="d-sub" x="150" y="66" font-size="17" text-anchor="middle">keys · encrypt · scan</text>
+                <rect class="d-box" x="335" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="485" y="38" font-size="24" text-anchor="middle">Prover</text>
+                <text class="d-sub" x="485" y="66" font-size="17" text-anchor="middle">RISC0 STARK proofs</text>
+                <rect class="d-box" x="670" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="820" y="38" font-size="24" text-anchor="middle">Prover nodes</text>
+                <text class="d-sub" x="820" y="66" font-size="17" text-anchor="middle">verify off-chain · attest</text>
+                <rect class="d-box" x="1005" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="1155" y="38" font-size="24" text-anchor="middle">Indexer</text>
+                <text class="d-sub" x="1155" y="66" font-size="17" text-anchor="middle">ciphertexts · tree data</text>
+                <rect class="d-box-hi" x="1340" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="1490" y="38" font-size="24" text-anchor="middle">Solana program</text>
+                <text class="d-sub" x="1490" y="66" font-size="17" text-anchor="middle">roots · nullifiers · custody</text>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-table">
+      <div class="frame">
+        <div class="eyebrow">Landscape</div>
+        <h2>How Sombra <em>compares.</em></h2>
+        <table class="cmp">
+          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col" class="us">Sombra<small>Solana · ZK notes</small></th>
+              <th scope="col">Zcash<small>Orchard / Ironwood pool</small></th>
+              <th scope="col">Privacy Cash<small>Solana</small></th>
+              <th scope="col">Light Protocol<small>ZK Compression</small></th>
+              <th scope="col">Arcium<small>Solana · MPC</small></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">Shielded transfers</th>
+              <td class="us"><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>Shield/unshield pool</td>
+              <td><span class="no" role="img" aria-label="no"></span>State compression, not a privacy pool</td>
+              <td><span class="na">—</span>Encrypted compute (MPC)</td>
+            </tr>
+            <tr>
+              <th scope="row">Native to Solana liquidity</th>
+              <td class="us"><span class="yes" role="img" aria-label="yes"></span>SPL in / SPL out</td>
+              <td><span class="no" role="img" aria-label="no"></span>Separate chain</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
+            </tr>
+            <tr>
+              <th scope="row">Proof system</th>
+              <td class="us">STARK · no trusted setup</td>
+              <td>Halo 2 · no trusted setup</td>
+              <td>Groth16 (BN254)</td>
+              <td>Groth16 (state proofs)</td>
+              <td>n/a (MPC)</td>
+            </tr>
+            <tr>
+              <th scope="row">Quantum-safe proofs</th>
+              <td class="us"><span class="yes" role="img" aria-label="yes"></span>Hash-based</td>
+              <td><span class="no" role="img" aria-label="no"></span>EC discrete-log</td>
+              <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
+              <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
+              <td><span class="na">—</span>n/a</td>
+            </tr>
+            <tr>
+              <th scope="row">Quantum-safe note encryption</th>
+              <td class="us"><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
+              <td><span class="no" role="img" aria-label="no"></span>ECDH (Pallas/Jubjub)</td>
+              <td><span class="no" role="img" aria-label="no"></span>AES-256, key from Ed25519 sig</td>
+              <td><span class="na">—</span>n/a, no notes</td>
+              <td><span class="no" role="img" aria-label="no"></span>X25519 key exchange</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="table-foot">
+          <span>Zcash: Orchard-protocol pools (Ironwood since Jul 2026). Legacy Sapling uses <span class="nowrap">Groth16/BLS12-381</span> — same non-PQ verdict. Zcash&rsquo;s PQ plan (ML-KEM) is roadmap.</span>
+          <span>Elusiv (Solana): sunset announced 29 Feb 2024; its team went on to build Arcium.</span>
+          <span>Arcium is an encrypted-compute network; shielded transfers on it come from apps like Umbra. Light: Helius is acquiring Light (Jun 2026) to build a privacy layer, currently devnet beta.</span>
+          <span>Quantum-safety judged per component: hash-based proofs and symmetric ciphers are PQ; elliptic-curve and pairing-based schemes are not.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-divider">
+      <div class="frame">
+        <div class="arc"></div>
+        <div class="num" aria-hidden="true">04</div>
+        <div class="eyebrow">Part four · Integration architecture</div>
+        <h2>Going private used to mean <em>leaving DeFi.</em></h2>
+        <p class="lede">Sombra's value proposition: private access to the Solana liquidity you already use.</p>
+      </div>
+    </section>
+
+    <section class="s-cta s-integration">
+      <div class="frame">
+        <div class="eyebrow">Integration points</div>
+        <h2>Where your product <em>plugs in.</em></h2>
+        <div class="cta-grid">
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-coins"/></svg><span class="badge live">Live · devnet</span></div>
+            <h3>Any SPL token</h3>
+            <p>Multi-token is generic: registering a mint makes it shieldable — no new circuit or program code per token.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-door"/></svg><span class="badge live">Live · devnet</span></div>
+            <h3>Onramp / offramp</h3>
+            <p>The entry and exit points. Users arrive from, and leave to, ordinary SPL accounts.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-stake"/></svg><span class="badge roadmap">Roadmap</span></div>
+            <h3>Private staking via LSTs</h3>
+            <p>Register an existing LST — JitoSOL, INF, bSOL, mSOL. Yield lives in the token's rate, not the note. No new protocol work.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-code"/></svg><span class="badge roadmap">Roadmap</span></div>
+            <h3>Client SDK</h3>
+            <p>Note building, encryption, proving, discovery and finalization behind one library. Today: WASM primitives + wallet extension.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-fee"/></svg><span class="badge design">Design</span></div>
+            <h3>Fee sponsorship</h3>
+            <p>Relayers pay gas so a user's own Solana key needn't appear. Swig smart wallets as fee-payer / session-key layer.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-swap"/></svg><span class="badge roadmap">Roadmap</span></div>
+            <h3>Private DeFi actions</h3>
+            <p>Swaps via Jupiter are planned (V2 Phase 2), built on the intent&nbsp;+&nbsp;public&nbsp;settlement pattern →</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-diagram">
+      <div class="frame">
+        <div class="row" style="justify-content:space-between; align-items:flex-start">
+          <div>
+            <div class="eyebrow">The integration pattern</div>
+            <h2 class="tight">Private intent. Public settlement. <em>Private claim.</em></h2>
+          </div>
+          <span class="badge roadmap" style="margin-top:6px">Roadmap pattern</span>
+        </div>
+        <div class="stage">
+          <svg viewBox="0 0 1640 500" role="img" aria-label="Three steps: private intent in the shielded zone, public settlement against Solana liquidity, private claim back into the shielded zone.">
+            <rect x="0" y="20" width="470" height="440" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
+            <rect x="585" y="20" width="470" height="440" rx="30" fill="rgba(103,232,249,0.05)" stroke="#67e8f9" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="8 10"/>
+            <rect x="1170" y="20" width="470" height="440" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
+            <text class="d-mono" x="235" y="66" font-size="18" text-anchor="middle">Shielded</text>
+            <text class="d-mono d-cyan" x="820" y="66" font-size="18" text-anchor="middle">Public · Solana</text>
+            <text class="d-mono" x="1405" y="66" font-size="18" text-anchor="middle">Shielded</text>
+
+            <g>
+              <circle cx="235" cy="200" r="72" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-lock" x="199" y="164" width="72" height="72" color="#d4c8ff"/>
+              <text class="d-label" x="235" y="330" font-size="36" text-anchor="middle">Private intent</text>
+              <text class="d-sub" x="235" y="372" font-size="21" text-anchor="middle">Prove what you want, privately;</text>
+              <text class="d-sub" x="235" y="400" font-size="21" text-anchor="middle">input value moves to a public pot</text>
+            </g>
+            <g class="fragment" data-fragment-index="1">
+              <path class="d-flow d-dash d-pulse" d="M315 200 H 735" marker-end="url(#m-arrow)"/>
+              <circle cx="820" cy="200" r="72" fill="#0f1a24" stroke="#67e8f9" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-swap" x="784" y="164" width="72" height="72" color="#67e8f9"/>
+              <text class="d-label" x="820" y="330" font-size="36" text-anchor="middle">Public settlement</text>
+              <text class="d-sub" x="820" y="372" font-size="21" text-anchor="middle">Aggregated, executed against</text>
+              <text class="d-sub" x="820" y="400" font-size="21" text-anchor="middle">public Solana liquidity</text>
+            </g>
+            <g class="fragment" data-fragment-index="2">
+              <path class="d-flow-c d-dash d-pulse" d="M900 200 H 1320" marker-end="url(#m-arrow-c)"/>
+              <circle cx="1405" cy="200" r="72" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-key" x="1369" y="164" width="72" height="72" color="#d4c8ff"/>
+              <text class="d-label" x="1405" y="330" font-size="36" text-anchor="middle">Private claim</text>
+              <text class="d-sub" x="1405" y="372" font-size="21" text-anchor="middle">Self-authenticating proof mints</text>
+              <text class="d-sub" x="1405" y="400" font-size="21" text-anchor="middle">your share into a new note</text>
+            </g>
+          </svg>
+        </div>
+        <p class="caption fragment rise" data-fragment-index="3"><strong>No contract ever owns a shielded note</strong> — a Solana program can't hold a secret. Contracts touch only public value; the secrets stay with the user.</p>
+      </div>
+    </section>
+
+    <section class="s-divider">
+      <div class="frame">
+        <div class="arc"></div>
+        <div class="num" aria-hidden="true">05</div>
+        <div class="eyebrow">Part five</div>
+        <h2>See it. <em>Then build with it.</em></h2>
+        <p class="lede">Live demo, and what your team can prepare now.</p>
+      </div>
+    </section>
+
+    <section class="s-demo">
+      <div class="frame">
+        <div class="row" style="justify-content:space-between; align-items:flex-start">
+          <div>
+            <div class="eyebrow">Live demo · devnet</div>
+            <h2><span class="live-dot"></span>Shield <span class="dim">→</span> send <span class="dim">→</span> <em>unshield.</em></h2>
+          </div>
+          <span class="badge caution" style="margin-top:6px">Fallback ready</span>
+        </div>
+        <div class="demo-strip">
+          <div class="shot">
+            <span class="slot">[ screenshot / clip slot · assets/demo/01-onramp ]</span>
+            <div class="step">01 · Onramp</div>
+            <h3>SPL tokens in</h3>
+            <p>A public deposit becomes a private note.</p>
+          </div>
+          <div class="shot">
+            <span class="slot">[ screenshot / clip slot · assets/demo/02-transfer ]</span>
+            <div class="step">02 · Private transfer</div>
+            <h3>Note to note</h3>
+            <p>Encrypted to the recipient, proven with a STARK.</p>
+          </div>
+          <div class="shot">
+            <span class="slot">[ screenshot / clip slot · assets/demo/03-offramp ]</span>
+            <div class="step">03 · Offramp</div>
+            <h3>SPL tokens out</h3>
+            <p>Back to an ordinary Solana account.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="s-cta">
+      <div class="frame">
+        <div class="eyebrow">Call to action</div>
+        <h2>What to prep for <em>integration.</em></h2>
+        <div class="cta-grid">
+          <div class="card glow">
+            <div class="who">Token &amp; LST teams</div>
+            <h3>Make it shieldable</h3>
+            <ul class="lux">
+              <li>Tell us which SPL mints you want registered.</li>
+              <li>LSTs fit natively: yield in the rate, fixed note amounts.</li>
+              <li>Plan round denominations at the edges — odd amounts fingerprint deposits to withdrawals.</li>
+            </ul>
+          </div>
+          <div class="card glow">
+            <div class="who">Wallets &amp; dApps</div>
+            <h3>Design the UX</h3>
+            <ul class="lux">
+              <li>Async, multi-step sends: pending → proving → attesting → final.</li>
+              <li>Onramp / offramp as entry and exit; those legs are public.</li>
+              <li>Local note scanning, and seed backup: shielded funds recover from the seed only.</li>
+            </ul>
+          </div>
+          <div class="card glow">
+            <div class="who">DeFi &amp; infra</div>
+            <h3>Think in intents</h3>
+            <ul class="lux">
+              <li>Contracts never hold shielded notes — design for intent + public settlement.</li>
+              <li>Relayers / fee sponsors: help remove the funding-wallet link.</li>
+              <li>Talk to us now about the SDK surface you need.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="after muted small">Start at <span class="mono" style="color:var(--violet-hi)">docs.sombra.tech</span></p>
+      </div>
+    </section>
+
+    <section class="s-closing" data-state="no-chrome">
+      <div class="frame">
+        <svg class="eclipse-small" viewBox="0 0 1000 1000" aria-hidden="true">
+          <circle cx="500" cy="500" r="490" fill="url(#g-corona)"/>
+          <circle cx="500" cy="500" r="360" fill="none" stroke="url(#g-sol)" stroke-width="10" filter="url(#f-glow)"/>
+          <circle cx="548" cy="452" r="352" fill="#05040b"/>
+        </svg>
+        <h2>Privacy that <em>outlasts</em> Q-Day.</h2>
+        <p class="lede">Sealed notes. Hash-based proofs. Solana liquidity.</p>
+        <div class="links"><span>docs.sombra.tech</span><span class="dim">·</span><span>Questions?</span></div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script src="vendor/reveal.js/dist/reveal.js"></script>
+<script src="vendor/reveal.js/plugin/notes/notes.js"></script>
+<script src="vendor/reveal.js/plugin/zoom/zoom.js"></script>
+<script>
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0,
+    minScale: 0.1,
+    maxScale: 3,
+    center: false,           // templates own their vertical layout via .frame
+    hash: true,
+    controls: true,
+    controlsTutorial: false,
+    progress: true,
+    slideNumber: 'c/t',
+    transition: 'fade',
+    backgroundTransition: 'fade',
+    autoAnimateDuration: 0.9,
+    autoAnimateEasing: 'cubic-bezier(0.2, 0.7, 0.2, 1)',
+    plugins: [RevealNotes, RevealZoom]
+  });
+</script>
+</body>
+</html>

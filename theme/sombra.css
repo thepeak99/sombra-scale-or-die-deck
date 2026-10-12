@@ -1,0 +1,473 @@
+/* =====================================================================
+   SOMBRA — reveal.js theme / design system
+   "Sombra" = shadow. Near-black indigo, one luminous violet accent,
+   cyan as a secondary signal, the Solana gradient used sparingly.
+
+   Authored for a fixed 1920×1080 canvas (Reveal width/height config),
+   so every size below is in canvas pixels and scales uniformly.
+   ===================================================================== */
+
+/* ---------- Fonts (vendored, latin subset) -------------------------- */
+@font-face {
+  font-family: "Space Grotesk";
+  src: url("../vendor/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
+  font-weight: 300 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../vendor/fonts/inter-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Inter";
+  src: url("../vendor/fonts/inter-latin-wght-italic.woff2") format("woff2");
+  font-weight: 100 900; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("../vendor/fonts/jetbrains-mono-latin-wght-normal.woff2") format("woff2");
+  font-weight: 100 800; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../vendor/fonts/instrument-serif-latin-400-italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap;
+}
+@font-face {
+  font-family: "Instrument Serif";
+  src: url("../vendor/fonts/instrument-serif-latin-400-normal.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+
+/* ---------- Tokens ---------------------------------------------------- */
+:root {
+  --ink-0: #05040b;          /* page */
+  --ink-1: #0b0918;
+  --ink-2: #110f25;          /* surface */
+  --ink-3: #1a1736;          /* raised surface */
+  --line: rgba(176, 160, 255, 0.14);
+  --line-strong: rgba(176, 160, 255, 0.30);
+
+  --text: #eeecf8;
+  --text-2: #b6b2d2;
+  --text-3: #7b779c;
+
+  --violet: #a78bfa;         /* the one luminous accent */
+  --violet-hi: #d4c8ff;
+  --violet-deep: #6d3cf0;
+  --cyan: #67e8f9;           /* secondary signal: "public / settlement" */
+  --sol-a: #9945ff;          /* Solana gradient — use sparingly */
+  --sol-b: #14f195;
+  --amber: #f5b94a;          /* "still classical" / caution */
+  --mint: #5eead4;           /* "quantum-safe" / ok */
+  --rose: #fb7185;
+
+  --glow: 0 0 40px rgba(167, 139, 250, 0.45), 0 0 120px rgba(109, 60, 240, 0.25);
+  --radius: 22px;
+
+  --f-display: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --f-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+
+  --pad-x: 140px;
+  --pad-top: 104px;
+  --pad-bottom: 132px;       /* leaves room for the chrome bar */
+}
+
+/* ---------- Canvas / background ------------------------------------- */
+.reveal-viewport {
+  background-color: var(--ink-0);
+  background-image:
+    radial-gradient(1200px 800px at 8% -10%, rgba(109, 60, 240, 0.22), transparent 60%),
+    radial-gradient(900px 700px at 105% 110%, rgba(103, 232, 249, 0.07), transparent 60%),
+    radial-gradient(1400px 900px at 50% 120%, rgba(60, 30, 140, 0.25), transparent 70%);
+}
+/* film grain — breaks up gradient banding on projectors */
+.reveal-viewport::after {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 1;
+  opacity: 0.06; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='220' height='220'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.reveal {
+  font-family: var(--f-body);
+  font-size: 34px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  -webkit-font-smoothing: antialiased;
+}
+.reveal ::selection { background: var(--violet-deep); color: #fff; }
+.reveal .slides { text-align: left; }
+
+/* Reveal toggles `display` on <section> inline, so layout lives on .frame */
+.reveal .slides > section,
+.reveal .slides > section > section { height: 100%; padding: 0; }
+.frame {
+  position: absolute; inset: 0;
+  padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
+  display: flex; flex-direction: column;
+  box-sizing: border-box;
+}
+
+/* ---------- Type scale ---------------------------------------------- */
+.reveal h1, .reveal h2, .reveal h3, .reveal h4 {
+  font-family: var(--f-display);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  color: var(--text);
+  margin: 0;
+  text-transform: none;
+  text-shadow: none;
+}
+.reveal h1 { font-size: 168px; letter-spacing: -0.05em; line-height: 0.92; }
+.reveal h2 { font-size: 76px; margin-bottom: 28px; }
+.reveal h3 { font-size: 40px; letter-spacing: -0.02em; line-height: 1.15; }
+.reveal h4 { font-size: 30px; letter-spacing: -0.01em; }
+.reveal h2.tight { font-size: 66px; }
+.reveal p { margin: 0 0 0.6em; line-height: 1.4; }
+.reveal strong { font-weight: 650; color: #fff; }
+.reveal a { color: var(--violet-hi); text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+
+/* serif italic — the "voice" used for emphasis inside display type */
+.reveal em, .serif {
+  font-family: var(--f-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  color: var(--violet-hi);
+}
+.reveal h1 em, .reveal h2 em, .reveal .statement em {
+  text-shadow: 0 0 36px rgba(167, 139, 250, 0.55);
+}
+.reveal .lede { font-size: 40px; line-height: 1.35; color: var(--text-2); max-width: 1400px; }
+.reveal .muted { color: var(--text-2); }
+.reveal .dim { color: var(--text-3); }
+.reveal .small { font-size: 26px; }
+.reveal .tiny { font-size: 21px; }
+
+.mono, .reveal code {
+  font-family: var(--f-mono);
+  white-space: nowrap;
+  font-size: 0.82em;
+  letter-spacing: 0;
+}
+.reveal code {
+  color: var(--violet-hi);
+  background: rgba(167, 139, 250, 0.10);
+  border: 1px solid var(--line);
+  padding: 0.08em 0.36em; border-radius: 8px;
+}
+
+.grad-text {
+  background: linear-gradient(92deg, var(--sol-a) 0%, var(--violet) 45%, var(--sol-b) 110%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  text-shadow: none;
+}
+
+/* eyebrow — section label above a headline */
+.eyebrow {
+  font-family: var(--f-mono);
+  font-size: 22px; font-weight: 500;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--violet);
+  display: flex; align-items: center; gap: 18px;
+  margin-bottom: 26px;
+}
+.eyebrow::before {
+  content: ""; width: 44px; height: 2px;
+  background: linear-gradient(90deg, var(--violet), transparent);
+  box-shadow: 0 0 12px var(--violet);
+}
+
+/* ---------- Badges (status labelling is mandatory for honesty) ------- */
+.badge {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-mono); font-size: 18px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  padding: 7px 14px 7px 12px; border-radius: 999px;
+  border: 1px solid currentColor;
+  white-space: nowrap; line-height: 1;
+}
+.badge::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: currentColor; box-shadow: 0 0 10px currentColor; }
+.badge.live    { color: var(--mint);   background: rgba(94, 234, 212, 0.08); }
+.badge.design  { color: var(--violet); background: rgba(167, 139, 250, 0.08); }
+.badge.roadmap { color: var(--cyan);   background: rgba(103, 232, 249, 0.07); }
+.badge.caution { color: var(--amber);  background: rgba(245, 185, 74, 0.08); }
+
+/* ---------- Cards ----------------------------------------------------- */
+.card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(26, 23, 54, 0.85), rgba(17, 15, 37, 0.85));
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 36px 38px;
+  box-shadow: 0 30px 80px -40px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+.card h3 { margin-bottom: 14px; }
+.card p { color: var(--text-2); font-size: 27px; line-height: 1.42; margin: 0; }
+.card .card-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; gap: 16px; }
+.card .icon { width: 56px; height: 56px; color: var(--violet); }
+.card.glow { border-color: rgba(167, 139, 250, 0.45); box-shadow: var(--glow), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+.card.ok   { border-top: 3px solid var(--mint); }
+.card.warn { border-top: 3px solid var(--amber); }
+
+/* list with luminous bullets */
+.reveal ul.lux { list-style: none; margin: 0; padding: 0; }
+.reveal ul.lux > li { position: relative; padding-left: 44px; margin: 0 0 22px; line-height: 1.38; }
+.reveal ul.lux > li::before {
+  content: ""; position: absolute; left: 4px; top: 0.52em;
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--violet); box-shadow: 0 0 14px var(--violet);
+}
+.reveal ul.lux.ok > li::before   { background: var(--mint);  box-shadow: 0 0 14px var(--mint); }
+.reveal ul.lux.warn > li::before { background: var(--amber); box-shadow: 0 0 14px var(--amber); }
+
+/* ---------- Layout helpers ------------------------------------------- */
+.cols   { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+.cols-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; }
+.grow   { flex: 1 1 auto; min-height: 0; }
+.bottom, .frame > .bottom { margin-top: auto; margin-bottom: 0; }
+.reveal .after { margin-top: 52px; margin-bottom: 0; }
+.center-y { display: flex; flex-direction: column; justify-content: center; }
+.row { display: flex; align-items: center; gap: 20px; }
+.rule { height: 1px; background: linear-gradient(90deg, var(--line-strong), transparent); margin: 30px 0; }
+
+/* =====================================================================
+   SLIDE TEMPLATES
+   ===================================================================== */
+
+/* --- 1. Title -------------------------------------------------------- */
+.s-title .frame { justify-content: center; padding-top: 80px; }
+.s-title .kicker {
+  font-family: var(--f-mono); font-size: 24px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--text-2); margin-bottom: 40px;
+}
+.s-title .kicker b { color: var(--violet); font-weight: 600; }
+.s-title h1 { max-width: 1150px; }
+.s-title .subtitle {
+  margin-top: 44px; font-size: 44px; line-height: 1.3; color: var(--text-2); max-width: 1050px;
+}
+.s-title .subtitle strong { color: var(--text); font-weight: 600; }
+.s-title .meta {
+  position: absolute; left: var(--pad-x); bottom: 92px;
+  display: flex; gap: 48px; align-items: center;
+  font-family: var(--f-mono); font-size: 21px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
+}
+.s-title .eclipse-hero {
+  position: absolute; right: -170px; top: 50%; transform: translateY(-50%);
+  width: 980px; height: 980px; pointer-events: none;
+}
+
+/* --- 2. Agenda ------------------------------------------------------- */
+.agenda { list-style: none; margin: 18px 0 0; padding: 0; counter-reset: ag; }
+.agenda li {
+  display: grid; grid-template-columns: 120px 1fr auto; align-items: baseline;
+  padding: 26px 0; border-bottom: 1px solid var(--line);
+  font-family: var(--f-display); font-size: 50px; font-weight: 500; letter-spacing: -0.025em;
+}
+.agenda li:first-child { border-top: 1px solid var(--line); }
+.agenda li .n { font-family: var(--f-mono); font-size: 24px; color: var(--violet); letter-spacing: 0.1em; }
+.agenda li .d { font-family: var(--f-body); font-size: 25px; color: var(--text-3); font-weight: 400; letter-spacing: 0; }
+
+/* --- 3. Section divider --------------------------------------------- */
+.s-divider .frame { justify-content: center; }
+.s-divider .num {
+  font-family: var(--f-display); font-weight: 700;
+  font-size: 380px; line-height: 0.8; letter-spacing: -0.06em;
+  color: transparent; -webkit-text-stroke: 2px rgba(167, 139, 250, 0.45);
+  position: absolute; right: 120px; top: 50%; transform: translateY(-54%);
+  text-shadow: 0 0 80px rgba(109, 60, 240, 0.35);
+}
+.s-divider h2 { font-size: 112px; letter-spacing: -0.045em; max-width: 1250px; line-height: 0.98; }
+.s-divider .lede { margin-top: 36px; max-width: 1150px; }
+.s-divider .arc {
+  position: absolute; left: -300px; bottom: -620px; width: 1400px; height: 1400px; border-radius: 50%;
+  border: 1px solid var(--line);
+  box-shadow: inset 0 40px 120px -60px rgba(167, 139, 250, 0.45);
+  pointer-events: none;
+}
+
+/* --- 4. Big statement ------------------------------------------------ */
+.s-statement .frame { justify-content: center; }
+.s-statement .statement {
+  font-family: var(--f-display); font-weight: 500;
+  font-size: 104px; line-height: 1.02; letter-spacing: -0.045em; max-width: 1560px;
+}
+.s-statement .support { margin-top: 56px; max-width: 1500px; }
+
+/* --- 5. Two-column --------------------------------------------------- */
+.s-two-col .cols { margin-top: 18px; align-items: stretch; }
+
+/* --- 6. Diagram ------------------------------------------------------ */
+.s-diagram .stage {
+  flex: 1 1 auto; min-height: 0; position: relative;
+  display: flex; align-items: center; justify-content: center;
+}
+.s-diagram .stage > svg { width: 100%; height: 100%; overflow: visible; }
+.s-diagram .caption { font-size: 26px; color: var(--text-2); margin-top: 18px; }
+
+/* SVG diagram vocabulary — shared by every inline diagram */
+svg .d-label  { font-family: var(--f-display); font-weight: 600; fill: var(--text); letter-spacing: -0.02em; }
+svg .d-sub    { font-family: var(--f-body); fill: var(--text-2); }
+svg .d-mono   { font-family: var(--f-mono); fill: var(--violet); letter-spacing: 0.14em; text-transform: uppercase; }
+svg .d-cyan   { fill: var(--cyan); }
+svg .d-amber  { fill: var(--amber); }
+svg .d-mint   { fill: var(--mint); }
+svg .d-knock  { paint-order: stroke; stroke: #1e1745; stroke-width: 8px; stroke-linejoin: round; }
+svg .d-box    { fill: rgba(26, 23, 54, 0.9); stroke: var(--line-strong); stroke-width: 1.5; }
+svg .d-box-hi { fill: rgba(40, 26, 92, 0.55); stroke: var(--violet); stroke-width: 2; }
+svg .d-line   { stroke: var(--line-strong); stroke-width: 2; fill: none; }
+svg .d-flow   { stroke: var(--violet); stroke-width: 3; fill: none; stroke-linecap: round; }
+svg .d-flow-c { stroke: var(--cyan); stroke-width: 3; fill: none; stroke-linecap: round; }
+svg .d-dash   { stroke-dasharray: 8 10; }
+svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
+@keyframes d-dash { to { stroke-dashoffset: -36; } }
+
+/* Timeline (HTML, not SVG, so auto-animate can morph the Q-Day marker
+   from a precise point into an uncertain band between slides) */
+.tl { position: relative; width: 1640px; height: 560px; }
+.tl-line {
+  position: absolute; left: 0; right: 0; top: 150px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--violet) 12%, var(--amber) 88%, transparent);
+  opacity: 0.7;
+}
+.tl-node { position: absolute; top: 102px; width: 360px; text-align: center; }
+.tl-dot {
+  width: 96px; height: 96px; margin: 0 auto; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--ink-3); border: 2px solid var(--violet);
+  box-shadow: 0 0 34px rgba(167, 139, 250, 0.5);
+  color: var(--violet-hi);
+}
+.tl-dot svg { width: 44px; height: 44px; }
+.tl-dot.qday-dot { border-color: var(--amber); color: var(--amber); box-shadow: 0 0 40px rgba(245, 185, 74, 0.55); }
+.tl-dot.pub-dot  { border-color: var(--cyan);  color: var(--cyan);  box-shadow: 0 0 34px rgba(103, 232, 249, 0.45); }
+.tl-k { margin-top: 28px; font-family: var(--f-mono); font-size: 20px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--violet); }
+.tl-k.warn { color: var(--amber); }
+.tl-k.cyan { color: var(--cyan); }
+.tl-t { margin-top: 10px; font-family: var(--f-display); font-weight: 600; font-size: 36px; letter-spacing: -0.02em; line-height: 1.1; }
+.tl-s { margin-top: 10px; font-size: 23px; color: var(--text-2); line-height: 1.35; }
+.qday-band {
+  position: absolute; left: 600px; top: 102px; width: 600px; height: 96px; border-radius: 48px;
+  background: linear-gradient(90deg, transparent, rgba(245, 185, 74, 0.35) 30%, rgba(245, 185, 74, 0.45) 50%, rgba(245, 185, 74, 0.35) 70%, transparent);
+  box-shadow: 0 0 80px rgba(245, 185, 74, 0.25);
+  filter: blur(2px);
+}
+.tl-band-label { position: absolute; left: 600px; width: 600px; top: 198px; text-align: center; }
+.tl-window {
+  position: absolute; left: 600px; width: 880px; top: 430px; height: 26px;
+  border: 2px dashed var(--amber); border-bottom: none; border-radius: 14px 14px 0 0;
+  opacity: 0.85;
+}
+.tl-window span {
+  position: absolute; left: 0; right: 0; top: 34px; text-align: center;
+  font-family: var(--f-mono); font-size: 22px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber);
+}
+
+/* Slide 6 payoff: a mint "ok" card pinned under the timeline (absolute, so it
+   never shifts the auto-animated timeline above it) */
+.s-diagram .payoff {
+  position: absolute; left: var(--pad-x); right: var(--pad-x); bottom: 100px;
+  display: flex; align-items: center; gap: 30px; padding: 20px 38px;
+}
+.s-diagram .payoff .icon { flex: none; color: var(--mint); }
+.s-diagram .payoff p { font-family: var(--f-display); font-weight: 500; font-size: 38px; line-height: 1.2; letter-spacing: -0.02em; color: var(--text-2); }
+.s-diagram .payoff em { color: var(--mint); text-shadow: 0 0 30px rgba(94, 234, 212, 0.45); }
+
+/* --- 7. Comparison table -------------------------------------------- */
+.cmp { width: 100%; table-layout: fixed; border-collapse: separate; border-spacing: 0; font-size: 23px; margin-top: 0; }
+.cmp col.c-head { width: 240px; }
+.cmp col.c-us { width: 280px; }
+.cmp col.c-wide { width: 320px; }
+.cmp th, .cmp td { padding: 18px 16px; text-align: left; vertical-align: middle; border-bottom: 1px solid var(--line); }
+.cmp thead th {
+  font-family: var(--f-display); font-weight: 600; font-size: 28px; letter-spacing: -0.015em;
+  color: var(--text); border-bottom: 1px solid var(--line-strong); padding-top: 18px;
+}
+.cmp thead th small { display: block; font-family: var(--f-mono); font-weight: 400; font-size: 16px; color: var(--text-3); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 6px; }
+.cmp tbody th { font-weight: 500; color: var(--text-2); font-size: 23px; }
+.cmp td { color: var(--text-2); }
+/* the Sombra column is the lit one */
+.cmp .us {
+  background: linear-gradient(180deg, rgba(109, 60, 240, 0.20), rgba(109, 60, 240, 0.10));
+  color: var(--text);
+  border-left: 1px solid rgba(167, 139, 250, 0.45); border-right: 1px solid rgba(167, 139, 250, 0.45);
+}
+.cmp thead .us { border-top: 1px solid rgba(167, 139, 250, 0.45); border-radius: 18px 18px 0 0; box-shadow: 0 -20px 60px -30px var(--violet); }
+.cmp tbody tr:last-child .us { border-bottom: 1px solid rgba(167, 139, 250, 0.45); border-radius: 0 0 18px 18px; }
+.yes, .no, .na { font-family: var(--f-mono); font-weight: 600; margin-right: 10px; }
+.yes, .no { display: inline-block; width: 0.8em; height: 0.8em; vertical-align: -0.05em; background: currentColor; }
+.yes { color: var(--mint); -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 8.5l4 4L14 4' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M2 8.5l4 4L14 4' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / contain no-repeat; }
+.no  { color: var(--rose); -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3.5 3.5l9 9M12.5 3.5l-9 9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'/></svg>") center / contain no-repeat; mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><path d='M3.5 3.5l9 9M12.5 3.5l-9 9' fill='none' stroke='black' stroke-width='2.6' stroke-linecap='round'/></svg>") center / contain no-repeat; }
+.na  { color: var(--text-3); }
+.cmp .note { font-size: 19px; color: var(--text-3); display: block; margin-top: 4px; }
+.table-foot .nowrap { white-space: nowrap; }
+.table-foot { margin-top: auto; padding-top: 14px; font-size: 18px; line-height: 1.35; color: var(--text-3); display: grid; grid-template-columns: 1fr 1fr; gap: 8px 48px; }
+
+/* --- 8. Demo --------------------------------------------------------- */
+.demo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; flex: 1 1 auto; min-height: 0; margin-top: 10px; }
+.shot {
+  position: relative; border-radius: var(--radius); overflow: hidden;
+  border: 1.5px dashed var(--line-strong);
+  background:
+    repeating-linear-gradient(135deg, rgba(167, 139, 250, 0.05) 0 14px, transparent 14px 28px),
+    rgba(17, 15, 37, 0.7);
+  display: flex; flex-direction: column; justify-content: flex-end; padding: 30px;
+}
+.shot .step { font-family: var(--f-mono); font-size: 20px; letter-spacing: 0.2em; color: var(--violet); text-transform: uppercase; }
+.shot h3 { margin: 8px 0 8px; }
+.shot p { font-size: 24px; color: var(--text-2); margin: 0; }
+.shot .slot { position: absolute; top: 28px; left: 30px; right: 30px; font-family: var(--f-mono); font-size: 18px; color: var(--text-3); letter-spacing: 0.06em; }
+.shot img, .shot video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.live-dot { display: inline-block; width: 22px; height: 22px; border-radius: 50%; background: var(--rose); box-shadow: 0 0 16px var(--rose); margin-right: 22px; animation: blink 1.4s ease-in-out infinite; vertical-align: 0.18em; }
+@keyframes blink { 50% { opacity: 0.25; } }
+
+/* --- 9. CTA ---------------------------------------------------------- */
+.s-cta .cta-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 8px; }
+.s-cta .card { padding: 32px 34px; }
+.s-cta .card h3 { font-size: 34px; }
+.s-cta .card .who { font-family: var(--f-mono); font-size: 18px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--violet); margin-bottom: 14px; }
+.s-cta .card ul.lux > li { font-size: 25px; margin-bottom: 14px; padding-left: 34px; color: var(--text-2); }
+.s-cta .card ul.lux > li::before { width: 10px; height: 10px; }
+
+/* --- 10. Closing ----------------------------------------------------- */
+.s-closing .frame { justify-content: center; align-items: center; text-align: center; }
+.s-closing h2 { font-size: 132px; letter-spacing: -0.05em; }
+.s-closing .lede { margin: 30px auto 0; text-align: center; }
+.s-closing .links { margin-top: 64px; display: flex; gap: 56px; justify-content: center; font-family: var(--f-mono); font-size: 26px; color: var(--text-2); letter-spacing: 0.04em; }
+.s-closing .eclipse-small { width: 220px; height: 220px; margin-bottom: 40px; }
+
+/* ---------- Persistent chrome (outside the scaled canvas) ------------ */
+.deck-chrome {
+  position: fixed; left: 2.6vw; bottom: 2.2vh; z-index: 30;
+  display: flex; align-items: center; gap: 0.7vw;
+  font-family: var(--f-mono); font-size: max(11px, 0.68vw); letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--text-3); pointer-events: none; transition: opacity 0.4s ease;
+}
+.deck-chrome svg { width: 1.4vw; height: 1.4vw; min-width: 18px; min-height: 18px; }
+.deck-chrome b { color: var(--text-2); font-weight: 600; }
+.reveal-viewport.no-chrome .deck-chrome { opacity: 0; }
+
+.reveal .slide-number {
+  /* sits left of the nav arrows rather than underneath them */
+  background: transparent; right: calc(2.6vw + 96px); bottom: 2.2vh;
+  font-family: var(--f-mono); font-size: max(11px, 0.68vw); letter-spacing: 0.18em; color: var(--text-3);
+}
+.reveal .controls { color: var(--violet); }
+.reveal .progress { color: var(--violet); height: 3px; background: rgba(167, 139, 250, 0.12); }
+.reveal .progress span { background: linear-gradient(90deg, var(--sol-a), var(--violet), var(--sol-b)); box-shadow: 0 0 12px var(--violet); }
+
+/* ---------- Fragments: a softer default than reveal's ---------------- */
+.reveal .slides section .fragment.rise { opacity: 0; transform: translateY(26px); transition: all 0.6s cubic-bezier(0.2, 0.7, 0.2, 1); }
+.reveal .slides section .fragment.rise.visible { opacity: 1; transform: none; }
+.reveal .slides section .fragment.dim-after.visible:not(.current-fragment) { opacity: 0.45; }
+/* SVG groups fade only (transforms on <g> fight the SVG coordinate system) */
+.reveal svg .fragment { transition: opacity 0.6s ease; }
+
+@media print {
+  .deck-chrome { display: none; }
+}

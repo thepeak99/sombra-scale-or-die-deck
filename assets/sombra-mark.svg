@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Sombra mark">
+  <!-- Eclipse: a luminous corona with the disc shifted off-centre — the "shadow" in Sombra. -->
+  <defs>
+    <linearGradient id="sm-ring" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9945ff"/>
+      <stop offset="0.55" stop-color="#a78bfa"/>
+      <stop offset="1" stop-color="#14f195"/>
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="40" fill="none" stroke="url(#sm-ring)" stroke-width="6"/>
+  <circle cx="57" cy="44" r="38" fill="#05040b"/>
+</svg>
