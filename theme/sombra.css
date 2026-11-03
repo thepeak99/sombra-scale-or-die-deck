@@ -299,6 +299,23 @@
 }
 .s-statement .support { margin-top: 56px; max-width: 1500px; }
 
+/* --- 4b. Hook beats (intro-you-we) ------------------------------------ */
+.s-beats .frame { justify-content: center; }
+.s-beats .statement {
+  font-family: var(--f-display); font-weight: 500;
+  font-size: 100px; line-height: 1.05; letter-spacing: -0.045em; max-width: 1620px;
+}
+.s-beats .statement + .statement { margin-top: 60px; }
+.s-beats .beat-label {
+  display: block; margin-bottom: 18px;
+  font-family: var(--f-mono); font-weight: 600; font-size: 24px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--violet);
+}
+
+/* relative-cost bar (latency slide) */
+.bar { height: 8px; border-radius: 4px; background: rgba(176, 160, 255, 0.12); margin-top: 20px; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--violet), var(--cyan)); box-shadow: 0 0 14px rgba(167, 139, 250, 0.5); }
+
 /* --- 5. Two-column --------------------------------------------------- */
 .s-two-col .cols { margin-top: 18px; align-items: stretch; }
 

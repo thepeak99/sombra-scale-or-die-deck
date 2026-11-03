@@ -97,6 +97,13 @@
       </div>
     </section>
 
+    <section class="s-beats" id="intro-you-we" data-state="no-chrome">
+      <div class="frame">
+        <p class="statement"><span class="beat-label">You</span>Every private transaction you make today is written to a public ledger. <em>Forever.</em></p>
+        <p class="statement"><span class="beat-label">We</span>We built the privacy pool whose secrets <em>outlive Q-Day.</em></p>
+      </div>
+    </section>
+
     <section class="s-agenda">
       <div class="frame">
         <div class="eyebrow">The next 20 minutes</div>
@@ -145,10 +152,37 @@
       </div>
     </section>
 
+    <section class="s-two-col" id="privacy-not-funds">
+      <div class="frame">
+        <div class="eyebrow">The split that decides everything</div>
+        <h2>Your funds will be fine. <em>Your privacy won&rsquo;t.</em></h2>
+        <div class="cols">
+          <div class="card ok">
+            <div class="card-top"><h3>Signatures — funds</h3><span class="badge live">Fixable</span></div>
+            <ul class="lux ok small">
+              <li>Chains are migrating to PQ-safe signatures — Ethereum&rsquo;s hash-based roadmap, Solana/Anza&rsquo;s PQ prototype.</li>
+              <li>A <strong>fork</strong> can rotate a key — migrate before Q-Day, and you&rsquo;re on time.</li>
+            </ul>
+          </div>
+          <div class="card warn">
+            <div class="card-top"><h3>Encryption — privacy</h3><span class="badge caution">Not fixable</span></div>
+            <ul class="lux warn small">
+              <li>Once a ciphertext is decrypted, <strong>no upgrade can re-encrypt it.</strong></li>
+              <li>Today&rsquo;s privacy protocols seal with elliptic-curve key exchange — shielded today, decrypted tomorrow.</li>
+            </ul>
+          </div>
+        </div>
+        <p class="lede after" style="max-width:none">The blockchain is the harvester. Every node keeps a copy. <em>Forever.</em></p>
+        <aside class="notes">
+          The thesis of the talk: funds have a migration path (signatures rotate with a fork), privacy does not (ciphertext, once decrypted, is done). Sources: Ethereum&rsquo;s hash-based (L1) signature roadmap; Solana/Anza post-quantum prototype — both public roadmap work.
+        </aside>
+      </div>
+    </section>
+
     <section class="s-diagram" data-auto-animate>
       <div class="frame">
         <div class="eyebrow" data-id="eb-q">Harvest now, decrypt later</div>
-        <h2 data-id="h-q">Breakable tomorrow is <em>not private today.</em></h2>
+        <h2 data-id="h-q">The chain is the harvester. Breakable tomorrow is <em>not private today.</em></h2>
         <div class="stage">
           <div class="tl">
             <div class="tl-line" data-id="tl-line"></div>
@@ -212,6 +246,39 @@
       </div>
     </section>
 
+    <section class="s-two-col" id="bunker-mode">
+      <div class="frame">
+        <div class="eyebrow">Oct 7, 2026 · Justin Drake, Ethereum Foundation</div>
+        <h2 class="tight">Bunker mode fixes <em>funds.</em> Not privacy.</h2>
+        <div class="cols">
+          <div class="card">
+            <div class="card-top"><h3>Drake: plan for bunker mode</h3><span class="badge design">Funds</span></div>
+            <ul class="lux small">
+              <li>Move funds to addresses that <strong>never signed</strong> — the pubkey hidden behind a hash.</li>
+              <li>Rotate keys with every signed message — one-time keys.</li>
+              <li>Go all-in on hash-based crypto.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <div class="card-top"><h3>Vitalik — same day</h3><span class="badge caution">Privacy</span></div>
+            <ul class="lux small">
+              <li>Privacy protocols should keep <strong>encrypted notes off-chain.</strong></li>
+              <li>Because on-chain ciphertext is harvested.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="card ok glow" style="margin-top:30px">
+          <div class="card-top" style="margin-bottom:14px"><h3>The takeaway</h3><span class="badge live">Sombra</span></div>
+          <p>Every bunker-mode measure is a <strong>signature</strong> fix — on-chain ciphertext stays harvested. Sombra: no signature to spend (hash-based STARK), one-time prover voting keys, ML-KEM-sealed notes. Harvest away.</p>
+        </div>
+        <aside class="notes">
+          Sources — Justin Drake (Ethereum Foundation), Oct 7 2026, on planning for &ldquo;bunker mode&rdquo;: https://x.com/drakefjustin/status/2107837081313505768 · Vitalik Buterin, same day, on keeping encrypted notes off-chain: https://x.com/VitalikButerin/status/2107976296320106851.
+          Q&amp;A prep: Vitalik also flagged the lattice family (ML-DSA-65 / ML-KEM-768) as a new risk area from AI-driven math, while conceding public-key encryption can&rsquo;t be built from hashes alone. Our answer: the least-structured primitive at each layer, plus a swappable KEM (next slide) — NIST HQC as the named non-lattice backup.
+          Do NOT claim one-time or stealth addresses: Sombra has one bech32m address per user; per-note unlinkability comes from commitment randomness.
+        </aside>
+      </div>
+    </section>
+
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
@@ -230,7 +297,7 @@
           <div class="card glow fragment rise">
             <div class="card-top"><svg class="icon"><use href="#i-lock"/></svg><span class="badge live">Live · devnet</span></div>
             <h3>Sealed notes</h3>
-            <p>Value lives in encrypted notes, sealed to the recipient with <span class="mono">ML-KEM-768</span> (NIST FIPS 203) + <span class="mono">ChaCha20-Poly1305</span>. Harvested ciphertext stays sealed.</p>
+            <p>Value lives in encrypted notes, sealed to the recipient with <span class="mono">ML-KEM-768</span> + <span class="mono">AES-256-GCM</span> (key via HKDF-SHA256). Harvested ciphertext stays sealed.</p>
           </div>
           <div class="card glow fragment rise">
             <div class="card-top"><svg class="icon"><use href="#i-hash"/></svg><span class="badge live">Live · devnet</span></div>
@@ -255,10 +322,10 @@
           <div class="card ok">
             <div class="card-top"><h3>Quantum-safe in Sombra</h3><span class="badge live">PQ</span></div>
             <ul class="lux ok small">
-              <li><strong>Note contents</strong> — ML-KEM-768 + ChaCha20-Poly1305. Harvested ciphertext stays sealed.</li>
+              <li><strong>Note contents</strong> — ML-KEM-768 + AES-256-GCM (key via HKDF-SHA256). Harvested ciphertext stays sealed.</li>
               <li><strong>Ownership &amp; spend proofs</strong> — hash-based STARKs over SHA-256 commitments.</li>
               <li><strong>No signature to spend</strong> — authority is knowledge of your key, proven in zero knowledge.</li>
-              <li><strong>Service links</strong> — ML-DSA (FIPS 204) authentication, hybrid ML-KEM TLS.</li>
+              <li><strong>Service links</strong> — requests signed with ML-DSA-65 (FIPS 204). Pure post-quantum — no classical fallback.</li>
             </ul>
           </div>
           <div class="card warn fragment rise">
@@ -272,6 +339,34 @@
             <p class="small" style="color:var(--text)">Our rule: <em>if the authorization path is Ed25519, we don’t call it post-quantum.</em></p>
           </div>
         </div>
+      </div>
+    </section>
+
+    <section class="s-two-col" id="crypto-agility">
+      <div class="frame">
+        <div class="eyebrow">Crypto agility</div>
+        <h2>PQC where it&rsquo;s urgent. <em>No signatures where they&rsquo;re hard to swap.</em></h2>
+        <div class="cols">
+          <div class="card">
+            <div class="card-top"><h3>Encryption — the urgent half</h3><span class="badge caution">Harvest risk</span></div>
+            <ul class="lux small">
+              <li>Ciphertext faces harvest-now-decrypt-later — so PQC now (NIST IR 8547 calls this the urgent half).</li>
+              <li>The KEM lives outside the proof — swapping it is a wallet upgrade, not a new circuit.</li>
+              <li>Every envelope is versioned; NIST&rsquo;s non-lattice backup, <span class="mono">HQC</span>, is a named swap path.</li>
+            </ul>
+          </div>
+          <div class="card ok">
+            <div class="card-top"><h3>Signatures — nothing to chase</h3><span class="badge live">PQ</span></div>
+            <ul class="lux ok small">
+              <li>Spend authority uses no signature — nothing address-bound to migrate.</li>
+              <li>Still classical: Solana settlement (<span class="mono">Ed25519</span>) — it migrates with the chain.</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          Sources — NIST IR 8547 (post-quantum crypto for mobile &amp; edge: against harvest-now-decrypt-later, encryption is the urgent half) · NIST CSWP 39 (crypto agility: algorithm identifiers make swaps easier; signatures bound to long-lived identity are the hardest to rotate).
+          Honesty note: the multi-algorithm envelope header is planned; today the version byte fixes the whole suite.
+        </aside>
       </div>
     </section>
 
@@ -424,7 +519,7 @@
     <section class="s-table">
       <div class="frame">
         <div class="eyebrow">Landscape</div>
-        <h2>How Sombra <em>compares.</em></h2>
+        <h2>How Sombra compares <em>today.</em></h2>
         <table class="cmp">
           <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
           <thead>
@@ -486,6 +581,52 @@
           <span>Arcium is an encrypted-compute network; shielded transfers on it come from apps like Umbra. Light: Helius is acquiring Light (Jun 2026) to build a privacy layer, currently devnet beta.</span>
           <span>Quantum-safety judged per component: hash-based proofs and symmetric ciphers are PQ; elliptic-curve and pairing-based schemes are not.</span>
         </div>
+      </div>
+    </section>
+
+    <section class="s-two-col" id="latency">
+      <div class="frame">
+        <div class="eyebrow">Latency</div>
+        <h2>Post-quantum costs <em>bytes, not time.</em></h2>
+        <div class="cols-3">
+          <div class="card">
+            <div class="card-top"><h3>Proof</h3><span class="badge caution">~6–8 s</span></div>
+            <p>STARK proving on GPU — the ciphers run in microseconds.</p>
+            <div class="bar"><i style="width:100%"></i></div>
+          </div>
+          <div class="card">
+            <div class="card-top"><h3>Inclusion</h3><span class="badge design">~200 ms</span></div>
+            <p>One Solana slot carries the proof.</p>
+            <div class="bar"><i style="width:3%"></i></div>
+          </div>
+          <div class="card">
+            <div class="card-top"><h3>Finality</h3><span class="badge live">~150 ms</span></div>
+            <p>Alpenglow, live on mainnet since Oct 2026.</p>
+            <div class="bar"><i style="width:2%"></i></div>
+          </div>
+        </div>
+        <div class="cols" style="margin-top:34px">
+          <div class="card">
+            <div class="card-top"><h3>The cost is size, not speed</h3></div>
+            <ul class="lux small">
+              <li><span class="mono">ML-KEM-768</span> runs in microseconds.</li>
+              <li>1,088 B ciphertext per note (vs 32 B X25519).</li>
+              <li>ML-DSA-65 signatures (3,309 B) stay off-chain.</li>
+            </ul>
+          </div>
+          <div class="card warn">
+            <div class="card-top"><h3>The honest tradeoff</h3></div>
+            <ul class="lux warn small">
+              <li>Proving dominates end-to-end time — the proof, not the cipher, is the cost.</li>
+              <li>Local CPU proving is too slow today → remote proving now, client-side on the roadmap.</li>
+            </ul>
+          </div>
+        </div>
+        <aside class="notes">
+          Sizes from FIPS 203 (ML-KEM-768 → 1,088 B ciphertext) and FIPS 204 (ML-DSA-65 → 3,309 B signature); X25519 is 32 B.
+          Alpenglow went live on Solana mainnet Oct 2026 — ~150 ms finality target, 200 ms slots.
+          Competitors&rsquo; end-to-end waits are often policy waits (e.g. Railgun&rsquo;s 1-hour unshield standby), not crypto cost.
+        </aside>
       </div>
     </section>
 
