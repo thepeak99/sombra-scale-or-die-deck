@@ -424,6 +424,12 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .cmp .note { font-size: 19px; color: var(--text-3); display: block; margin-top: 4px; }
 .table-foot .nowrap { white-space: nowrap; }
 .table-foot { margin-top: auto; padding-top: 14px; font-size: 18px; line-height: 1.35; color: var(--text-3); display: grid; grid-template-columns: 1fr 1fr; gap: 8px 48px; }
+/* Slide 15 comparison table gained a 7th column (Umbra): tighten THIS table's
+   vertical rhythm so table + footnotes fit back inside the frame's bottom edge. */
+.s-table .cmp th, .s-table .cmp td { padding: 14px 16px; }
+.s-table .cmp { font-size: 21px; }
+.s-table .cmp tbody th { font-size: 21px; }
+.s-table .cmp col.c-head { width: 210px; }
 
 /* --- 8. Demo --------------------------------------------------------- */
 .demo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; flex: 1 1 auto; min-height: 0; margin-top: 10px; }

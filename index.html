@@ -463,12 +463,37 @@
       </div>
     </section>
 
+    <section class="s-two-col">
+      <div class="frame">
+        <div class="eyebrow">Remote prover</div>
+        <h2>Like having our GPU <em>plugged into your phone.</em></h2>
+        <div class="cols-3" style="margin-top:22px">
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-lock"/></svg></div>
+            <h3>Enclave</h3>
+            <p>Proving runs inside a TEE. The witness &mdash; spend key and all &mdash; never leaves it; the operator can&rsquo;t see what&rsquo;s being proven.</p>
+          </div>
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-key"/></svg></div>
+            <h3>End-to-end sealed</h3>
+            <p>Your device seals the request with <span class="mono">ML-KEM-768</span> on the way in &mdash; post-quantum; the operator only ever sees ciphertext.</p>
+          </div>
+          <div class="card glow fragment rise">
+            <div class="card-top"><svg class="icon"><use href="#i-shield"/></svg></div>
+            <h3>Attested</h3>
+            <p>Before your wallet sends anything, remote attestation verifies the exact code and GPU that will run the proof.</p>
+          </div>
+        </div>
+        <p class="lede after" style="max-width:none">Fast proofs, no trusting the operator&rsquo;s hardware &mdash; <em>the GPU is ours, the secrets stay yours.</em></p>
+      </div>
+    </section>
+
     <section class="s-table">
       <div class="frame">
         <div class="eyebrow">Landscape</div>
         <h2>How Sombra compares <em>today.</em></h2>
         <table class="cmp">
-          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
+          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col><col></colgroup>
           <thead>
             <tr>
               <th scope="col"></th>
@@ -477,6 +502,7 @@
               <th scope="col">Privacy Cash<small>Solana</small></th>
               <th scope="col">Light Protocol<small>ZK Compression</small></th>
               <th scope="col">Arcium<small>Solana · MPC</small></th>
+              <th scope="col">Umbra<small>Solana &middot; ZK pool</small></th>
             </tr>
           </thead>
           <tbody>
@@ -487,11 +513,13 @@
               <td><span class="yes" role="img" aria-label="yes"></span>Shield/unshield pool</td>
               <td><span class="no" role="img" aria-label="no"></span>State compression, not a privacy pool</td>
               <td><span class="na">—</span>Encrypted compute (MPC)</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
             </tr>
             <tr>
               <th scope="row">Native to Solana liquidity</th>
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>SPL in / SPL out</td>
               <td><span class="no" role="img" aria-label="no"></span>Separate chain</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
@@ -503,6 +531,7 @@
               <td>Groth16 (BN254)</td>
               <td>Groth16 (state proofs)</td>
               <td>n/a (MPC)</td>
+              <td>Groth16 (BN254)</td>
             </tr>
             <tr>
               <th scope="row">Quantum-safe proofs</th>
@@ -511,6 +540,7 @@
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
               <td><span class="na">—</span>n/a</td>
+              <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
             </tr>
             <tr>
               <th scope="row">Quantum-safe note encryption</th>
@@ -519,15 +549,20 @@
               <td><span class="no" role="img" aria-label="no"></span>AES-256, key from Ed25519 sig</td>
               <td><span class="na">—</span>n/a, no notes</td>
               <td><span class="no" role="img" aria-label="no"></span>X25519 key exchange</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
             </tr>
           </tbody>
         </table>
         <div class="table-foot">
           <span>Zcash: Orchard-protocol pools (Ironwood since Jul 2026). Legacy Sapling uses <span class="nowrap">Groth16/BLS12-381</span> — same non-PQ verdict. Zcash&rsquo;s PQ plan (ML-KEM) is roadmap.</span>
           <span>Elusiv (Solana): sunset announced 29 Feb 2024; its team went on to build Arcium.</span>
-          <span>Arcium is an encrypted-compute network; shielded transfers on it come from apps like Umbra. Light: Helius is acquiring Light (Jun 2026) to build a privacy layer, currently devnet beta.</span>
+          <span>Arcium is an encrypted-compute network; its first shielded app was Umbra (now its own ZK pool). Light: Helius is acquiring Light (Jun 2026) to build a privacy layer, currently devnet beta.</span>
+          <span>Umbra (Solana): first app on Arcium (mainnet alpha Feb 2026, public Mar 2026); its current protocol is a ZK shielded pool &mdash; Groth16/BN254 proofs, ML-KEM-768 note encryption, 3-node enclave guardian committee with shared viewing keys.</span>
           <span>Quantum-safety judged per component: hash-based proofs and symmetric ciphers are PQ; elliptic-curve and pairing-based schemes are not.</span>
         </div>
+        <aside class="notes">
+          Umbra sources &mdash; Umbra/Nimbus docs (Oct 2026): https://docs.nimbusprivacy.xyz/cryptography/security-levels &middot; https://docs.nimbusprivacy.xyz/cryptography/zero-knowledge-proofs &middot; https://docs.nimbusprivacy.xyz/security/assumptions. Launch: The Block, Mar 27 2026. Q&amp;A prep: Umbra&rsquo;s notes are ML-KEM-768 + AES-256-GCM, the same construction as Sombra&rsquo;s, so do NOT claim exclusive PQ note encryption. Our edge is the proof layer: Sombra proves with hash-based STARKs, while Umbra&rsquo;s Groth16/BN254 is pairing-based and quantum-broken (their own docs say so). Umbra is mainnet-live; deposits/withdrawals are public; viewing keys are split across 3 enclave guardians.
+        </aside>
       </div>
     </section>
 
