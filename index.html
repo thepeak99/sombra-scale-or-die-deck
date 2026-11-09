@@ -104,49 +104,25 @@
       </div>
     </section>
 
-    <section class="s-agenda">
-      <div class="frame">
-        <div class="eyebrow">The next 20 minutes</div>
-        <h2>Agenda</h2>
-        <ol class="agenda">
-          <li><span class="n">01</span><span>Why privacy — and why today's is fragile</span><span class="d">the quantum gap</span></li>
-          <li><span class="n">02</span><span>Enter Sombra</span><span class="d">what it is, what it isn't</span></li>
-          <li><span class="n">03</span><span>How it works</span><span class="d">and how it compares</span></li>
-          <li><span class="n">04</span><span>Integration architecture</span><span class="d">private access to Solana liquidity</span></li>
-          <li><span class="n">05</span><span>Demo &amp; call to action</span><span class="d">what to prep</span></li>
-        </ol>
-      </div>
-    </section>
-
-    <section class="s-divider">
-      <div class="frame">
-        <div class="arc"></div>
-        <div class="num" aria-hidden="true">01</div>
-        <div class="eyebrow">Part one</div>
-        <h2>Why privacy matters — and why today's is <em>fragile</em></h2>
-        <p class="lede">The quantum information gap.</p>
-      </div>
-    </section>
-
     <section class="s-statement">
       <div class="frame">
-        <div class="eyebrow">The default today</div>
-        <p class="statement">On-chain finance is <em>transparent by default.</em></p>
+        <div class="eyebrow">Harvest now, decrypt later</div>
+        <p class="statement">No major privacy protocol is <em>truly private.</em></p>
         <div class="cols-3 support">
           <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-eye"/></svg></div>
-            <h3>Everything, forever</h3>
-            <p>Balances, payments and positions are public — and they never expire.</p>
+            <div class="card-top"><svg class="icon"><use href="#i-key"/></svg></div>
+            <h3>Classical math underneath</h3>
+            <p>Zcash, Monero and the rest hide data behind elliptic-curve cryptography — the exact math a quantum computer breaks.</p>
           </div>
           <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-coins"/></svg></div>
-            <h3>Broken use cases</h3>
-            <p>Payroll, treasury, trading and commerce don't work when every counterparty can read your books.</p>
+            <div class="card-top"><svg class="icon"><use href="#i-archive"/></svg></div>
+            <h3>The chain is the harvester</h3>
+            <p>A public ledger is a permanent, replicated archive of every ciphertext. No one even has to intercept anything.</p>
           </div>
           <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-shield"/></svg></div>
-            <h3>Personal safety</h3>
-            <p>As AI and surveillance scale, linking wallets to people gets cheaper and more automatic.</p>
+            <div class="card-top"><svg class="icon"><use href="#i-unlock"/></svg></div>
+            <h3>Tomorrow: an open book</h3>
+            <p>Today&rsquo;s &ldquo;private&rdquo; transactions are readable the day a capable machine arrives — all of them at once.</p>
           </div>
         </div>
       </div>
@@ -176,36 +152,6 @@
         <aside class="notes">
           The thesis of the talk: funds have a migration path (signatures rotate with a fork), privacy does not (ciphertext, once decrypted, is done). Sources: Ethereum&rsquo;s hash-based (L1) signature roadmap; Solana/Anza post-quantum prototype — both public roadmap work.
         </aside>
-      </div>
-    </section>
-
-    <section class="s-diagram" data-auto-animate>
-      <div class="frame">
-        <div class="eyebrow" data-id="eb-q">Harvest now, decrypt later</div>
-        <h2 data-id="h-q">The chain is the harvester. Breakable tomorrow is <em>not private today.</em></h2>
-        <div class="stage">
-          <div class="tl">
-            <div class="tl-line" data-id="tl-line"></div>
-            <div class="tl-node" data-id="tl-today" style="left:60px">
-              <div class="tl-dot"><svg><use href="#i-lock"/></svg></div>
-              <div class="tl-k">Today</div>
-              <div class="tl-t">You transact &ldquo;privately&rdquo;</div>
-              <div class="tl-s">encrypted data lands on a public ledger</div>
-            </div>
-            <div class="tl-node fragment rise" data-id="tl-harvest" style="left:640px">
-              <div class="tl-dot"><svg><use href="#i-archive"/></svg></div>
-              <div class="tl-k">Every day after</div>
-              <div class="tl-t">The ciphertext is harvested</div>
-              <div class="tl-s">public chains are a perfect, permanent archive</div>
-            </div>
-            <div class="tl-node fragment rise" style="left:1220px">
-              <div class="tl-dot qday-dot" data-id="tl-qday"><svg><use href="#i-unlock"/></svg></div>
-              <div class="tl-k warn">Q-Day</div>
-              <div class="tl-t">…and decrypted</div>
-              <div class="tl-s">every past &ldquo;private&rdquo; transfer, at once</div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -249,32 +195,33 @@
     <section class="s-two-col" id="bunker-mode">
       <div class="frame">
         <div class="eyebrow">Oct 7, 2026 · Justin Drake, Ethereum Foundation</div>
-        <h2 class="tight">Bunker mode fixes <em>funds.</em> Not privacy.</h2>
+        <h2 class="tight">Bunker Mode protects <em>funds,</em> not privacy &mdash; both need to happen.</h2>
         <div class="cols">
-          <div class="card">
-            <div class="card-top"><h3>Drake: plan for bunker mode</h3><span class="badge design">Funds</span></div>
-            <ul class="lux small">
-              <li>Move funds to addresses that <strong>never signed</strong> — the pubkey hidden behind a hash.</li>
-              <li>Rotate keys with every signed message — one-time keys.</li>
-              <li>Go all-in on hash-based crypto.</li>
+          <div class="card ok">
+            <div class="card-top"><h3>Advocates &mdash; funds</h3><span class="badge live">Protected</span></div>
+            <ul class="lux ok small">
+              <li><strong>One-time addresses</strong> &mdash; fresh, never-signed; the pubkey stays behind a hash.</li>
+              <li><strong>Key rotation</strong> &mdash; a new key after every signed message.</li>
+              <li><strong>Hash-based crypto</strong> &mdash; Drake&rsquo;s long-term exit.</li>
             </ul>
           </div>
-          <div class="card">
-            <div class="card-top"><h3>Vitalik — same day</h3><span class="badge caution">Privacy</span></div>
-            <ul class="lux small">
-              <li>Privacy protocols should keep <strong>encrypted notes off-chain.</strong></li>
-              <li>Because on-chain ciphertext is harvested.</li>
+          <div class="card warn">
+            <div class="card-top"><h3>Leaves open &mdash; privacy</h3><span class="badge caution">Still exposed</span></div>
+            <ul class="lux warn small">
+              <li><strong>Off-chain notes</strong> &mdash; Vitalik&rsquo;s ask: keep encrypted notes off the chain.</li>
+              <li>Ciphertext already on-chain is <strong>harvested</strong> &mdash; no new address un-posts it.</li>
             </ul>
           </div>
         </div>
-        <div class="card ok glow" style="margin-top:30px">
-          <div class="card-top" style="margin-bottom:14px"><h3>The takeaway</h3><span class="badge live">Sombra</span></div>
-          <p>Every bunker-mode measure is a <strong>signature</strong> fix — on-chain ciphertext stays harvested. Sombra: no signature to spend (hash-based STARK), one-time prover voting keys, ML-KEM-sealed notes. Harvest away.</p>
+        <div class="card ok glow fragment rise" style="margin-top:30px">
+          <div class="card-top" style="margin-bottom:14px"><h3>Key takeaway</h3><span class="badge live">Sombra</span></div>
+          <p><strong>Is it just a signature fix?</strong> Mostly &mdash; it saves funds. Past and future data stays open to harvest-now-decrypt-later. That&rsquo;s the gap Sombra closes.</p>
         </div>
         <aside class="notes">
           Sources — Justin Drake (Ethereum Foundation), Oct 7 2026, on planning for &ldquo;bunker mode&rdquo;: https://x.com/drakefjustin/status/2107837081313505768 · Vitalik Buterin, same day, on keeping encrypted notes off-chain: https://x.com/VitalikButerin/status/2107976296320106851.
           Q&amp;A prep: Vitalik also flagged the lattice family (ML-DSA-65 / ML-KEM-768) as a new risk area from AI-driven math, while conceding public-key encryption can&rsquo;t be built from hashes alone. Our answer: the least-structured primitive at each layer, plus a swappable KEM (next slide) — NIST HQC as the named non-lattice backup.
-          Do NOT claim one-time or stealth addresses: Sombra has one bech32m address per user; per-note unlinkability comes from commitment randomness.
+          Message: Bunker Mode protects funds, not privacy — both need to happen. Left column = Drake (fresh never-signed addresses, rotate keys, hash-based crypto); right column = Vitalik (encrypted notes off-chain). Takeaway: it is mostly a signature/key fix.
+          Do NOT claim one-time or stealth addresses for Sombra: Sombra has one bech32m address per user; per-note unlinkability comes from commitment randomness. The one-time addresses on this slide are Bunker Mode&rsquo;s ask, not ours.
         </aside>
       </div>
     </section>
@@ -282,8 +229,7 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">02</div>
-        <div class="eyebrow">Part two</div>
+        <div class="num" aria-hidden="true">01</div>
         <h2>Enter <em>Sombra</em></h2>
         <p class="lede">Privacy built to endure the quantum age.</p>
       </div>
@@ -325,7 +271,8 @@
               <li><strong>Note contents</strong> — ML-KEM-768 + AES-256-GCM (key via HKDF-SHA256). Harvested ciphertext stays sealed.</li>
               <li><strong>Ownership &amp; spend proofs</strong> — hash-based STARKs over SHA-256 commitments.</li>
               <li><strong>No signature to spend</strong> — authority is knowledge of your key, proven in zero knowledge.</li>
-              <li><strong>Service links</strong> — requests signed with ML-DSA-65 (FIPS 204). Pure post-quantum — no classical fallback.</li>
+              <li><strong>All calls to our infra</strong> — remote prover, indexer, QFire (our RPC). ML-DSA-65 (FIPS 204) signed: an extra PQ layer on already-safe traffic.</li>
+              <li><strong>Remote prover in enclaves</strong> — attestation lets you verify the code that proves.</li>
             </ul>
           </div>
           <div class="card warn fragment rise">
@@ -372,12 +319,12 @@
 
     <section class="s-two-col">
       <div class="frame">
-        <div class="eyebrow">Compliance posture</div>
-        <h2>Privacy with accountability — <em>not a mixer.</em></h2>
+        <div class="eyebrow">Compliance by design</div>
+        <h2>Privacy with <em>Compliance.</em></h2>
         <div class="cols" style="gap:30px 40px; grid-template-rows:auto auto">
           <div class="card fragment rise">
-            <div class="card-top"><h3>Public edges</h3><svg class="icon"><use href="#i-door"/></svg></div>
-            <p>Deposits and withdrawals are public. Value entering and leaving the pool is always visible and auditable.</p>
+            <div class="card-top"><h3>Private on/off-ramps</h3><svg class="icon"><use href="#i-swap"/></svg></div>
+            <p>Deposits and withdrawals can run through a privacy relayer — ramps that settle off-chain, so value entering and leaving the pool stays private.</p>
           </div>
           <div class="card fragment rise">
             <div class="card-top"><h3>Scoped disclosure</h3><span class="badge design">V2 design</span></div>
@@ -398,8 +345,8 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">03</div>
-        <div class="eyebrow">Part three</div>
+        <div class="num" aria-hidden="true">02</div>
+        <div class="eyebrow">Part two</div>
         <h2>How it works — <em>and how it compares</em></h2>
         <p class="lede">Enough architecture to trust it. Not a blueprint.</p>
       </div>
@@ -633,8 +580,8 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">04</div>
-        <div class="eyebrow">Part four · Integration architecture</div>
+        <div class="num" aria-hidden="true">03</div>
+        <div class="eyebrow">Part three · Integration architecture</div>
         <h2>Going private used to mean <em>leaving DeFi.</em></h2>
         <p class="lede">Sombra's value proposition: private access to the Solana liquidity you already use.</p>
       </div>
@@ -729,8 +676,8 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">05</div>
-        <div class="eyebrow">Part five</div>
+        <div class="num" aria-hidden="true">04</div>
+        <div class="eyebrow">Part four</div>
         <h2>See it. <em>Then build with it.</em></h2>
         <p class="lede">Live demo, and what your team can prepare now.</p>
       </div>
