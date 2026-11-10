@@ -346,7 +346,6 @@
       <div class="frame">
         <div class="arc"></div>
         <div class="num" aria-hidden="true">02</div>
-        <div class="eyebrow">Part two</div>
         <h2>How it works — <em>and how it compares</em></h2>
         <p class="lede">Enough architecture to trust it. Not a blueprint.</p>
       </div>
@@ -572,42 +571,47 @@
         <h2>Post-quantum costs <em>bytes, not time.</em></h2>
         <div class="cols-3">
           <div class="card">
-            <div class="card-top"><h3>Proof</h3><span class="badge caution">~6–8 s</span></div>
-            <p>STARK proving on GPU — the ciphers run in microseconds.</p>
+            <div class="card-top"><h3>Proof</h3><span class="badge caution">~2 s on GPU</span></div>
+            <p>STARK proven in an attested enclave. ~25 s on CPU, ~2 s on GPU &mdash; hardware sets the time.</p>
             <div class="bar"><i style="width:100%"></i></div>
           </div>
           <div class="card">
-            <div class="card-top"><h3>Inclusion</h3><span class="badge design">~200 ms</span></div>
-            <p>One Solana slot carries the proof.</p>
-            <div class="bar"><i style="width:3%"></i></div>
+            <div class="card-top"><h3>Verifier vote</h3><span class="badge design">~1&ndash;2 s</span></div>
+            <p>Verifier nodes check the proof off-chain and vote; the chain counts votes, never sees the proof.</p>
+            <div class="bar"><i style="width:75%"></i></div>
           </div>
           <div class="card">
-            <div class="card-top"><h3>Finality</h3><span class="badge live">~150 ms</span></div>
-            <p>Alpenglow, live on mainnet since Oct 2026.</p>
-            <div class="bar"><i style="width:2%"></i></div>
+            <div class="card-top"><h3>Settlement</h3><span class="badge live">&lt; 1 s</span></div>
+            <p>One Solana slot carries hashes and votes; Alpenglow finality, live on mainnet since Oct 2026.</p>
+            <div class="bar"><i style="width:10%"></i></div>
           </div>
         </div>
         <div class="cols" style="margin-top:34px">
           <div class="card">
-            <div class="card-top"><h3>The cost is size, not speed</h3></div>
+            <div class="card-top" style="margin-bottom:6px"><h3>On-chain: 32-byte hashes</h3></div>
             <ul class="lux small">
-              <li><span class="mono">ML-KEM-768</span> runs in microseconds.</li>
-              <li>1,088 B ciphertext per note (vs 32 B X25519).</li>
-              <li>ML-DSA-65 signatures (3,309 B) stay off-chain.</li>
+              <li>No proof, ciphertext or signature touches the chain &mdash; ~1 KB per transfer, whatever the prover.</li>
+              <li>1,088 B note ciphertext (vs 32 B X25519), off-chain.</li>
+              <li>ML-DSA-65 sig (3,309 B), ~0.6 MB proof: off-chain.</li>
             </ul>
           </div>
-          <div class="card warn">
-            <div class="card-top"><h3>The honest tradeoff</h3></div>
-            <ul class="lux warn small">
-              <li>Proving dominates end-to-end time — the proof, not the cipher, is the cost.</li>
-              <li>Local CPU proving is too slow today → remote proving now, client-side on the roadmap.</li>
+          <div class="card ok">
+            <div class="card-top" style="margin-bottom:6px"><h3>Full circle with Bunker Mode</h3></div>
+            <ul class="lux ok small">
+              <li>Vitalik&rsquo;s ask: keep encrypted notes off-chain. Sombra already does &mdash; only the hash is posted.</li>
+              <li>Faster hardware cuts the time; the on-chain bytes stay the same.</li>
             </ul>
           </div>
         </div>
         <aside class="notes">
+          Measurement honesty &mdash; the ~1.8 s is the GPU proof spend inside the SEV-SNP confidential VM (RTX PRO 6000, devnet, a handful of proofs, proving only; excludes queue and network). ~24 s on the host CPU; ~55 s in the CPU-only CVM. The succinct receipt is ~586 KB.
+          The ~1&ndash;2 s verifier vote is the team&rsquo;s estimate &mdash; not yet benchmarked.
+          No isolated TEE-overhead measurement exists; it&rsquo;s one GPU per VM with a FIFO queue, so do NOT claim multi-GPU.
+          On-chain: the program stores only 32-byte hashes; a 1&ndash;4 input transfer is &asymp;1.0&ndash;1.2 KB of transaction data. Built and measured on devnet; not yet deployed to mainnet.
           Sizes from FIPS 203 (ML-KEM-768 → 1,088 B ciphertext) and FIPS 204 (ML-DSA-65 → 3,309 B signature); X25519 is 32 B.
           Alpenglow went live on Solana mainnet Oct 2026 — ~150 ms finality target, 200 ms slots.
           Competitors&rsquo; end-to-end waits are often policy waits (e.g. Railgun&rsquo;s 1-hour unshield standby), not crypto cost.
+          Local CPU proving is too slow today → remote proving (Remote prover slide); client-side on the roadmap.
         </aside>
       </div>
     </section>
@@ -628,36 +632,40 @@
         <h2>Where your product <em>plugs in.</em></h2>
         <div class="cta-grid">
           <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-coins"/></svg><span class="badge live">Live · devnet</span></div>
+            <div class="card-top"><svg class="icon"><use href="#i-stake"/></svg><span class="badge live">Live on Devnet</span></div>
+            <h3>Private staking via LSTs</h3>
+            <p>Register an existing LST — JitoSOL, bSOL, mSOL. Yield lives in the token&rsquo;s rate, not the note.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-code"/></svg><span class="badge live">Live on Devnet</span></div>
+            <h3>Wallet SDK</h3>
+            <p>Note building, encryption, proving, discovery and finalization — one library, end to end.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-fee"/></svg><span class="badge live">Live on Devnet</span></div>
+            <h3>Privacy Relayer</h3>
+            <p>Deposits and withdrawals via the relayer — it pays fees and rent, so your wallet stays unlinked.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-swap"/></svg><span class="badge design">Design partners open</span></div>
+            <h3>Private Actions</h3>
+            <p>Shielded funds in, a public action, a note out — swaps, staking, lending, perps.</p>
+          </div>
+          <div class="card">
+            <div class="card-top"><svg class="icon"><use href="#i-coins"/></svg><span class="badge live">Live on Devnet</span></div>
             <h3>Any SPL token</h3>
             <p>Multi-token is generic: registering a mint makes it shieldable — no new circuit or program code per token.</p>
           </div>
           <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-door"/></svg><span class="badge live">Live · devnet</span></div>
+            <div class="card-top"><svg class="icon"><use href="#i-door"/></svg><span class="badge live">Live on Devnet</span></div>
             <h3>Onramp / offramp</h3>
-            <p>The entry and exit points. Users arrive from, and leave to, ordinary SPL accounts.</p>
-          </div>
-          <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-stake"/></svg><span class="badge roadmap">Roadmap</span></div>
-            <h3>Private staking via LSTs</h3>
-            <p>Register an existing LST — JitoSOL, INF, bSOL, mSOL. Yield lives in the token's rate, not the note. No new protocol work.</p>
-          </div>
-          <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-code"/></svg><span class="badge roadmap">Roadmap</span></div>
-            <h3>Client SDK</h3>
-            <p>Note building, encryption, proving, discovery and finalization behind one library. Today: WASM primitives + wallet extension.</p>
-          </div>
-          <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-fee"/></svg><span class="badge design">Design</span></div>
-            <h3>Fee sponsorship</h3>
-            <p>Relayers pay gas so a user's own Solana key needn't appear. Swig smart wallets as fee-payer / session-key layer.</p>
-          </div>
-          <div class="card">
-            <div class="card-top"><svg class="icon"><use href="#i-swap"/></svg><span class="badge roadmap">Roadmap</span></div>
-            <h3>Private DeFi actions</h3>
-            <p>Swaps via Jupiter are planned (V2 Phase 2), built on the intent&nbsp;+&nbsp;public&nbsp;settlement pattern →</p>
+            <p>The entry and exit points — private via the relayer, so value in and out of the pool stays shielded.</p>
           </div>
         </div>
+        <aside class="notes">
+          Private Actions (Actions SDK) — the concept on one line: a private action on-chain is a private contract call — the user&rsquo;s shielded funds drive a public protocol action, and the result returns as a shielded note (the next slide&rsquo;s pattern: private intent &rarr; public settlement &rarr; private claim). Full use-case list beyond the four on the card: private swaps; private staking / LSTs; private lending &amp; borrowing (collateral and repay); private perps / trading without leaking positions or intent; private yield vaults; private payroll / treasury payouts; private DAO voting / governance; private OTC / RFQ settlement; private subscriptions / bill pay; private token-sale / launchpad participation; private donations / grants. Call to action: the Actions SDK is accepting design partners today — ask which private action a team would run first and offer to scope it with them.
+          Devnet status caveats (fact-check 2026-11-10, against /workz/Sombra, /workz/Sombra-infra, /workz/sombra-cvm; primary source Sombra-infra/scratch/RELEASE-devnet-1.md, 2026-11-09): (1) LST staking — no LST mint is documented as registered on devnet (the 2026-11-09 e2e smoke used a test mint); it works via the same mint-agnostic deposit path (Sombra/programs/sombra-program/src/instructions/shield.rs, Deposited.mint), zero protocol work per qcash-kb/private-defi.md Variant C — say &ldquo;works with any registered LST&rdquo;, not &ldquo;JitoSOL is live&rdquo;. (2) Wallet SDK — the SDK drove the live-devnet deposit in the passing 12/12 e2e (RELEASE-devnet-1.md R8), but the release doc&rsquo;s Wallet/SDK section still lists package pins as PENDING (C3/C5), and no standalone client package (e.g. a TS @sombra/client) exists in the local Sombra-infra checkout — &ldquo;Live on Devnet&rdquo; means the SDK works against devnet, not a shipped versioned package. (3) Relayer — job is up on devnet and e2e-proven (quote &rarr; submit &rarr; finalize), but the public DNS/cert for relayer.sombra.tech was still broken (smoke pinned the edge IP); fee mint was &ldquo;awaiting user confirmation&rdquo;. (4) Actions SDK — no actions/intent SDK code exists in any repo; the program carries Phase 2 swap fields that are rejected today (create_pending.rs: &ldquo;Phase 1 has no swap kind&rdquo;; pending.rs: &ldquo;Swap in Phase 2&rdquo;), so &ldquo;Design partners open&rdquo; is a business status, not shipped code.
+        </aside>
       </div>
     </section>
 
@@ -665,46 +673,83 @@
       <div class="frame">
         <div class="row" style="justify-content:space-between; align-items:flex-start">
           <div>
-            <div class="eyebrow">The integration pattern</div>
-            <h2 class="tight">Private intent. Public settlement. <em>Private claim.</em></h2>
+            <div class="eyebrow">Private actions · worked example</div>
+            <h2 class="tight">A private swap, <em>step by step.</em></h2>
           </div>
-          <span class="badge roadmap" style="margin-top:6px">Roadmap pattern</span>
+          <span class="badge design" style="margin-top:6px">Design partners open</span>
         </div>
         <div class="stage">
-          <svg viewBox="0 0 1640 500" role="img" aria-label="Three steps: private intent in the shielded zone, public settlement against Solana liquidity, private claim back into the shielded zone.">
-            <rect x="0" y="20" width="470" height="440" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
-            <rect x="585" y="20" width="470" height="440" rx="30" fill="rgba(103,232,249,0.05)" stroke="#67e8f9" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="8 10"/>
-            <rect x="1170" y="20" width="470" height="440" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
-            <text class="d-mono" x="235" y="66" font-size="18" text-anchor="middle">Shielded</text>
-            <text class="d-mono d-cyan" x="820" y="66" font-size="18" text-anchor="middle">Public · Solana</text>
-            <text class="d-mono" x="1405" y="66" font-size="18" text-anchor="middle">Shielded</text>
+          <svg viewBox="0 0 1640 660" role="img" aria-label="Four steps of a private swap: 1 private intent, a sealed request the chain never sees; 2 proven and attested, verifiers vote on the action while the proof stays off-chain; 3 public settlement, only the public swap leg is visible; 4 private claim, new note commitments as hashes only. Actors: wallet, relayer, prover in a TEE, verifiers, your protocol.">
+            <rect x="20" y="30" width="700" height="470" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
+            <rect x="760" y="30" width="400" height="470" rx="30" fill="rgba(103,232,249,0.05)" stroke="#67e8f9" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="8 10"/>
+            <rect x="1200" y="30" width="420" height="470" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
+            <text class="d-mono" x="370" y="66" font-size="18" text-anchor="middle">Shielded</text>
+            <text class="d-mono d-cyan" x="960" y="66" font-size="18" text-anchor="middle">Public · Solana</text>
+            <text class="d-mono" x="1410" y="66" font-size="18" text-anchor="middle">Shielded</text>
 
             <g>
-              <circle cx="235" cy="200" r="72" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-lock" x="199" y="164" width="72" height="72" color="#d4c8ff"/>
-              <text class="d-label" x="235" y="330" font-size="36" text-anchor="middle">Private intent</text>
-              <text class="d-sub" x="235" y="372" font-size="21" text-anchor="middle">Prove what you want, privately;</text>
-              <text class="d-sub" x="235" y="400" font-size="21" text-anchor="middle">input value moves to a public pot</text>
+              <circle cx="205" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-lock" x="177" y="152" width="56" height="56" color="#d4c8ff"/>
+              <text class="d-label" x="205" y="300" font-size="30" text-anchor="middle">Private intent</text>
+              <text class="d-sub" x="205" y="342" font-size="18" text-anchor="middle">chain sees: nothing — a sealed request.</text>
+              <text class="d-sub" x="205" y="404" font-size="18" text-anchor="middle">hidden: who, what, how much</text>
             </g>
             <g class="fragment" data-fragment-index="1">
-              <path class="d-flow d-dash d-pulse" d="M315 200 H 735" marker-end="url(#m-arrow)"/>
-              <circle cx="820" cy="200" r="72" fill="#0f1a24" stroke="#67e8f9" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-swap" x="784" y="164" width="72" height="72" color="#67e8f9"/>
-              <text class="d-label" x="820" y="330" font-size="36" text-anchor="middle">Public settlement</text>
-              <text class="d-sub" x="820" y="372" font-size="21" text-anchor="middle">Aggregated, executed against</text>
-              <text class="d-sub" x="820" y="400" font-size="21" text-anchor="middle">public Solana liquidity</text>
+              <path class="d-flow d-dash d-pulse" d="M261 180 H 479" marker-end="url(#m-arrow)"/>
+              <circle cx="535" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-shield" x="507" y="152" width="56" height="56" color="#d4c8ff"/>
+              <text class="d-label" x="535" y="300" font-size="30" text-anchor="middle">Proven &amp; attested</text>
+              <text class="d-sub" x="535" y="342" font-size="18" text-anchor="middle">chain sees: verifier votes</text>
+              <text class="d-sub" x="535" y="368" font-size="18" text-anchor="middle">on the action</text>
+              <text class="d-sub" x="535" y="404" font-size="18" text-anchor="middle">hidden: the proof — it never</text>
+              <text class="d-sub" x="535" y="430" font-size="18" text-anchor="middle">touches the chain</text>
             </g>
             <g class="fragment" data-fragment-index="2">
-              <path class="d-flow-c d-dash d-pulse" d="M900 200 H 1320" marker-end="url(#m-arrow-c)"/>
-              <circle cx="1405" cy="200" r="72" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-key" x="1369" y="164" width="72" height="72" color="#d4c8ff"/>
-              <text class="d-label" x="1405" y="330" font-size="36" text-anchor="middle">Private claim</text>
-              <text class="d-sub" x="1405" y="372" font-size="21" text-anchor="middle">Self-authenticating proof mints</text>
-              <text class="d-sub" x="1405" y="400" font-size="21" text-anchor="middle">your share into a new note</text>
+              <path class="d-flow-c d-dash d-pulse" d="M591 180 H 904" marker-end="url(#m-arrow-c)"/>
+              <circle cx="960" cy="180" r="56" fill="#0f1a24" stroke="#67e8f9" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-swap" x="932" y="152" width="56" height="56" color="#67e8f9"/>
+              <text class="d-label" x="960" y="300" font-size="30" text-anchor="middle">Public settlement</text>
+              <text class="d-sub" x="960" y="342" font-size="18" text-anchor="middle">chain sees: only the public leg —</text>
+              <text class="d-sub" x="960" y="368" font-size="18" text-anchor="middle">a swap against public liquidity</text>
+              <text class="d-sub" x="960" y="404" font-size="18" text-anchor="middle">hidden: your identity; nothing</text>
+              <text class="d-sub" x="960" y="430" font-size="18" text-anchor="middle">names you</text>
+            </g>
+            <g class="fragment" data-fragment-index="3">
+              <path class="d-flow-c d-dash d-pulse" d="M1016 180 H 1354" marker-end="url(#m-arrow-c)"/>
+              <circle cx="1410" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
+              <use href="#i-key" x="1382" y="152" width="56" height="56" color="#d4c8ff"/>
+              <text class="d-label" x="1410" y="300" font-size="30" text-anchor="middle">Private claim</text>
+              <text class="d-sub" x="1410" y="342" font-size="18" text-anchor="middle">chain sees: new note commitments —</text>
+              <text class="d-sub" x="1410" y="368" font-size="18" text-anchor="middle">hashes only</text>
+              <text class="d-sub" x="1410" y="404" font-size="18" text-anchor="middle">hidden: your share, in a fresh</text>
+              <text class="d-sub" x="1410" y="430" font-size="18" text-anchor="middle">shielded note</text>
+            </g>
+
+            <g class="fragment" data-fragment-index="4">
+              <g transform="translate(0 540)">
+                <rect class="d-box" x="0" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="150" y="38" font-size="24" text-anchor="middle">Wallet</text>
+                <text class="d-sub" x="150" y="66" font-size="17" text-anchor="middle">builds the sealed intent</text>
+                <rect class="d-box" x="335" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="485" y="38" font-size="24" text-anchor="middle">Relayer</text>
+                <text class="d-sub" x="485" y="66" font-size="17" text-anchor="middle">submits · pays fees &amp; rent</text>
+                <rect class="d-box" x="670" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="820" y="38" font-size="24" text-anchor="middle">Prover (TEE)</text>
+                <text class="d-sub" x="820" y="66" font-size="17" text-anchor="middle">produces the STARK</text>
+                <rect class="d-box" x="1005" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="1155" y="38" font-size="24" text-anchor="middle">Verifiers</text>
+                <text class="d-sub" x="1155" y="66" font-size="17" text-anchor="middle">check the proof · vote</text>
+                <rect class="d-box-hi" x="1340" y="0" width="300" height="88" rx="44"/>
+                <text class="d-label" x="1490" y="38" font-size="24" text-anchor="middle">Your protocol</text>
+                <text class="d-sub" x="1490" y="66" font-size="17" text-anchor="middle">settles the public leg</text>
+              </g>
             </g>
           </svg>
         </div>
-        <p class="caption fragment rise" data-fragment-index="3"><strong>No contract ever owns a shielded note</strong> — a Solana program can't hold a secret. Contracts touch only public value; the secrets stay with the user.</p>
+        <p class="caption fragment rise" data-fragment-index="5">Your protocol changes nothing — SPL in, SPL out. <strong>No contract ever owns a shielded note.</strong></p>
+        <aside class="notes">
+          A private action is a private contract call: the user&rsquo;s shielded funds drive a public protocol action, and the result returns as a shielded note. Flow: the wallet builds a sealed intent &rarr; the relayer submits it and pays fees/rent with an ephemeral key, so the user&rsquo;s wallet never appears &rarr; the prover in an attested TEE produces the STARK &rarr; verifier nodes check it off-chain and vote &rarr; the program settles the public leg (planned: a single allowlisted call into Jupiter) &rarr; finalize appends new note commitments &rarr; the wallet finds and decrypts its new note. If the action is rejected or times out, it is cancelled; no nullifiers are created, so the user&rsquo;s notes stay spendable (a full refund). HONESTY: the swap action is phase 2 — the program already reserves the swap fields but rejects them today. Do not claim batching/aggregation. Swaps are the first planned action kind; staking/lending/perps are design-partner use cases. Status: design partners open. Amounts become public wherever value crosses the private&rarr;public boundary (the public leg) — only identity/linkage stays hidden there.
+        </aside>
       </div>
     </section>
 
