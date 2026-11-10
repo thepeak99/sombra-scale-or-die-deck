@@ -499,7 +499,7 @@
               <th scope="col" class="us">Sombra<small>Solana · ZK notes</small></th>
               <th scope="col">Zcash<small>Orchard / Ironwood pool</small></th>
               <th scope="col">Privacy Cash<small>Solana</small></th>
-              <th scope="col">Light Protocol<small>ZK Compression</small></th>
+              <th scope="col">Rings<small>Helius &times; Light &middot; devnet beta</small></th>
               <th scope="col">Arcium<small>Solana · MPC</small></th>
               <th scope="col">Umbra<small>Solana &middot; ZK pool</small></th>
             </tr>
@@ -510,7 +510,7 @@
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Shield/unshield pool</td>
-              <td><span class="no" role="img" aria-label="no"></span>State compression, not a privacy pool</td>
+              <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool, devnet beta</td>
               <td><span class="na">—</span>Encrypted compute (MPC)</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
             </tr>
@@ -528,7 +528,7 @@
               <td class="us">STARK · no trusted setup</td>
               <td>Halo 2 · no trusted setup</td>
               <td>Groth16 (BN254)</td>
-              <td>Groth16 (state proofs)</td>
+              <td>Groth16 (BN254)</td>
               <td>n/a (MPC)</td>
               <td>Groth16 (BN254)</td>
             </tr>
@@ -546,7 +546,7 @@
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
               <td><span class="no" role="img" aria-label="no"></span>ECDH (Pallas/Jubjub)</td>
               <td><span class="no" role="img" aria-label="no"></span>AES-256, key from Ed25519 sig</td>
-              <td><span class="na">—</span>n/a, no notes</td>
+              <td><span class="no" role="img" aria-label="no"></span>X25519 ECDH</td>
               <td><span class="no" role="img" aria-label="no"></span>X25519 key exchange</td>
               <td><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
             </tr>
@@ -555,7 +555,7 @@
         <div class="table-foot">
           <span>Zcash: Orchard-protocol pools (Ironwood since Jul 2026). Legacy Sapling uses <span class="nowrap">Groth16/BLS12-381</span> — same non-PQ verdict. Zcash&rsquo;s PQ plan (ML-KEM) is roadmap.</span>
           <span>Elusiv (Solana): sunset announced 29 Feb 2024; its team went on to build Arcium.</span>
-          <span>Arcium is an encrypted-compute network; its first shielded app was Umbra (now its own ZK pool). Light: Helius is acquiring Light (Jun 2026) to build a privacy layer, currently devnet beta.</span>
+          <span>Arcium is an encrypted-compute network; its first shielded app was Umbra (now its own ZK pool). Rings: built by the Light Protocol team, acquired by Helius (Jun 2026); devnet private beta.</span>
           <span>Umbra (Solana): first app on Arcium (mainnet alpha Feb 2026, public Mar 2026); its current protocol is a ZK shielded pool &mdash; Groth16/BN254 proofs, ML-KEM-768 note encryption, 3-node enclave guardian committee with shared viewing keys.</span>
           <span>Quantum-safety judged per component: hash-based proofs and symmetric ciphers are PQ; elliptic-curve and pairing-based schemes are not.</span>
         </div>
