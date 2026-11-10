@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-brand_check.py — executable contracts for the phase-1 brand re-theme of the
-Sombra reveal.js deck (palette re-skin, effects removed, real logo in).
+brand_check.py — executable contracts for the Sombra reveal.js deck.
 
-Written TDD-style BEFORE the re-theme exists: on the untouched repo (commit
-66369c3) the colour/effects/logo checks are RED by design; the freeze checks
-(type, text, geometry, parity) are GREEN and must stay GREEN after the edits.
+Phase 1 (brand re-theme: palette re-skin, effects removed, real logo in)
+shipped at a8e95c2; the permanent brand rules (palette, effects, logo,
+font freezes) must stay GREEN. Its migration freezes — c25b (slide texts),
+c26 (HTML outside <svg>), c27 (non-paint CSS declarations), c30 (inline
+style attrs), c31 (deck_check parity) — were retired on 2026-11-10: they
+compared the deck against the pre-re-theme baseline 66369c3 to prove phase 1
+changed no text and no geometry, and keeping them would forbid any
+legitimate content edit.
+
+The e01–e19 contracts are the four approved content edits (divider
+numerals/eyebrows, the compliance card, the comparison-table row tags, the
+integration card). Written TDD-style BEFORE the edits: most are RED by
+design on the current deck and turn green when the edits land.
 
 Usage (one command; Python 3 stdlib only; no network; deterministic):
     python3 tests/brand_check.py                  # check the repo itself
@@ -48,13 +57,29 @@ Contract -> check mapping (contract numbers from the phase-1 spec):
   22 c22_font_face_blocks_unchanged
   23 c23_font_token_lines_unchanged
   24 c24_typography_declarations_unchanged
-  25 c25a_exactly_21_top_level_sections, c25b_slide_texts_unchanged
-  26 c26_html_outside_svg_equals_baseline_two_subs
-  27 c27_non_paint_declarations_frozen
+  25 c25a_exactly_21_top_level_sections
+  26 (retired: c26_html_outside_svg_equals_baseline_two_subs)
+  27 (retired: c27_non_paint_declarations_frozen)
   28 c28_diagram_svgs_unchanged_minus_paint_attrs
   29 c29a_icon_symbols_unchanged, c29b_markers_unchanged_apart_fill
-  30 c30_inline_style_attrs_frozen
-  31 c31_deck_check_parity (only when --root is the repo; skipped otherwise)
+  30 (retired: c30_inline_style_attrs_frozen)
+  31 (retired: c31_deck_check_parity)
+  E  e01_dividers_no_num_element, e02_dividers_no_numeral_text,
+     e03_no_part_word_anywhere,
+     e04_divider3_eyebrow_integration_architecture,
+     e05_divider_headings_unchanged,
+     e06_compliance_private_withdrawals_card,
+     e07_compliance_no_onofframps_text,
+     e08_withdrawals_card_body_terms,
+     e09_compliance_card_set_unchanged,
+     e10_table_exactly_two_row_tags, e11_row_tag_texts,
+     e12_row_tags_in_right_rows, e13_row_tags_use_yes_mark,
+     e14_table_headers_and_row_labels_unchanged,
+     e15_table_body_row_widths_consistent,
+     e16_integration_private_defi_card,
+     e17_integration_no_onramp_offramp_headings,
+     e18_private_defi_description_ok,
+     e19_integration_card_set_unchanged
 
 Verified facts baked into the checks (confirmed against the real files):
   * SHA-256 of the UTF-8 bytes of the `d` attribute value (exactly as
@@ -142,35 +167,6 @@ FAVICON_LINK = '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 HERO_MARK_SVG = '<svg class="hero-mark" aria-hidden="true"><use href="#mark"/></svg>'
 CLOSING_LOCKUP_SVG = '<svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>'
 
-# The only declarations phase 1 may ADD (contract 27): ten, in two rules.
-ADDED_DECLARATIONS = {
-    (".s-title .hero-mark", "position", "absolute"),
-    (".s-title .hero-mark", "right", "var(--pad-x)"),
-    (".s-title .hero-mark", "top", "50%"),
-    (".s-title .hero-mark", "transform", "translateY(-50%)"),
-    (".s-title .hero-mark", "width", "520px"),
-    (".s-title .hero-mark", "height", "520px"),
-    (".s-title .hero-mark", "pointer-events", "none"),
-    (".s-closing .closing-lockup", "width", "239px"),
-    (".s-closing .closing-lockup", "height", "220px"),
-    (".s-closing .closing-lockup", "margin-bottom", "40px"),
-}
-
-# Selectors whose declarations contract 27 allows to be REMOVED.
-REMOVED_SELECTORS = {
-    ".reveal-viewport::after",
-    ".grad-text",
-    ".s-title .eclipse-hero",
-    ".s-closing .eclipse-small",
-}
-
-# Contract 27 paint set: declarations on these properties are excluded.
-PAINT_PROPS = {
-    "color", "background", "background-color", "background-image",
-    "border-color", "border-style", "fill", "stroke", "box-shadow",
-    "text-shadow", "filter", "mix-blend-mode",
-}
-
 TYPO_PROPS = {
     "font-family", "font-size", "font-weight", "font-style",
     "letter-spacing", "line-height", "text-transform",
@@ -205,14 +201,67 @@ slategrey snow springgreen steelblue tan teal thistle tomato turquoise violet
 wheat white whitesmoke yellow yellowgreen
 """.split())
 
-# Contract 31: deck_check.py on the baseline reports exactly this.
-EXPECTED_DECK_FAILS = {
-    "c_privacy_not_funds_exists_between_divider1_and_harvest",
-    "c_total_top_level_sections_is_25",
-    "d_compliance_posture_unchanged",
-    "d_integration_points_unchanged",
-    "d_live_demo_unchanged",
+# ---------------------------------------------------------------------------
+# Content-edit contract values (the e01–e19 checks)
+# ---------------------------------------------------------------------------
+
+# The three s-divider slides, by top-level <section> order (1-based).
+DIVIDER_SLIDES = (7, 12, 17)
+
+# Today's divider h2 text (hard-coded; must survive the content edits).
+DIVIDER_HEADINGS = {
+    7: "Enter Sombra",
+    12: "How it works — and how it compares",
+    17: "Going private used to mean leaving DeFi.",
 }
+
+# Slide 11 (compliance): the card set after the edit — one heading changes
+# from "Private on/off-ramps" to "Private withdrawals", the other three are
+# frozen at today's values.
+COMPLIANCE_CARD_HEADINGS = (
+    "Private withdrawals",
+    "Scoped disclosure",
+    "Lineage by design",
+    "Association sets",
+)
+
+# Slide 15 (comparison table): the five data column headers by main text
+# (the <small> subtitle excluded) and the five row labels, in order.
+TABLE_COLUMN_HEADERS = ("Sombra", "Zcash", "Privacy Cash", "Rings", "Umbra")
+TABLE_ROW_LABELS = (
+    "Shielded transfers",
+    "Native to Solana liquidity",
+    "Proof system",
+    "Quantum-safe proofs",
+    "Quantum-safe note encryption",
+)
+
+# Slide 18 (integration grid): the card set after the edit — one heading
+# changes from "Onramp / offramp" to "Private DeFi", the other five are
+# frozen at today's values.
+INTEGRATION_CARD_HEADINGS = (
+    "Private staking via LSTs",
+    "Wallet SDK",
+    "Privacy Relayer",
+    "Private Actions",
+    "Any SPL token",
+    "Private DeFi",
+)
+
+# The table's existing "yes" mark markup (confirmed against index.html).
+YES_MARK = '<span class="yes" role="img" aria-label="yes"></span>'
+
+PART_WORD_RE = re.compile(r"\bpart (one|two|three|four)\b", re.I)
+ONOFFRAMP_RE = re.compile(r"\bon/off[\s-]?ramps\b", re.I)
+# Any element carrying the row-tag class; group(2) is its inner HTML.
+ROW_TAG_RE = re.compile(
+    r'<([a-zA-Z][a-zA-Z0-9]*)\b[^>]*\bclass="[^"]*\brow-tag\b[^"]*"[^>]*>'
+    r"(.*?)</\1>", re.S)
+NOTES_RE = re.compile(r'<aside class="notes">.*?</aside>', re.S)
+# class="card" or class="card …" — NOT "card-top" (a space, not a dash,
+# separates the classes).
+CARD_OPEN_RE = re.compile(r'<div class="card(?: [^"]*)?">')
+DIV_RE = re.compile(r"<div\b|</div>")
 
 # ---------------------------------------------------------------------------
 # Regexes
@@ -295,10 +344,68 @@ def top_level_sections(html_text):
     return out
 
 
-def slide_text(section_html):
-    """Tag-stripped, entity-decoded, whitespace-normalised slide text."""
-    t = html_mod.unescape(re.sub(r"<[^>]*>", " ", section_html))
-    return " ".join(t.split())
+def strip_tags(html_text):
+    """Tag-stripped, entity-decoded, whitespace-normalised text."""
+    return " ".join(html_mod.unescape(re.sub(r"<[^>]*>", " ", html_text)).split())
+
+
+def strip_notes(section_html):
+    """The section's HTML without its <aside class=\"notes\"> speaker notes."""
+    return NOTES_RE.sub(" ", section_html)
+
+
+def visible_text(section_html):
+    """Visible (on-stage) text of a slide: speaker notes excluded."""
+    return strip_tags(strip_notes(section_html))
+
+
+def h2_text(section_html):
+    m = re.search(r"<h2[^>]*>(.*?)</h2>", strip_notes(section_html), re.S)
+    return strip_tags(m.group(1)) if m else None
+
+
+def eyebrow_text(section_html):
+    m = re.search(r'<div class="eyebrow"[^>]*>(.*?)</div>',
+                  strip_notes(section_html), re.S)
+    return strip_tags(m.group(1)) if m else None
+
+
+def card_blocks(section_html):
+    """The .card divs of a slide, in document order (depth-matched)."""
+    out = []
+    for m in CARD_OPEN_RE.finditer(section_html):
+        depth, i = 1, m.end()
+        while i < len(section_html) and depth:
+            nxt = DIV_RE.search(section_html, i)
+            if nxt is None:
+                break
+            depth += 1 if nxt.group(0)[1] == "d" else -1
+            i = nxt.end()
+        out.append(section_html[m.start():i])
+    return out
+
+
+def card_heading(card_html):
+    m = re.search(r"<h3[^>]*>(.*?)</h3>", card_html, re.S)
+    return strip_tags(m.group(1)) if m else None
+
+
+def card_body(card_html):
+    m = re.search(r"<p[^>]*>(.*?)</p>", card_html, re.S)
+    return strip_tags(m.group(1)) if m else ""
+
+
+def table_rows(section_html, part):
+    """The <tr> blocks of a table's <thead>/<tbody>, in document order."""
+    m = re.search(rf"<{part}>(.*?)</{part}>", section_html, re.S)
+    if not m:
+        return []
+    return re.findall(r"<tr\b[^>]*>.*?</tr>", m.group(1), re.S)
+
+
+def th_main_text(th_html):
+    """A table header's main text (the <small> subtitle removed)."""
+    return strip_tags(re.sub(r"<small.*?</small>", " ", th_html, flags=re.S))
 
 
 def parse_declarations(css_nc):
@@ -385,41 +492,6 @@ def url_spans(text):
 
 def sha256_of(s):
     return hashlib.sha256(s.encode("utf-8")).hexdigest()
-
-
-# ---------------------------------------------------------------------------
-# Contract 27 value normalisation
-# ---------------------------------------------------------------------------
-
-def colour_tokens_of(decls):
-    """The :root custom properties that are NOT structural (i.e. colours)."""
-    return {p for (s, p, _v) in decls if s == ":root" and p.startswith("--")} \
-           - set(STRUCTURAL_TOKENS)
-
-
-def geo_norm(v, colour_tokens):
-    """Replace every colour value with <c> (contract 27 placeholder)."""
-    v = v.replace("%23", "#")  # spec: treat %23 as # when scanning CSS
-    for t in sorted(colour_tokens, key=len, reverse=True):
-        v = v.replace("var(" + t + ")", "<c>")
-    v = re.sub(r"rgba?\([^)]*\)", "<c>", v)
-    v = re.sub(r"#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})\b", "<c>", v)
-    v = re.sub(r"\b(black|currentColor|transparent)\b", "<c>", v)
-    return v
-
-
-def geo_counter(css_nc):
-    """Multiset of non-paint (selector, prop, normalised value) entries."""
-    decls = parse_declarations(css_nc)
-    ctokens = colour_tokens_of(decls)
-    c = collections.Counter()
-    for sel, p, v in decls:
-        if p in PAINT_PROPS:
-            continue
-        if p.startswith("--") and p not in STRUCTURAL_TOKENS:
-            continue  # ignore colour custom properties
-        c[(sel, p, geo_norm(v, ctokens))] += 1
-    return c
 
 
 # ---------------------------------------------------------------------------
@@ -953,63 +1025,27 @@ class Checker:
                      "typography (selector, property, value) entries in "
                      "theme/sombra.css differ from baseline"))
 
-        # ---- Contract 25: 21 sections, texts frozen ---------------------------
-        bsecs = top_level_sections(bhtml)
+        # ---- Contract 25: 21 sections -----------------------------------------
         self.add("c25a_exactly_21_top_level_sections",
                  htm is not None and len(top_level_sections(htm)) == 21,
                  f"index.html has {0 if htm is None else len(top_level_sections(htm))} "
                  f"top-level <section> elements (want 21)")
-        if htm is None:
-            self._html_missing("c25b_slide_texts_unchanged")
-        else:
-            secs = top_level_sections(htm)
-            bad = [i + 1 for i, (a, b) in
-                   enumerate(zip(secs, bsecs)) if slide_text(a) != slide_text(b)]
-            if len(secs) != len(bsecs):
-                bad.append(f"count {len(secs)} vs baseline {len(bsecs)}")
-            self.add("c25b_slide_texts_unchanged", not bad,
-                     "tag-stripped text changed on top-level section(s): "
-                     + ", ".join(str(b) for b in bad[:8]))
 
-        # ---- Contract 26: HTML outside <svg> == baseline + 2 substitutions -----
-        nosvg = lambda s: re.sub(r"<svg\b.*?</svg>", "<svg/>", s, flags=re.S)
-        if htm is None:
-            self._html_missing("c26_html_outside_svg_equals_baseline_two_subs")
-        else:
-            expected = nosvg(bhtml).replace("assets/sombra-mark.svg",
-                                            "assets/favicon.svg").replace(
-                "var(--violet-hi)", "var(--sky)")
-            got = nosvg(htm)
-            self.add("c26_html_outside_svg_equals_baseline_two_subs", got == expected,
-                     "index.html outside <svg>…</svg> differs from baseline after "
-                     "assets/sombra-mark.svg→assets/favicon.svg and "
-                     "var(--violet-hi)→var(--sky) — first difference: "
-                     + self._first_diff(got, expected))
-
-        # ---- Contract 27: non-paint declarations frozen ------------------------
-        if css is None:
-            self._css_missing("c27_non_paint_declarations_frozen")
-        else:
-            gB, gC = geo_counter(bcss_nc), geo_counter(css_nc)
-            removed = gB - gC
-            added = gC - gB
-            bad_removed = [k for k in removed if k[0] not in REMOVED_SELECTORS]
-            ok_added = set(added) == ADDED_DECLARATIONS and \
-                sum(added.values()) == len(ADDED_DECLARATIONS)
-            detail = []
-            if bad_removed:
-                detail.append("non-paint declaration(s) missing/changed vs "
-                              "baseline (beyond the 4 allowed removed rules): "
-                              + "; ".join(f"{k!r} ×{removed[k]}"
-                                          for k in sorted(bad_removed)[:6]))
-            if not ok_added:
-                extra = sorted(set(added) - ADDED_DECLARATIONS)
-                missing = sorted(ADDED_DECLARATIONS - set(added))
-                detail.append("added declarations differ from the 10 expected — "
-                              f"extra: {extra[:6]}; missing: {missing[:6]}")
-            self.add("c27_non_paint_declarations_frozen",
-                     not bad_removed and ok_added,
-                     "theme/sombra.css — " + "; ".join(detail))
+        # ------------------------------------------------------------------
+        # RETIRED (2026-11-10), after phase 1 shipped at a8e95c2:
+        #   c25b_slide_texts_unchanged,
+        #   c26_html_outside_svg_equals_baseline_two_subs,
+        #   c27_non_paint_declarations_frozen,
+        #   c30_inline_style_attrs_frozen,
+        #   c31_deck_check_parity
+        # These migration guards compared the deck with the pre-re-theme
+        # baseline 66369c3 to prove phase 1 changed no text and no geometry.
+        # Their job is done; keeping them would forbid any legitimate
+        # content edit (the e01–e19 contracts below are the new content
+        # contract). Their now-unused helpers (slide_text, geo_counter et
+        # al., _styles_ok, _first_diff) and constants (ADDED_DECLARATIONS,
+        # REMOVED_SELECTORS, PAINT_PROPS, EXPECTED_DECK_FAILS) were removed.
+        # ------------------------------------------------------------------
 
         # ---- Contract 28: diagram SVGs minus paint attrs -----------------------
         diagram = lambda h: [PAINT_ATTR_RE.sub("", x)
@@ -1038,39 +1074,177 @@ class Checker:
                  f"<marker> elements differ from baseline apart from fill; "
                  f"candidate has {0 if htm is None else len(markers(htm))} (want 2)")
 
-        # ---- Contract 30: inline style attributes frozen -----------------------
-        styles = lambda h: collections.Counter(re.findall(r'style="([^"]*)"', h))
-        s_ok = htm is not None and self._styles_ok(styles(htm), styles(bhtml))
-        self.add("c30_inline_style_attrs_frozen", s_ok,
-                 "" if s_ok else
-                 "inline style=\"…\" multiset in index.html differs from baseline "
-                 "after the one allowed color:var(--violet-hi)→color:var(--sky) swap"
-                 + (f"; candidate={dict(styles(htm))}" if htm is not None else ""))
-
-        # ---- Contract 31: deck_check parity -------------------------------------
-        if self.root == REPO:
-            try:
-                r = subprocess.run(
-                    [sys.executable, "tests/deck_check.py"],
-                    cwd=str(REPO), capture_output=True, text=True, timeout=120)
-                out = r.stdout
-                msum = re.search(r"(\d+) passed, (\d+) failed, (\d+) total", out)
-                fails = set(re.findall(r"^\[FAIL\] (\S+)", out, re.M))
-                ok = (r.returncode == 1 and msum
-                      and int(msum.group(1)) == 21 and int(msum.group(2)) == 5
-                      and fails == EXPECTED_DECK_FAILS)
-                self.add("c31_deck_check_parity", ok,
-                         "deck_check.py on the repo: "
-                         f"rc={r.returncode}, summary={msum.group(0) if msum else 'unparsed'}, "
-                         f"failing={sorted(fails)} (want exactly "
-                         f"{sorted(EXPECTED_DECK_FAILS)})" if not ok else "")
-            except (OSError, subprocess.TimeoutExpired) as e:
-                self.add("c31_deck_check_parity", False,
-                         f"could not run tests/deck_check.py: {e}")
+        # ---- Content-edit contracts (e01–e19) ----------------------------------
+        # The four approved content edits. Written TDD-style BEFORE the
+        # edits: most are RED on the current deck by design.
+        if htm is None:
+            for n in E_NAMES:
+                self._html_missing(n)
         else:
-            self.skip("c31_deck_check_parity",
-                      f"skipped: --root is {self.root}, not the repo "
-                      f"({REPO}); parity is only meaningful on the repo itself")
+            secs = top_level_sections(htm)
+
+            # -- Edit 1: dividers (slides 7, 12, 17) --------------------------
+            divs = {i: secs[i - 1] for i in DIVIDER_SLIDES if i <= len(secs)}
+            bad = [i for i, s in sorted(divs.items())
+                   if re.search(r'<div class="num"', s)]
+            self.add("e01_dividers_no_num_element", not bad,
+                     "divider slide(s) still contain a <div class=\"num\"> "
+                     "numeral element: " + ", ".join(str(b) for b in bad))
+            bad = [i for i, s in sorted(divs.items())
+                   if re.search(r"\b0[123]\b", visible_text(s))]
+            self.add("e02_dividers_no_numeral_text", not bad,
+                     "divider slide(s) still show a '01'/'02'/'03' numeral: "
+                     + ", ".join(str(b) for b in bad))
+            bad = [i + 1 for i, s in enumerate(secs)
+                   if PART_WORD_RE.search(visible_text(s))]
+            self.add("e03_no_part_word_anywhere", not bad,
+                     "'Part one/two/three/four' visible on slide(s): "
+                     + ", ".join(str(b) for b in bad))
+            got = eyebrow_text(divs[17]) if 17 in divs else None
+            self.add("e04_divider3_eyebrow_integration_architecture",
+                     got == "Integration architecture",
+                     "slide 17 eyebrow is "
+                     f"{got!r}, want 'Integration architecture'")
+            bad = {i: h2_text(s) for i, s in divs.items()
+                   if h2_text(s) != DIVIDER_HEADINGS.get(i)}
+            self.add("e05_divider_headings_unchanged", not bad,
+                     "divider h2 text changed — " + "; ".join(
+                         f"slide {i}: {w!r}" for i, w in sorted(bad.items())))
+
+            # -- Edit 2: slide 11 (compliance card) ----------------------------
+            s11 = secs[10] if len(secs) > 10 else ""
+            c11 = card_blocks(s11)
+            h11 = [card_heading(c) for c in c11]
+            self.add("e06_compliance_private_withdrawals_card",
+                     "Private withdrawals" in h11,
+                     "slide 11 has no card headed 'Private withdrawals' "
+                     f"(headings found: {h11!r})")
+            m = ONOFFRAMP_RE.search(visible_text(s11))
+            self.add("e07_compliance_no_onofframps_text", m is None,
+                     "slide 11 visible text still contains "
+                     f"{m.group(0)!r}" if m else "")
+            wd = [c for c in c11 if card_heading(c) == "Private withdrawals"]
+            if not wd:
+                self.add("e08_withdrawals_card_body_terms", False,
+                         "no 'Private withdrawals' card to inspect on slide 11")
+            else:
+                body = card_body(wd[0]).lower()
+                missing = [t for t in ("relayer", "private deposits",
+                                       "coming soon") if t not in body]
+                self.add("e08_withdrawals_card_body_terms", not missing,
+                         "'Private withdrawals' card body is missing "
+                         f"{missing!r}; body: {card_body(wd[0])[:90]!r}…")
+            self.add("e09_compliance_card_set_unchanged",
+                     collections.Counter(h11) ==
+                     collections.Counter(COMPLIANCE_CARD_HEADINGS),
+                     "slide 11 card headings are "
+                     f"{h11!r}, want exactly {sorted(COMPLIANCE_CARD_HEADINGS)!r}")
+
+            # -- Edit 3: slide 15 (comparison table row tags) -------------------
+            s15 = secs[14] if len(secs) > 14 else ""
+            tags = [inner for _name, inner in ROW_TAG_RE.findall(s15)]
+            tag_texts = [strip_tags(t) for t in tags]
+            self.add("e10_table_exactly_two_row_tags", len(tags) == 2,
+                     f"slide 15 has {len(tags)} element(s) with class "
+                     f"'row-tag' (want exactly 2): {tag_texts!r}")
+            self.add("e11_row_tag_texts",
+                     tag_texts == ["Fund safety", "Privacy"],
+                     "row-tag visible texts are "
+                     f"{tag_texts!r}, want ['Fund safety', 'Privacy']")
+            rows = table_rows(s15, "tbody")
+
+            def _tags_in(row):
+                return [strip_tags(t) for _n, t in ROW_TAG_RE.findall(row)]
+
+            fund_rows = [r for r in rows if "Proof system" in strip_tags(r)]
+            priv_rows = [r for r in rows
+                         if "Quantum-safe note encryption" in strip_tags(r)]
+            problems = []
+            if not fund_rows:
+                problems.append("no <tr> containing the row label 'Proof system'")
+            elif "Fund safety" not in _tags_in(fund_rows[0]):
+                problems.append(
+                    f"'Proof system' row tag(s) are {_tags_in(fund_rows[0])!r}, "
+                    "want 'Fund safety'")
+            if not priv_rows:
+                problems.append(
+                    "no <tr> containing the row label 'Quantum-safe note encryption'")
+            elif "Privacy" not in _tags_in(priv_rows[0]):
+                problems.append(
+                    f"'Quantum-safe note encryption' row tag(s) are "
+                    f"{_tags_in(priv_rows[0])!r}, want 'Privacy'")
+            self.add("e12_row_tags_in_right_rows", not problems,
+                     "slide 15 — " + "; ".join(problems))
+            bad = [t for t in tags if YES_MARK not in t]
+            self.add("e13_row_tags_use_yes_mark", not bad,
+                     "row-tag cell(s) without the table's yes mark "
+                     '<span class="yes" role="img" aria-label="yes"></span>: '
+                     + ", ".join(repr(t[:60]) for t in bad))
+            thead_m = re.search(r"<thead>(.*?)</thead>", s15, re.S)
+            tbody_m = re.search(r"<tbody>(.*?)</tbody>", s15, re.S)
+            headers = []
+            if thead_m:
+                ths = re.findall(r'<th[^>]*scope="col"[^>]*>(.*?)</th>',
+                                 thead_m.group(1), re.S)
+                headers = [th_main_text(t) for t in ths[1:]]
+            labels = []
+            if tbody_m:
+                labels = [th_main_text(t) for t in re.findall(
+                    r'<th[^>]*scope="row"[^>]*>(.*?)</th>', tbody_m.group(1), re.S)]
+            bad = []
+            if headers != list(TABLE_COLUMN_HEADERS):
+                bad.append(f"column headers are {headers!r}, want "
+                           f"{list(TABLE_COLUMN_HEADERS)!r}")
+            if labels != list(TABLE_ROW_LABELS):
+                bad.append(f"row labels are {labels!r}, want "
+                           f"{list(TABLE_ROW_LABELS)!r}")
+            self.add("e14_table_headers_and_row_labels_unchanged", not bad,
+                     "slide 15 — " + "; ".join(bad))
+            widths, carry = [], 0
+            for row in rows:
+                cells = re.findall(r"<t[dh]\b[^>]*>", row)
+                widths.append(len(cells) + carry)
+                rs = [int(m.group(1)) for m in
+                      (re.search(r'\browspan="(\d+)"', c) for c in cells) if m]
+                carry = sum(r - 1 for r in rs)
+            ok = bool(widths) and all(w == widths[0] for w in widths)
+            self.add("e15_table_body_row_widths_consistent", ok,
+                     "slide 15 body row widths (own cells + carried rowspan) "
+                     f"are {widths!r}, want all equal")
+
+            # -- Edit 4: slide 18 (integration grid card) -----------------------
+            s18 = secs[17] if len(secs) > 17 else ""
+            c18 = card_blocks(s18)
+            h18 = [card_heading(c) for c in c18]
+            self.add("e16_integration_private_defi_card",
+                     "Private DeFi" in h18,
+                     "slide 18 has no card headed 'Private DeFi' "
+                     f"(headings found: {h18!r})")
+            bad = [h for h in h18 if h and re.search(r"onramp|offramp", h, re.I)]
+            self.add("e17_integration_no_onramp_offramp_headings", not bad,
+                     "slide 18 card heading(s) still contain 'onramp'/'offramp': "
+                     + ", ".join(repr(h) for h in bad))
+            pd = [c for c in c18 if card_heading(c) == "Private DeFi"]
+            if not pd:
+                self.add("e18_private_defi_description_ok", False,
+                         "no 'Private DeFi' card to inspect on slide 18")
+            else:
+                body = card_body(pd[0])
+                problems = []
+                if len(body) < 40:
+                    problems.append(f"description is {len(body)} char(s), "
+                                    "want at least 40")
+                if "private deposits" in body.lower():
+                    problems.append("description contains the phrase "
+                                    "'private deposits'")
+                self.add("e18_private_defi_description_ok", not problems,
+                         "slide 18 'Private DeFi' card — " + "; ".join(problems)
+                         + (f"; description: {body[:90]!r}…" if problems else ""))
+            self.add("e19_integration_card_set_unchanged",
+                     collections.Counter(h18) ==
+                     collections.Counter(INTEGRATION_CARD_HEADINGS),
+                     "slide 18 card headings are "
+                     f"{h18!r}, want exactly {sorted(INTEGRATION_CARD_HEADINGS)!r}")
 
     # -- helpers ---------------------------------------------------------------
     def _check_symbol(self, name, htm, sym_id, viewBox, want_hash):
@@ -1105,27 +1279,6 @@ class Checker:
     def _typo_counter(decls):
         return collections.Counter(
             (s, p, " ".join(v.split())) for (s, p, v) in decls if p in TYPO_PROPS)
-
-    @staticmethod
-    def _styles_ok(got, base):
-        expected = collections.Counter(base)
-        expected["color:var(--sky)"] = expected.get("color:var(--sky)", 0) + 1
-        expected["color:var(--violet-hi)"] = \
-            expected.get("color:var(--violet-hi)", 1) - 1
-        return got == expected
-
-    @staticmethod
-    def _first_diff(a, b, limit=160):
-        for i, (ca, cb) in enumerate(zip(a, b)):
-            if ca != cb:
-                lo = max(0, i - 40)
-                return (f"at char {i}: candidate {a[lo:i + limit]!r} … vs baseline "
-                        f"{b[lo:i + limit]!r} …")
-        if len(a) != len(b):
-            i = min(len(a), len(b))
-            return (f"lengths differ (candidate {len(a)} vs baseline {len(b)}); "
-                    f"tail of longer: {(a if len(a) > len(b) else b)[i:i + limit]!r}")
-        return "unknown"
 
     def _diff_detail(self, got, want, prefix):
         if got == want:
@@ -1168,6 +1321,29 @@ C12_TOKENS = (
 )
 C12_NAMES = [n for n, _ in C12_TOKENS]
 
+# The content-edit checks (e01–e19), in run order.
+E_NAMES = (
+    "e01_dividers_no_num_element",
+    "e02_dividers_no_numeral_text",
+    "e03_no_part_word_anywhere",
+    "e04_divider3_eyebrow_integration_architecture",
+    "e05_divider_headings_unchanged",
+    "e06_compliance_private_withdrawals_card",
+    "e07_compliance_no_onofframps_text",
+    "e08_withdrawals_card_body_terms",
+    "e09_compliance_card_set_unchanged",
+    "e10_table_exactly_two_row_tags",
+    "e11_row_tag_texts",
+    "e12_row_tags_in_right_rows",
+    "e13_row_tags_use_yes_mark",
+    "e14_table_headers_and_row_labels_unchanged",
+    "e15_table_body_row_widths_consistent",
+    "e16_integration_private_defi_card",
+    "e17_integration_no_onramp_offramp_headings",
+    "e18_private_defi_description_ok",
+    "e19_integration_card_set_unchanged",
+)
+
 CHECK_NAMES = (
     ["c01_css_hex_literals_in_palette", "c02_css_rgb_rgba_palette_and_alpha",
      "c02b_css_no_exotic_colour_functions", "c03_css_no_named_colours_in_values",
@@ -1194,12 +1370,10 @@ CHECK_NAMES = (
        "c21c_logo_css_rules_no_effect_props",
        "c22_font_face_blocks_unchanged", "c23_font_token_lines_unchanged",
        "c24_typography_declarations_unchanged",
-       "c25a_exactly_21_top_level_sections", "c25b_slide_texts_unchanged",
-       "c26_html_outside_svg_equals_baseline_two_subs",
-       "c27_non_paint_declarations_frozen",
+       "c25a_exactly_21_top_level_sections",
        "c28_diagram_svgs_unchanged_minus_paint_attrs",
-       "c29a_icon_symbols_unchanged", "c29b_markers_unchanged_apart_fill",
-       "c30_inline_style_attrs_frozen", "c31_deck_check_parity"]
+       "c29a_icon_symbols_unchanged", "c29b_markers_unchanged_apart_fill"]
+    + list(E_NAMES)
 )
 
 
