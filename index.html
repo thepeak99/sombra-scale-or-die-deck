@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Scale or Die — Sombra: post-quantum privacy on Solana</title>
   <meta name="description" content="Sombra: quantum-safe privacy for existing Solana liquidity.">
-  <link rel="icon" href="assets/sombra-mark.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="vendor/reveal.js/dist/reset.css">
   <link rel="stylesheet" href="vendor/reveal.js/dist/reveal.css">
   <link rel="stylesheet" href="theme/sombra.css">
@@ -15,46 +15,16 @@
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
   <defs>
-    <linearGradient id="g-sol" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#9945ff"/>
-      <stop offset="0.55" stop-color="#a78bfa"/>
-      <stop offset="1" stop-color="#14f195"/>
-    </linearGradient>
-    <linearGradient id="g-line" x1="0" y1="0" x2="1" y2="0">
-      <stop offset="0" stop-color="#a78bfa" stop-opacity="0"/>
-      <stop offset="0.15" stop-color="#a78bfa" stop-opacity="0.7"/>
-      <stop offset="0.85" stop-color="#67e8f9" stop-opacity="0.7"/>
-      <stop offset="1" stop-color="#67e8f9" stop-opacity="0"/>
-    </linearGradient>
-    <radialGradient id="g-corona" cx="0.5" cy="0.5" r="0.5">
-      <stop offset="0.62" stop-color="#a78bfa" stop-opacity="0"/>
-      <stop offset="0.78" stop-color="#a78bfa" stop-opacity="0.55"/>
-      <stop offset="0.86" stop-color="#6d3cf0" stop-opacity="0.25"/>
-      <stop offset="1" stop-color="#6d3cf0" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="g-pool" cx="0.5" cy="0.35" r="0.75">
-      <stop offset="0" stop-color="#6d3cf0" stop-opacity="0.30"/>
-      <stop offset="1" stop-color="#110f25" stop-opacity="0.92"/>
-    </radialGradient>
-    <filter id="f-glow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="6" result="b"/>
-      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
-    </filter>
-    <filter id="f-soft" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="22"/>
-    </filter>
     <marker id="m-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#a78bfa"/>
+      <path d="M0 0L10 5L0 10z" fill="#B1E0FF"/>
     </marker>
     <marker id="m-arrow-c" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M0 0L10 5L0 10z" fill="#67e8f9"/>
+      <path d="M0 0L10 5L0 10z" fill="#B1E0FF"/>
     </marker>
   </defs>
 
-  <symbol id="mark" viewBox="0 0 100 100">
-    <circle cx="50" cy="50" r="40" fill="none" stroke="url(#g-sol)" stroke-width="6"/>
-    <circle cx="57" cy="44" r="38" fill="#05040b"/>
-  </symbol>
+  <symbol id="mark" viewBox="0 0 148.59 148.59"><path fill="#FCF9F2" fill-rule="evenodd" d="M87.26 74.30C87.26 57.84 111.64 44.33 142.80 42.82C146.00 42.67 148.59 40.09 148.59 36.89L148.59 5.79C148.59 2.59 146.00 0.00 142.80 0.00L111.71 0.00C108.51 0.00 105.93 2.60 105.77 5.79C104.27 36.95 90.75 61.33 74.30 61.33C57.84 61.33 44.33 36.95 42.82 5.79C42.67 2.60 40.09 0.00 36.89 0.00L5.79 0.00C2.59 0.00 0.00 2.59 0.00 5.79L0.00 36.89C0.00 40.09 2.60 42.67 5.79 42.82C36.95 44.33 61.33 57.84 61.33 74.30C61.33 90.75 36.95 104.27 5.79 105.77C2.60 105.93 0.00 108.51 0.00 111.71L0.00 142.80C0.00 146.00 2.59 148.59 5.79 148.59L36.89 148.59C40.09 148.59 42.67 146.00 42.82 142.80C44.33 111.64 57.84 87.26 74.30 87.26C90.75 87.26 104.27 111.64 105.77 142.80C105.93 146.00 108.51 148.59 111.71 148.59L142.80 148.59C146.00 148.59 148.59 146.00 148.59 142.80L148.59 111.71C148.59 108.51 146.00 105.93 142.80 105.77C111.64 104.27 87.26 90.75 87.26 74.30Z"/></symbol>
+  <symbol id="lockup-stacked" viewBox="0 0 373.53 343.88"><path fill="#FCF9F2" fill-rule="evenodd" d="M27.24 343.88C9.60 343.88 0.00 334.04 0.00 322.88L10.80 322.88C11.52 330.56 16.80 335.24 27.24 335.24C36.00 335.24 41.76 331.64 41.76 326.00C41.76 321.80 38.16 318.20 30.72 316.88L20.04 314.96C7.44 312.68 1.56 306.08 1.56 297.68C1.56 286.76 11.04 279.44 25.56 279.44C40.92 279.44 50.40 288.32 50.76 299.72L40.20 299.72C39.36 291.20 33.48 287.96 25.56 287.96C17.28 287.96 11.76 291.68 11.76 296.96C11.76 301.28 15.72 304.16 23.16 305.60L33.84 307.64C47.28 310.16 52.32 316.28 52.32 325.28C52.32 336.08 42.36 343.88 27.24 343.88ZM86.63 343.88C66.95 343.88 56.51 329.72 56.51 311.60C56.51 293.48 66.95 279.44 86.63 279.44C106.31 279.44 116.75 293.48 116.75 311.60C116.75 329.72 106.31 343.88 86.63 343.88ZM86.63 334.88C97.31 334.88 105.95 326.60 105.95 311.60C105.95 296.60 97.31 288.44 86.63 288.44C75.95 288.44 67.31 296.60 67.31 311.60C67.31 326.60 75.95 334.88 86.63 334.88ZM122.59 342.68L122.59 280.64L132.79 280.64L132.79 290.00L133.03 290.00C136.15 282.56 144.19 279.44 151.03 279.44C161.59 279.44 167.11 283.76 169.51 290.96C173.71 282.92 182.11 279.44 189.31 279.44C204.67 279.44 209.35 288.80 209.35 302.12L209.35 342.68L199.15 342.68L199.15 300.92C199.15 293.36 194.83 288.44 187.87 288.44C176.59 288.44 171.07 296.72 171.07 307.88L171.07 342.68L160.87 342.68L160.87 300.92C160.87 293.36 156.55 288.44 149.59 288.44C138.31 288.44 132.79 296.72 132.79 307.88L132.79 325.28L132.79 342.68L122.59 342.68ZM247.52 343.88C241.28 343.88 232.16 341.48 227.60 334.04L227.36 334.04L227.36 342.68L217.16 342.68L217.16 257.00L227.36 257.00L227.36 289.16L227.60 289.16C232.16 281.84 241.28 279.44 247.52 279.44C266.60 279.44 275.96 294.08 275.96 311.60C275.96 329.24 266.60 343.88 247.52 343.88ZM246.08 334.88C259.88 334.88 265.16 323.12 265.16 311.60C265.16 300.08 259.88 288.44 246.08 288.44C232.52 288.44 227.00 300.08 227.00 311.60C227.00 323.12 232.52 334.88 246.08 334.88ZM281.76 342.68L281.88 289.64L291.96 280.64L314.40 280.64L314.40 289.64L292.08 289.64L292.08 342.68L281.76 342.68ZM335.25 343.88C323.97 343.88 314.73 337.16 314.73 325.64C314.73 312.32 322.77 303.92 354.33 305.24L356.49 305.36L356.49 300.92C356.49 293.00 353.01 288.44 342.21 288.44C333.81 288.44 328.29 291.08 327.81 299.96L317.13 299.96C317.73 284.72 329.49 279.44 342.21 279.44C354.81 279.44 366.69 284.72 366.69 299.12L366.69 333.68L373.53 333.68L373.53 342.68L362.25 342.68L356.73 335.00L356.49 335.00C350.85 341.00 343.29 343.88 335.25 343.88ZM325.29 324.92C325.29 331.40 331.17 334.88 337.53 334.88C350.85 334.88 356.49 326.72 356.49 321.08L356.49 313.76L354.21 313.64C329.13 312.68 325.29 318.20 325.29 324.92ZM204.39 102.50C204.39 79.88 237.80 61.27 280.58 59.10C285.23 58.86 289.00 55.11 289.00 50.46L289.00 8.42C289.00 3.77 285.23 0.00 280.58 0.00L238.54 0.00C233.89 0.00 230.14 3.77 229.90 8.42C227.73 51.20 209.12 84.61 186.50 84.61C163.88 84.61 145.27 51.20 143.10 8.42C142.86 3.77 139.11 0.00 134.46 0.00L92.42 0.00C87.77 0.00 84.00 3.77 84.00 8.42L84.00 50.46C84.00 55.11 87.77 58.86 92.42 59.10C135.20 61.27 168.61 79.88 168.61 102.50C168.61 125.12 135.20 143.73 92.42 145.90C87.77 146.14 84.00 149.89 84.00 154.54L84.00 196.58C84.00 201.23 87.77 205.00 92.42 205.00L134.46 205.00C139.11 205.00 142.86 201.23 143.10 196.58C145.27 153.80 163.88 120.39 186.50 120.39C209.12 120.39 227.73 153.80 229.90 196.58C230.14 201.23 233.89 205.00 238.54 205.00L280.58 205.00C285.23 205.00 289.00 201.23 289.00 196.58L289.00 154.54C289.00 149.89 285.23 146.14 280.58 145.90C237.80 143.73 204.39 125.12 204.39 102.50Z"/></symbol>
 
   <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
   <symbol id="i-unlock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.6-1.8"/></symbol>
@@ -84,12 +54,7 @@
 
     <section class="s-title" data-state="no-chrome">
       <div class="frame">
-        <svg class="eclipse-hero" viewBox="0 0 1000 1000" aria-hidden="true">
-          <circle cx="500" cy="500" r="470" fill="url(#g-corona)"/>
-          <circle cx="500" cy="500" r="360" fill="none" stroke="url(#g-sol)" stroke-width="3" filter="url(#f-glow)"/>
-          <circle cx="548" cy="452" r="352" fill="#05040b"/>
-          <circle cx="548" cy="452" r="352" fill="none" stroke="rgba(176,160,255,0.10)" stroke-width="1"/>
-        </svg>
+        <svg class="hero-mark" aria-hidden="true"><use href="#mark"/></svg>
         <div class="kicker"><b>Scale or Die</b> &nbsp;/&nbsp; Post-quantum privacy on Solana</div>
         <h1>Sombra</h1>
         <p class="subtitle">Privacy built to <em>endure</em> the quantum age — <strong>for the Solana liquidity you already use.</strong></p>
@@ -368,9 +333,9 @@
               <text class="d-label" x="28" y="164" font-size="29">Public liquidity</text>
               <text class="d-sub" x="28" y="198" font-size="20">any registered SPL token</text>
               <g transform="translate(0 300)">
-                <circle cx="66" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
-                <circle cx="135" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
-                <circle cx="204" cy="0" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+                <circle cx="66" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+                <circle cx="135" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+                <circle cx="204" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
                 <text class="d-mono" x="66" y="6" font-size="15" text-anchor="middle">SPL</text>
                 <text class="d-mono" x="135" y="6" font-size="15" text-anchor="middle">SPL</text>
                 <text class="d-mono" x="204" y="6" font-size="15" text-anchor="middle">LST</text>
@@ -379,21 +344,21 @@
             </g>
 
             <g>
-              <rect x="440" y="30" width="760" height="460" rx="36" fill="url(#g-pool)" stroke="#a78bfa" stroke-opacity="0.55" stroke-width="2"/>
+              <rect x="440" y="30" width="760" height="460" rx="36" fill="#2A2954" stroke="#B1E0FF" stroke-width="2"/>
               <text class="d-mono" x="480" y="80" font-size="18">Shielded pool</text>
               <text class="d-label" x="480" y="124" font-size="32">Global commitment tree</text>
               <text class="d-sub" x="480" y="158" font-size="21">anonymity set = every note in the tree</text>
-              <g stroke="rgba(176,160,255,0.28)" stroke-width="1.5" fill="none">
+              <g stroke="#FCF9F2" stroke-opacity="0.4" stroke-width="1.5" fill="none">
                 <path d="M820 215L680 280M820 215L960 280"/>
                 <path d="M680 280L610 345M680 280L750 345M960 280L890 345M960 280L1030 345"/>
                 <path d="M610 345L575 409M610 345L645 409M750 345L715 409M750 345L785 409M890 345L855 409M890 345L925 409M1030 345L995 409M1030 345L1065 409"/>
               </g>
-              <g fill="#2a2457" stroke="#a78bfa" stroke-opacity="0.6" stroke-width="1.5">
+              <g fill="#2A2954" stroke="#B1E0FF" stroke-width="1.5">
                 <circle cx="820" cy="215" r="9"/>
                 <circle cx="680" cy="280" r="8"/><circle cx="960" cy="280" r="8"/>
                 <circle cx="610" cy="345" r="7"/><circle cx="750" cy="345" r="7"/><circle cx="890" cy="345" r="7"/><circle cx="1030" cy="345" r="7"/>
               </g>
-              <g fill="#a78bfa" filter="url(#f-glow)">
+              <g fill="#B1E0FF">
                 <circle cx="645" cy="409" r="10"/><circle cx="715" cy="409" r="10"/><circle cx="785" cy="409" r="10"/>
                 <circle cx="855" cy="409" r="10"/><circle cx="995" cy="409" r="10"/><circle cx="1065" cy="409" r="10"/>
               </g>
@@ -402,17 +367,17 @@
 
             <g class="fragment" data-fragment-index="1">
               <path class="d-flow-c d-dash d-pulse" d="M270 262 C 390 262, 500 300, 567 397" marker-end="url(#m-arrow-c)"/>
-              <circle cx="575" cy="409" r="12" fill="#67e8f9" filter="url(#f-glow)"/>
+              <circle cx="575" cy="409" r="12" fill="#B1E0FF"/>
               <text class="d-mono d-cyan" x="355" y="186" font-size="18" text-anchor="middle">Onramp</text>
               <text class="d-sub" x="355" y="216" font-size="18" text-anchor="middle">public: depositor,</text>
               <text class="d-sub" x="355" y="240" font-size="18" text-anchor="middle">token, amount</text>
             </g>
 
             <g class="fragment" data-fragment-index="2">
-              <circle cx="715" cy="409" r="13" fill="#110f25" stroke="#f5b94a" stroke-width="2.5"/>
-              <path d="M709 403l12 12M721 403l-12 12" stroke="#f5b94a" stroke-width="2"/>
+              <circle cx="715" cy="409" r="13" fill="#A73D13" stroke="#A73D13" stroke-width="2.5"/>
+              <path d="M709 403l12 12M721 403l-12 12" stroke="#FCF9F2" stroke-width="2"/>
               <path class="d-flow" d="M722 392 C 770 322, 870 322, 918 392" marker-end="url(#m-arrow)"/>
-              <circle cx="925" cy="409" r="12" fill="#d4c8ff" filter="url(#f-glow)"/>
+              <circle cx="925" cy="409" r="12" fill="#FCF9F2"/>
               <text class="d-mono d-knock" x="820" y="318" font-size="16" text-anchor="middle">private transfer</text>
               <text class="d-sub d-amber" x="715" y="458" font-size="17" text-anchor="middle">nullifier marks spent</text>
               <text class="d-sub d-mint" x="925" y="458" font-size="17" text-anchor="middle">new encrypted note</text>
@@ -420,8 +385,8 @@
             </g>
 
             <g class="fragment" data-fragment-index="3">
-              <circle cx="1065" cy="409" r="13" fill="#110f25" stroke="#f5b94a" stroke-width="2.5"/>
-              <path d="M1059 403l12 12M1071 403l-12 12" stroke="#f5b94a" stroke-width="2"/>
+              <circle cx="1065" cy="409" r="13" fill="#A73D13" stroke="#A73D13" stroke-width="2.5"/>
+              <path d="M1059 403l12 12M1071 403l-12 12" stroke="#FCF9F2" stroke-width="2"/>
               <path class="d-flow-c d-dash d-pulse" d="M1073 396 C 1140 300, 1250 262, 1368 262" marker-end="url(#m-arrow-c)"/>
               <text class="d-mono d-cyan" x="1285" y="186" font-size="18" text-anchor="middle">Offramp</text>
               <text class="d-sub" x="1285" y="216" font-size="18" text-anchor="middle">public: amount,</text>
@@ -433,7 +398,7 @@
               <text class="d-mono" x="1398" y="116" font-size="18">Solana</text>
               <text class="d-label" x="1398" y="164" font-size="29">Any SPL account</text>
               <text class="d-sub" x="1398" y="198" font-size="20">plain SPL tokens out</text>
-              <circle cx="1505" cy="300" r="32" fill="#110f25" stroke="url(#g-sol)" stroke-width="2.5"/>
+              <circle cx="1505" cy="300" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
               <text class="d-mono" x="1505" y="306" font-size="15" text-anchor="middle">SPL</text>
               <text class="d-sub" x="1398" y="404" font-size="20">back into DeFi</text>
             </g>
@@ -673,24 +638,24 @@
         </div>
         <div class="stage">
           <svg viewBox="0 0 1640 660" role="img" aria-label="Four steps of a private swap: 1 private intent, a sealed request the chain never sees; 2 proven and attested, verifiers vote on the action while the proof stays off-chain; 3 public settlement, only the public swap leg is visible; 4 private claim, new note commitments as hashes only. Actors: wallet, relayer, prover in a TEE, verifiers, your protocol.">
-            <rect x="20" y="30" width="700" height="470" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
-            <rect x="760" y="30" width="400" height="470" rx="30" fill="rgba(103,232,249,0.05)" stroke="#67e8f9" stroke-opacity="0.45" stroke-width="1.5" stroke-dasharray="8 10"/>
-            <rect x="1200" y="30" width="420" height="470" rx="30" fill="rgba(109,60,240,0.10)" stroke="#a78bfa" stroke-opacity="0.45" stroke-width="1.5"/>
+            <rect x="20" y="30" width="700" height="470" rx="30" fill="#2A2954" stroke="#B1E0FF" stroke-width="1.5"/>
+            <rect x="760" y="30" width="400" height="470" rx="30" fill="#233A35" stroke="#B1E0FF" stroke-width="1.5" stroke-dasharray="8 10"/>
+            <rect x="1200" y="30" width="420" height="470" rx="30" fill="#2A2954" stroke="#B1E0FF" stroke-width="1.5"/>
             <text class="d-mono" x="370" y="66" font-size="18" text-anchor="middle">Shielded</text>
             <text class="d-mono d-cyan" x="960" y="66" font-size="18" text-anchor="middle">Public · Solana</text>
             <text class="d-mono" x="1410" y="66" font-size="18" text-anchor="middle">Shielded</text>
 
             <g>
-              <circle cx="205" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-lock" x="177" y="152" width="56" height="56" color="#d4c8ff"/>
+              <circle cx="205" cy="180" r="56" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+              <use href="#i-lock" x="177" y="152" width="56" height="56" color="#B1E0FF"/>
               <text class="d-label" x="205" y="300" font-size="30" text-anchor="middle">Private intent</text>
               <text class="d-sub" x="205" y="342" font-size="18" text-anchor="middle">chain sees: nothing — a sealed request.</text>
               <text class="d-sub" x="205" y="404" font-size="18" text-anchor="middle">hidden: who, what, how much</text>
             </g>
             <g class="fragment" data-fragment-index="1">
               <path class="d-flow d-dash d-pulse" d="M261 180 H 479" marker-end="url(#m-arrow)"/>
-              <circle cx="535" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-shield" x="507" y="152" width="56" height="56" color="#d4c8ff"/>
+              <circle cx="535" cy="180" r="56" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+              <use href="#i-shield" x="507" y="152" width="56" height="56" color="#B1E0FF"/>
               <text class="d-label" x="535" y="300" font-size="30" text-anchor="middle">Proven &amp; attested</text>
               <text class="d-sub" x="535" y="342" font-size="18" text-anchor="middle">chain sees: verifier votes</text>
               <text class="d-sub" x="535" y="368" font-size="18" text-anchor="middle">on the action</text>
@@ -699,8 +664,8 @@
             </g>
             <g class="fragment" data-fragment-index="2">
               <path class="d-flow-c d-dash d-pulse" d="M591 180 H 904" marker-end="url(#m-arrow-c)"/>
-              <circle cx="960" cy="180" r="56" fill="#0f1a24" stroke="#67e8f9" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-swap" x="932" y="152" width="56" height="56" color="#67e8f9"/>
+              <circle cx="960" cy="180" r="56" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+              <use href="#i-swap" x="932" y="152" width="56" height="56" color="#B1E0FF"/>
               <text class="d-label" x="960" y="300" font-size="30" text-anchor="middle">Public settlement</text>
               <text class="d-sub" x="960" y="342" font-size="18" text-anchor="middle">chain sees: only the public leg —</text>
               <text class="d-sub" x="960" y="368" font-size="18" text-anchor="middle">a swap against public liquidity</text>
@@ -709,8 +674,8 @@
             </g>
             <g class="fragment" data-fragment-index="3">
               <path class="d-flow-c d-dash d-pulse" d="M1016 180 H 1354" marker-end="url(#m-arrow-c)"/>
-              <circle cx="1410" cy="180" r="56" fill="#1a1736" stroke="url(#g-sol)" stroke-width="2.5" filter="url(#f-glow)"/>
-              <use href="#i-key" x="1382" y="152" width="56" height="56" color="#d4c8ff"/>
+              <circle cx="1410" cy="180" r="56" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
+              <use href="#i-key" x="1382" y="152" width="56" height="56" color="#B1E0FF"/>
               <text class="d-label" x="1410" y="300" font-size="30" text-anchor="middle">Private claim</text>
               <text class="d-sub" x="1410" y="342" font-size="18" text-anchor="middle">chain sees: new note commitments —</text>
               <text class="d-sub" x="1410" y="368" font-size="18" text-anchor="middle">hashes only</text>
@@ -779,17 +744,13 @@
             </ul>
           </div>
         </div>
-        <p class="after muted small">Start at <span class="mono" style="color:var(--violet-hi)">docs.sombra.tech</span></p>
+        <p class="after muted small">Start at <span class="mono" style="color:var(--sky)">docs.sombra.tech</span></p>
       </div>
     </section>
 
     <section class="s-closing" data-state="no-chrome">
       <div class="frame">
-        <svg class="eclipse-small" viewBox="0 0 1000 1000" aria-hidden="true">
-          <circle cx="500" cy="500" r="490" fill="url(#g-corona)"/>
-          <circle cx="500" cy="500" r="360" fill="none" stroke="url(#g-sol)" stroke-width="10" filter="url(#f-glow)"/>
-          <circle cx="548" cy="452" r="352" fill="#05040b"/>
-        </svg>
+        <svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>
         <h2>Privacy that <em>outlasts</em> Q-Day.</h2>
         <p class="lede">Sealed notes. Hash-based proofs. Solana liquidity.</p>
         <div class="links"><span>docs.sombra.tech</span><span class="dim">·</span><span>Questions?</span></div>
