@@ -396,6 +396,12 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .s-table .cmp { font-size: 21px; }
 .s-table .cmp tbody th { font-size: 21px; }
 .s-table .cmp col.c-head { width: 210px; }
+/* Slide 15 row tags: leftmost column labels the row groups
+   ("Fund safety" / "Privacy"). Colour + borders only — no font
+   declarations (typography freeze, c24). */
+.s-table .cmp col.c-tag { width: 178px; }
+.s-table .cmp td.row-tag { color: var(--sky); border-right: 1px solid var(--line-strong); }
+.s-table .cmp td.tag-empty { border-bottom: none; }
 
 /* --- 8. Demo --------------------------------------------------------- */
 .demo-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 36px; flex: 1 1 auto; min-height: 0; margin-top: 10px; }

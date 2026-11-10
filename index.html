@@ -194,7 +194,6 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">01</div>
         <h2>Enter <em>Sombra</em></h2>
         <p class="lede">Privacy built to endure the quantum age.</p>
       </div>
@@ -288,8 +287,8 @@
         <h2>Privacy with <em>Compliance.</em></h2>
         <div class="cols" style="gap:30px 40px; grid-template-rows:auto auto">
           <div class="card fragment rise">
-            <div class="card-top"><h3>Private on/off-ramps</h3><svg class="icon"><use href="#i-swap"/></svg></div>
-            <p>Deposits and withdrawals can run through a privacy relayer — ramps that settle off-chain, so value entering and leaving the pool stays private.</p>
+            <div class="card-top"><h3>Private withdrawals</h3><svg class="icon"><use href="#i-swap"/></svg></div>
+            <p>Withdrawals can run through a privacy relayer, so value leaving the pool stays private. Private deposits are coming soon.</p>
           </div>
           <div class="card fragment rise">
             <div class="card-top"><h3>Scoped disclosure</h3><span class="badge design">V2 design</span></div>
@@ -310,7 +309,6 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">02</div>
         <h2>How it works — <em>and how it compares</em></h2>
         <p class="lede">Enough architecture to trust it. Not a blueprint.</p>
       </div>
@@ -457,9 +455,10 @@
         <div class="eyebrow">Landscape</div>
         <h2>How Sombra compares <em>today.</em></h2>
         <table class="cmp">
-          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
+          <colgroup><col class="c-tag"><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
           <thead>
             <tr>
+              <th></th>
               <th scope="col"></th>
               <th scope="col" class="us">Sombra<small>Solana · ZK notes</small></th>
               <th scope="col">Zcash<small>Orchard / Ironwood pool</small></th>
@@ -470,6 +469,7 @@
           </thead>
           <tbody>
             <tr>
+              <td class="tag-empty"></td>
               <th scope="row">Shielded transfers</th>
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool</td>
@@ -478,6 +478,7 @@
               <td><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
             </tr>
             <tr>
+              <td class="tag-empty"></td>
               <th scope="row">Native to Solana liquidity</th>
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>SPL in / SPL out</td>
               <td><span class="no" role="img" aria-label="no"></span>Separate chain</td>
@@ -486,6 +487,7 @@
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
             </tr>
             <tr>
+              <td class="row-tag" rowspan="2"><span class="yes" role="img" aria-label="yes"></span>Fund safety</td>
               <th scope="row">Proof system</th>
               <td class="us">STARK · no trusted setup</td>
               <td>Halo 2 · no trusted setup</td>
@@ -502,6 +504,7 @@
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
             </tr>
             <tr>
+              <td class="row-tag"><span class="yes" role="img" aria-label="yes"></span>Privacy</td>
               <th scope="row">Quantum-safe note encryption</th>
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
               <td><span class="no" role="img" aria-label="no"></span>ECDH (Pallas/Jubjub)</td>
@@ -577,8 +580,7 @@
     <section class="s-divider">
       <div class="frame">
         <div class="arc"></div>
-        <div class="num" aria-hidden="true">03</div>
-        <div class="eyebrow">Part three · Integration architecture</div>
+        <div class="eyebrow">Integration architecture</div>
         <h2>Going private used to mean <em>leaving DeFi.</em></h2>
         <p class="lede">Sombra's value proposition: private access to the Solana liquidity you already use.</p>
       </div>
@@ -616,8 +618,8 @@
           </div>
           <div class="card">
             <div class="card-top"><svg class="icon"><use href="#i-door"/></svg><span class="badge live">Live on Devnet</span></div>
-            <h3>Onramp / offramp</h3>
-            <p>The entry and exit points — private via the relayer, so value in and out of the pool stays shielded.</p>
+            <h3>Private DeFi</h3>
+            <p>Private access to Solana liquidity you already use — withdraw to any SPL account, back to DeFi.</p>
           </div>
         </div>
         <aside class="notes">
