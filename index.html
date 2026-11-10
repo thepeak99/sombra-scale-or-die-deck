@@ -492,7 +492,7 @@
         <div class="eyebrow">Landscape</div>
         <h2>How Sombra compares <em>today.</em></h2>
         <table class="cmp">
-          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col><col></colgroup>
+          <colgroup><col class="c-head"><col class="c-us"><col class="c-wide"><col><col><col></colgroup>
           <thead>
             <tr>
               <th scope="col"></th>
@@ -500,7 +500,6 @@
               <th scope="col">Zcash<small>Orchard / Ironwood pool</small></th>
               <th scope="col">Privacy Cash<small>Solana</small></th>
               <th scope="col">Rings<small>Helius &times; Light &middot; devnet beta</small></th>
-              <th scope="col">Arcium<small>Solana · MPC</small></th>
               <th scope="col">Umbra<small>Solana &middot; ZK pool</small></th>
             </tr>
           </thead>
@@ -511,14 +510,12 @@
               <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Shield/unshield pool</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Shielded pool, devnet beta</td>
-              <td><span class="na">—</span>Encrypted compute (MPC)</td>
               <td><span class="yes" role="img" aria-label="yes"></span>Encrypted notes</td>
             </tr>
             <tr>
               <th scope="row">Native to Solana liquidity</th>
               <td class="us"><span class="yes" role="img" aria-label="yes"></span>SPL in / SPL out</td>
               <td><span class="no" role="img" aria-label="no"></span>Separate chain</td>
-              <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
               <td><span class="yes" role="img" aria-label="yes"></span>On Solana</td>
@@ -529,7 +526,6 @@
               <td>Halo 2 · no trusted setup</td>
               <td>Groth16 (BN254)</td>
               <td>Groth16 (BN254)</td>
-              <td>n/a (MPC)</td>
               <td>Groth16 (BN254)</td>
             </tr>
             <tr>
@@ -538,7 +534,6 @@
               <td><span class="no" role="img" aria-label="no"></span>EC discrete-log</td>
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
-              <td><span class="na">—</span>n/a</td>
               <td><span class="no" role="img" aria-label="no"></span>Pairing-based</td>
             </tr>
             <tr>
@@ -547,15 +542,13 @@
               <td><span class="no" role="img" aria-label="no"></span>ECDH (Pallas/Jubjub)</td>
               <td><span class="no" role="img" aria-label="no"></span>AES-256, key from Ed25519 sig</td>
               <td><span class="no" role="img" aria-label="no"></span>X25519 ECDH</td>
-              <td><span class="no" role="img" aria-label="no"></span>X25519 key exchange</td>
               <td><span class="yes" role="img" aria-label="yes"></span>ML-KEM-768</td>
             </tr>
           </tbody>
         </table>
         <div class="table-foot">
           <span>Zcash: Orchard-protocol pools (Ironwood since Jul 2026). Legacy Sapling uses <span class="nowrap">Groth16/BLS12-381</span> — same non-PQ verdict. Zcash&rsquo;s PQ plan (ML-KEM) is roadmap.</span>
-          <span>Elusiv (Solana): sunset announced 29 Feb 2024; its team went on to build Arcium.</span>
-          <span>Arcium is an encrypted-compute network; its first shielded app was Umbra (now its own ZK pool). Rings: built by the Light Protocol team, acquired by Helius (Jun 2026); devnet private beta.</span>
+          <span>Rings: built by the Light Protocol team, acquired by Helius (Jun 2026); devnet private beta.</span>
           <span>Umbra (Solana): first app on Arcium (mainnet alpha Feb 2026, public Mar 2026); its current protocol is a ZK shielded pool &mdash; Groth16/BN254 proofs, ML-KEM-768 note encryption, 3-node enclave guardian committee with shared viewing keys.</span>
           <span>Quantum-safety judged per component: hash-based proofs and symmetric ciphers are PQ; elliptic-curve and pairing-based schemes are not.</span>
         </div>
