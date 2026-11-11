@@ -131,7 +131,7 @@
             <li class="a7">Most of today&rsquo;s privacy protocols seal with elliptic-curve key exchange — shielded today, decrypted tomorrow.</li>
           </ul>
         </div>
-        <p class="closer late" style="top: 780px"><span class="g">The blockchain is the harvester. Every node keeps a copy.</span> <span class="underline">Forever.</span></p>
+        <p class="closer fragment rise" style="top: 780px"><span class="g">The blockchain is the harvester. Every node keeps a copy.</span> <span class="underline">Forever.</span></p>
         <aside class="notes">
           The thesis of the talk: funds have a migration path (signatures rotate with a fork), privacy does not (ciphertext, once decrypted, is done). Sources: Ethereum&rsquo;s hash-based (L1) signature roadmap; Solana/Anza post-quantum prototype — both public roadmap work.
         </aside>
@@ -184,10 +184,10 @@
           <div class="qd-s">long after the fact</div>
         </div>
 
-        <svg class="qd-brk" width="896" height="34" viewBox="0 0 896 34" aria-hidden="true" style="position: absolute; left: 734px; top: 742px"><path d="M6 32 V8 Q6 4 10 4 H886 Q890 4 890 8 V32" fill="none" stroke="#A73D13" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/></svg>
-        <div class="cap wh qd-brk-label" style="position: absolute; left: 734px; top: 786px; width: 896px; text-align: center; font-size: 17px; letter-spacing: 0.3em">Unobservable impact window</div>
+        <svg class="qd-brk fragment" data-fragment-index="1" width="896" height="34" viewBox="0 0 896 34" aria-hidden="true" style="position: absolute; left: 734px; top: 742px"><path d="M6 32 V8 Q6 4 10 4 H886 Q890 4 890 8 V32" fill="none" stroke="#A73D13" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/></svg>
+        <div class="cap wh qd-brk-label fragment" data-fragment-index="1" style="position: absolute; left: 734px; top: 786px; width: 896px; text-align: center; font-size: 17px; letter-spacing: 0.3em">Unobservable impact window</div>
 
-        <div class="qd-call" style="position: absolute; left: 140px; top: 852px; width: 1640px; height: 134px; box-sizing: border-box; padding: 0 44px; border-radius: 18px; background: #233A35; border: 1.5px solid #B1E0FF; display: flex; align-items: center; gap: 36px">
+        <div class="qd-call fragment" data-fragment-index="1" style="position: absolute; left: 140px; top: 852px; width: 1640px; height: 134px; box-sizing: border-box; padding: 0 44px; border-radius: 18px; background: #233A35; border: 1.5px solid #B1E0FF; display: flex; align-items: center; gap: 36px">
           <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path class="qd-shield" d="M12 2.5 L19.5 5.5 V11.5 C19.5 16.2 16.4 19.8 12 21.5 C7.6 19.8 4.5 16.2 4.5 11.5 V5.5 Z"/></svg>
           <p style="margin: 0; font-size: 36px; line-height: 1.3; letter-spacing: -0.02em">With Sombra, your privacy is safe from quantum attacks —<br><span class="qd-s" style="font-size: inherit">what&rsquo;s sealed today</span> <span class="sky">stays sealed</span> <span class="qd-s" style="font-size: inherit">after Q-Day.</span></p>
         </div>
@@ -215,7 +215,7 @@
             <li class="a8">Ciphertext already on-chain is <b>harvested</b> &mdash; no new address un-posts it.</li>
           </ul>
         </div>
-        <div class="card fj late" style="position: absolute; left: 140px; top: 784px; width: 1640px; height: 200px">
+        <div class="card fj fragment rise" style="position: absolute; left: 140px; top: 784px; width: 1640px; height: 200px">
           <div class="gap-ring"></div>
           <div class="row"><h3 class="ct">Key takeaway</h3><span class="tag ol"><i></i>Sombra</span></div>
           <p class="body" style="margin-top: 22px"><b>Is it just a signature fix?</b> Mostly &mdash; it saves funds. Past and future data stays open to harvest-now-decrypt-later. <span class="sky">That&rsquo;s the gap Sombra closes.</span></p>
@@ -258,7 +258,7 @@
             <p class="body" style="margin-top: 18px; font-size: 25px">SPL tokens in, SPL tokens out. Not a new chain — <b>a privacy extension for the liquidity you already have.</b></p>
           </div>
         </div>
-        <p class="closer late" style="top: 820px"><span class="g">Built for a world with quantum computers</span> and AI-scale surveillance.</p>
+        <p class="closer fragment rise" style="top: 820px"><span class="g">Built for a world with quantum computers</span> and AI-scale surveillance.</p>
       </div>
     </section>
 
@@ -285,8 +285,8 @@
             <li class="a6" style="font-size: 25px"><b>Transaction signing &amp; fee payers.</b></li>
             <li class="a7" style="font-size: 25px"><b>Prover-node voting keys</b> — rotated after every use to limit exposure.</li>
           </ul>
-          <div class="divider" style="margin-top: 40px"></div>
-          <p class="late" style="margin: 36px 0 0; font-size: 30px; line-height: 1.4; letter-spacing: -0.01em"><span class="g">Our rule:</span> if the authorization path is Ed25519, <span class="sky">we don&rsquo;t call it post-quantum.</span></p>
+          <div class="divider fragment" data-fragment-index="1" style="margin-top: 40px"></div>
+          <p class="fragment rise" data-fragment-index="1" style="margin: 36px 0 0; font-size: 30px; line-height: 1.4; letter-spacing: -0.01em"><span class="g">Our rule:</span> if the authorization path is Ed25519, <span class="sky">we don&rsquo;t call it post-quantum.</span></p>
         </div>
       </div>
     </section>
@@ -356,6 +356,7 @@
       <div class="sl vf">
         <div class="cap eyebrow a1">Value flow</div>
         <h2 class="h1 a1"><span class="g">How value moves</span> through the shielded pool.</h2>
+        <span class="fragment vf-c1" data-fragment-index="1" aria-hidden="true"></span><span class="fragment vf-c2" data-fragment-index="2" aria-hidden="true"></span><span class="fragment vf-c3" data-fragment-index="3" aria-hidden="true"></span>
         <span class="tag ol a1" style="position: absolute; right: 60px; top: 70px">Sombra V2 design</span>
 
         <div class="panel" style="left: 60px; width: 360px"><div class="cap">Solana · public</div></div>
@@ -615,7 +616,7 @@
             <div class="track"><div class="fill b3"></div></div>
           </div>
         </div>
-        <div class="card a6" style="position: absolute; left: 140px; top: 640px; width: 800px; height: 350px">
+        <div class="card fragment rise" data-fragment-index="1" style="position: absolute; left: 140px; top: 640px; width: 800px; height: 350px">
           <h3 class="ct">On-chain: 32-byte hashes</h3>
           <ul class="bl" style="margin-top: 26px; gap: 14px">
             <li style="font-size: 24px">No proof, ciphertext or signature touches the chain &mdash; <b>~1 KB per transfer</b>, whatever the prover.</li>
@@ -623,8 +624,8 @@
             <li style="font-size: 24px"><span class="tech">ML-DSA-65</span> sig (3,309 B), ~0.6 MB proof: off-chain.</li>
           </ul>
         </div>
-        <div class="card fj a7" style="position: absolute; left: 980px; top: 640px; width: 800px; height: 350px">
-          <div class="edge e4"></div>
+        <div class="card fj fragment rise" data-fragment-index="1" style="position: absolute; left: 980px; top: 640px; width: 800px; height: 350px">
+          <div class="edge"></div>
           <h3 class="ct">Full circle with Bunker Mode</h3>
           <ul class="bl" style="margin-top: 26px; gap: 14px">
             <li style="font-size: 24px">Vitalik&rsquo;s ask: keep encrypted notes off-chain. <b>Sombra already does &mdash; only the hash is posted.</b></li>
@@ -740,11 +741,11 @@
         <div class="ps-tok" style="position: absolute; left: 330px; top: 430px"></div>
 
         <div style="position: absolute; left: 140px; top: 772px; width: 1640px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px">
-          <div class="pill ps-p1"><div class="n">Wallet</div><div class="d">builds the sealed intent</div></div>
-          <div class="pill ps-p2"><div class="n">Relayer</div><div class="d">submits · pays fees &amp; rent</div></div>
-          <div class="pill ps-p3"><div class="n">Prover (TEE)</div><div class="d">produces the STARK</div></div>
-          <div class="pill ps-p4"><div class="n">Verifiers</div><div class="d">check the proof · vote</div></div>
-          <div class="pill yours ps-p5"><div class="n">Your protocol</div><div class="d">settles the public leg</div></div>
+          <div class="pill fragment rise" data-fragment-index="1"><div class="n">Wallet</div><div class="d">builds the sealed intent</div></div>
+          <div class="pill fragment rise" data-fragment-index="1"><div class="n">Relayer</div><div class="d">submits · pays fees &amp; rent</div></div>
+          <div class="pill fragment rise" data-fragment-index="2"><div class="n">Prover (TEE)</div><div class="d">produces the STARK</div></div>
+          <div class="pill fragment rise" data-fragment-index="2"><div class="n">Verifiers</div><div class="d">check the proof · vote</div></div>
+          <div class="pill yours fragment rise" data-fragment-index="3"><div class="n">Your protocol</div><div class="d">settles the public leg</div></div>
         </div>
         <aside class="notes">
           A private action is a private contract call: the user&rsquo;s shielded funds drive a public protocol action, and the result returns as a shielded note. Flow: the wallet builds a sealed intent &rarr; the relayer submits it and pays fees/rent with an ephemeral key, so the user&rsquo;s wallet never appears &rarr; the prover in an attested TEE produces the STARK &rarr; verifier nodes check it off-chain and vote &rarr; the program settles the public leg (planned: a single allowlisted call into Jupiter) &rarr; finalize appends new note commitments &rarr; the wallet finds and decrypts its new note. If the action is rejected or times out, it is cancelled; no nullifiers are created, so the user&rsquo;s notes stay spendable (a full refund). HONESTY: the swap action is phase 2 — the program already reserves the swap fields but rejects them today. Do not claim batching/aggregation. Swaps are the first planned action kind; staking/lending/perps are design-partner use cases. Status: design partners open. Amounts become public wherever value crosses the private&rarr;public boundary (the public leg) — only identity/linkage stays hidden there.

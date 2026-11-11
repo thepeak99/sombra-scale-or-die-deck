@@ -502,6 +502,8 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .sl .e3 { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 1.92s both; }
 .present .sl .e4 { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 2.52s both; }
 .present .sl .late { animation: sl-late 0.84s ease 6.6s both; }
+/* Click-revealed parts (.fragment) draw their card edge once shown */
+.present .sl .fragment.visible .edge { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 0.3s both; }
 .present .sl .tag i { animation: sl-blink 2.2s ease-in-out infinite; }
 /* Icons drawn on: give each stroke pathLength="1" and class="draw" */
 @keyframes sl-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
@@ -556,21 +558,22 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .sl .qd-pub { animation: sl-wake 0.3s ease 7.9s both; }
 .present .sl .qd-eye { animation: sl-eye 0.4s ease-out 7.9s both; }
 .present .sl .qd-ping { animation: sl-ping 0.8s ease-out 8s; }
-.present .sl .qd-brk { animation: sl-wipe 0.78s cubic-bezier(0.4, 0, 0.2, 1) 8.58s both; }
-.present .sl .qd-brk-label { animation: sl-track 0.52s ease 9.1s both; }
-.present .sl .qd-call { animation: sl-up24 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) 9.75s both; }
-.present .sl .qd-shield { animation: sl-shield 0.65s ease-out 10.27s both; }
+/* impact window + callout wait for the next click */
+.present .sl .qd-brk.visible { animation: sl-wipe 0.78s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.present .sl .qd-brk-label.visible { animation: sl-track 0.52s ease 0.52s both; }
+.present .sl .qd-call.visible { animation: sl-up24 0.65s cubic-bezier(0.2, 0.7, 0.2, 1) 1.17s both; }
+.present .sl .visible .qd-shield { animation: sl-shield 0.65s ease-out 1.69s both; }
 
 /* 4 · The split: "Not fixable" shakes, "Forever." gets underlined */
 @keyframes sl-shake { 17% { transform: translateX(-4px); } 33% { transform: translateX(4px); } 50% { transform: translateX(-3px); } 67% { transform: translateX(2px); } }
 .present .sl .shake { animation: sl-shake 0.72s ease 3.6s; }
 .sl .underline { position: relative; display: inline-block; }
 .sl .underline::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--sky); transform-origin: left; }
-.present .sl .underline::after { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 8.4s both; }
+.present .sl .visible .underline::after { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 0.6s both; }
 
 /* 9 · Post-quantum: a rule draws across before "Our rule" lands */
 .sl .divider { height: 1.5px; background: var(--line); transform-origin: left; }
-.present .sl .divider { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 6.24s both; }
+.present .sl .divider.visible { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) both; }
 
 /* 10 · Crypto agility: "Harvest risk" sends out one ring */
 .sl .urgent { position: relative; }
@@ -584,7 +587,7 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .sl .nudge-r { animation: sl-nudge-r 2.4s ease-in-out infinite; }
 .present .sl .nudge-l { animation: sl-nudge-l 2.4s ease-in-out infinite; }
 
-/* 13 · Value flow: one deposit rides through the pool (the canvas's 14 s story) */
+/* 13 · Value flow: one deposit rides through the pool, one phase per click */
 .vf .eyebrow { left: 60px; top: 70px; }
 .vf .h1 { left: 60px; top: 96px; font-size: 64px; line-height: 1.08; letter-spacing: -0.03em; }
 .vf .cap { font-size: 12px; letter-spacing: 0.16em; }
@@ -612,52 +615,83 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .vf .vf-pop, .vf .vf-ring { transform-box: fill-box; transform-origin: center; }
 .vf .vf-rp, .vf .vf-ring, .vf .vf-l1, .vf .vf-l2, .vf .vf-l3, .vf .vf-dim, .vf .vf-box, .vf .vf-arc { opacity: 0; }
 .vf .vf-s21, .vf .vf-s22, .vf .vf-s23 { opacity: 0.55; }
-@keyframes vf-route { 0%, 5.71% { stroke-dashoffset: 1; } 10% { stroke-dashoffset: 0.8482; } 22%, 36% { stroke-dashoffset: 0.4342; } 42%, 58% { stroke-dashoffset: 0.36; } 64% { stroke-dashoffset: 0.1383; } 72%, 100% { stroke-dashoffset: 0; } }
-@keyframes vf-move { 0%, 5.71% { offset-distance: 0%; } 10% { offset-distance: 15.18%; } 22%, 36% { offset-distance: 56.58%; } 42%, 58% { offset-distance: 64%; } 64% { offset-distance: 86.17%; } 72%, 100% { offset-distance: 100%; } }
-@keyframes vf-look { 0%, 21% { background: var(--sky); border-color: var(--sky); } 22.5%, 35.5% { background: var(--fjord); border-color: var(--sky); } 36.8%, 57.5% { background: var(--white); border-color: var(--white); } 59%, 100% { background: var(--canyon); border-color: var(--white); } }
-@keyframes vf-rp { 0% { opacity: 1; stroke-dashoffset: 1; } 36% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
-@keyframes vf-pop { 0% { opacity: 0; transform: scale(0.3); } 50% { transform: scale(1.4); } }
-@keyframes vf-drop { from { opacity: 0; transform: translateY(-8px); } }
+/* Three clicks, three phases: 1 deposit, 2 private transfer, 3 withdrawal.
+   Each phase starts from where the last one stopped, so every keyframe names
+   its from-state. Reduced motion skips the dimmed start and shows the end. */
+@media (prefers-reduced-motion: no-preference) {
+  .present .vf .vf-route { stroke-dashoffset: 1; }
+  .present .vf .vf-w-pl, .present .vf .vf-w-on, .present .vf .vf-w-p, .present .vf .vf-w-pn, .present .vf .vf-w-sp,
+  .present .vf .vf-w-ix, .present .vf .vf-w-hid, .present .vf .vf-w-off, .present .vf .vf-w-de { opacity: 0.32; }
+  .present .vf .vf-pop, .present .vf .vf-n1, .present .vf .vf-n2, .present .vf .vf-l4, .present .vf .vf-lr { opacity: 0; }
+}
+@keyframes vf-route1 { from { stroke-dashoffset: 1; } 26% { stroke-dashoffset: 0.8482; } to { stroke-dashoffset: 0.4342; } }
+@keyframes vf-route2 { from { stroke-dashoffset: 0.4342; } to { stroke-dashoffset: 0.36; } }
+@keyframes vf-route3 { from { stroke-dashoffset: 0.36; } 43% { stroke-dashoffset: 0.1383; } to { stroke-dashoffset: 0; } }
+@keyframes vf-move1 { from { offset-distance: 0%; } 26% { offset-distance: 15.18%; } to { offset-distance: 56.58%; } }
+@keyframes vf-move2 { from { offset-distance: 56.58%; } to { offset-distance: 64%; } }
+@keyframes vf-move3 { from { offset-distance: 64%; } 43% { offset-distance: 86.17%; } to { offset-distance: 100%; } }
+@keyframes vf-tint1 { 0%, 92% { background: var(--sky); border-color: var(--sky); } 100% { background: var(--fjord); border-color: var(--sky); } }
+@keyframes vf-tint2 { from { background: var(--fjord); border-color: var(--sky); } to { background: var(--white); border-color: var(--white); } }
+@keyframes vf-tint3 { from { background: var(--white); border-color: var(--white); } to { background: var(--canyon); border-color: var(--white); } }
+@keyframes vf-on { from { opacity: 0.32; } to { opacity: 1; } }
+@keyframes vf-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes vf-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes vf-dim-in { from { opacity: 0; } to { opacity: 0.6; } }
+@keyframes vf-dim-out { from { opacity: 0.6; } to { opacity: 0; } }
+@keyframes vf-arc-in { from { opacity: 1; stroke-dashoffset: 1; } to { opacity: 1; stroke-dashoffset: 0; } }
+@keyframes vf-pop { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 1; transform: scale(1.4); } 100% { opacity: 1; transform: none; } }
+@keyframes vf-pop-dim { 0% { opacity: 0; transform: scale(0.3); } 50% { opacity: 0.55; transform: scale(1.3); } 100% { opacity: 0.55; transform: none; } }
+@keyframes vf-drop { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
 @keyframes vf-ring { 0% { opacity: 0; transform: scale(0.5); } 10% { opacity: 0.9; transform: none; } 100% { opacity: 0; transform: scale(2.8); } }
-@keyframes vf-wake { from { opacity: 0.32; } }
-@keyframes vf-l1 { 0% { opacity: 0; } 30%, 80% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes vf-l2 { 0% { opacity: 0; } 16%, 89% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes vf-l3 { 0% { opacity: 0; } 7%, 95% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes vf-dim { 0% { opacity: 0; } 11%, 89% { opacity: 0.6; } 100% { opacity: 0; } }
-@keyframes vf-box { 0% { opacity: 0; } 9%, 89% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes vf-arc { 0% { opacity: 1; stroke-dashoffset: 1; } 27% { stroke-dashoffset: 0; } 89% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
-.present .vf .vf-route { animation: vf-route 14s ease-in-out both; }
-.present .vf .vf-token { animation: vf-move 14s ease-in-out both, vf-look 14s linear both; }
-.present .vf .vf-rp1 { animation: vf-rp 1.54s ease-out 3.08s; }
-.present .vf .vf-rp2 { animation: vf-rp 1.54s ease-out 5.88s; }
-.present .vf .vf-s20 { animation: vf-pop 0.42s ease-out 3.08s both; }
-.present .vf .vf-s21 { animation: vf-pop 0.35s ease-out 3.71s both; }
-.present .vf .vf-s22 { animation: vf-pop 0.35s ease-out 4.13s both; }
-.present .vf .vf-s23 { animation: vf-pop 0.35s ease-out 4.55s both; }
-.present .vf .vf-s24 { animation: vf-pop 0.42s ease-out 5.88s both; }
-.present .vf .vf-n1 { animation: vf-drop 0.28s ease-out 5.11s both; }
-.present .vf .vf-n2 { animation: vf-drop 0.28s ease-out 8.19s both; }
-.present .vf .vf-r-on { animation: vf-ring 0.84s ease-out 1.4s; }
-.present .vf .vf-r-rt1 { animation: vf-ring 0.84s ease-out 3.64s; }
-.present .vf .vf-r-rt2 { animation: vf-ring 0.84s ease-out 6.44s; }
-.present .vf .vf-r-off { animation: vf-ring 0.84s ease-out 8.96s; }
-.present .vf .vf-w-pl { animation: vf-wake 0.21s ease 0.8s both; }
-.present .vf .vf-w-on { animation: vf-wake 0.21s ease 1.4s both; }
-.present .vf .vf-w-p { animation: vf-wake 0.21s ease 4.76s both; }
-.present .vf .vf-w-pn { animation: vf-wake 0.21s ease 4.9s both; }
-.present .vf .vf-w-sp { animation: vf-wake 0.21s ease 5.18s both; }
-.present .vf .vf-w-ix { animation: vf-wake 0.21s ease 6.02s both; }
-.present .vf .vf-w-hid { animation: vf-wake 0.42s ease 6.72s both; }
-.present .vf .vf-w-off { animation: vf-wake 0.21s ease 8.96s both; }
-.present .vf .vf-w-de { animation: vf-wake 0.21s ease 10.08s both; }
-.present .vf .vf-l1 { animation: vf-l1 0.7s ease 3.01s; }
-.present .vf .vf-l2 { animation: vf-l2 1.33s ease 3.64s; }
-.present .vf .vf-l3 { animation: vf-l3 3.08s ease 4.97s; }
-.present .vf .vf-l4 { animation: sl-fade 0.21s ease 8.05s both; }
-.present .vf .vf-lr { animation: sl-fade 0.28s ease 5.88s both; }
-.present .vf .vf-dim { animation: vf-dim 3.29s ease 4.9s; }
-.present .vf .vf-box { animation: vf-box 3.22s ease 4.97s; }
-.present .vf .vf-arc { animation: vf-arc 3.15s ease-in-out 5.04s; }
+@keyframes vf-rp { 0% { opacity: 1; stroke-dashoffset: 1; } 36% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
+@keyframes vf-blip { 0% { opacity: 0; } 30%, 80% { opacity: 1; } 100% { opacity: 0; } }
+
+/* phase 1 · deposit: onramp, commitment, other notes join */
+.present .vf:has(.vf-c1.visible) .vf-route { animation: vf-route1 2.28s ease-in-out 0.2s both; }
+.present .vf:has(.vf-c1.visible) .vf-token { animation: vf-move1 2.28s ease-in-out 0.2s both, vf-tint1 2.5s linear 0.2s both; }
+.present .vf:has(.vf-c1.visible) .vf-w-pl { animation: vf-on 0.21s ease both; }
+.present .vf:has(.vf-c1.visible) .vf-w-on { animation: vf-on 0.21s ease 0.6s both; }
+.present .vf:has(.vf-c1.visible) .vf-r-on { animation: vf-ring 0.84s ease-out 0.6s; }
+.present .vf:has(.vf-c1.visible) .vf-l1 { animation: vf-blip 0.7s ease 2.21s; }
+.present .vf:has(.vf-c1.visible) .vf-s20 { animation: vf-pop 0.42s ease-out 2.28s both; }
+.present .vf:has(.vf-c1.visible) .vf-rp1 { animation: vf-rp 1.54s ease-out 2.28s; }
+.present .vf:has(.vf-c1.visible) .vf-r-rt1 { animation: vf-ring 0.84s ease-out 2.84s; }
+.present .vf:has(.vf-c1.visible) .vf-l2 { animation: vf-in 0.3s ease 2.84s both; }
+.present .vf:has(.vf-c1.visible) .vf-s21 { animation: vf-pop-dim 0.35s ease-out 2.91s both; }
+.present .vf:has(.vf-c1.visible) .vf-s22 { animation: vf-pop-dim 0.35s ease-out 3.33s both; }
+.present .vf:has(.vf-c1.visible) .vf-s23 { animation: vf-pop-dim 0.35s ease-out 3.75s both; }
+
+/* phase 2 · private transfer: old note nullified, recipient's note encrypted */
+.present .vf:has(.vf-c2.visible) .vf-route { animation: vf-route2 0.84s ease-in-out 0.14s both; }
+.present .vf:has(.vf-c2.visible) .vf-token { animation: vf-move2 0.84s ease-in-out 0.14s both, vf-tint2 0.2s linear 0.25s both; }
+.present .vf:has(.vf-c2.visible) .vf-l2 { animation: vf-out 0.3s ease both; }
+.present .vf:has(.vf-c2.visible) .vf-dim { animation: vf-dim-in 0.35s ease both; }
+.present .vf:has(.vf-c2.visible) .vf-box { animation: vf-in 0.28s ease 0.07s both; }
+.present .vf:has(.vf-c2.visible) .vf-l3 { animation: vf-in 0.21s ease 0.07s both; }
+.present .vf:has(.vf-c2.visible) .vf-arc { animation: vf-arc-in 0.84s ease-in-out 0.14s both; }
+.present .vf:has(.vf-c2.visible) .vf-w-p { animation: vf-on 0.21s ease both; }
+.present .vf:has(.vf-c2.visible) .vf-w-pn { animation: vf-on 0.21s ease 0.14s both; }
+.present .vf:has(.vf-c2.visible) .vf-w-sp { animation: vf-on 0.21s ease 0.28s both; }
+.present .vf:has(.vf-c2.visible) .vf-n1 { animation: vf-drop 0.28s ease-out 0.21s both; }
+.present .vf:has(.vf-c2.visible) .vf-s24 { animation: vf-pop 0.42s ease-out 0.98s both; }
+.present .vf:has(.vf-c2.visible) .vf-rp2 { animation: vf-rp 1.54s ease-out 0.98s; }
+.present .vf:has(.vf-c2.visible) .vf-lr { animation: vf-in 0.28s ease 0.98s both; }
+.present .vf:has(.vf-c2.visible) .vf-w-ix { animation: vf-on 0.21s ease 1.12s both; }
+.present .vf:has(.vf-c2.visible) .vf-r-rt2 { animation: vf-ring 0.84s ease-out 1.54s; }
+.present .vf:has(.vf-c2.visible) .vf-w-hid { animation: vf-on 0.42s ease 1.82s both; }
+
+/* phase 3 · withdrawal: recipient's note nullified, tokens leave to DeFi */
+.present .vf:has(.vf-c3.visible) .vf-route { animation: vf-route3 1.96s ease-in-out both; }
+.present .vf:has(.vf-c3.visible) .vf-token { animation: vf-move3 1.96s ease-in-out both, vf-tint3 0.2s linear 0.14s both; }
+.present .vf:has(.vf-c3.visible) .vf-dim { animation: vf-dim-out 0.35s ease both; }
+.present .vf:has(.vf-c3.visible) .vf-box,
+.present .vf:has(.vf-c3.visible) .vf-l3,
+.present .vf:has(.vf-c3.visible) .vf-arc { animation: vf-out 0.3s ease both; }
+.present .vf:has(.vf-c3.visible) .vf-l4 { animation: vf-in 0.21s ease both; }
+.present .vf:has(.vf-c3.visible) .vf-n2 { animation: vf-drop 0.28s ease-out 0.07s both; }
+.present .vf:has(.vf-c3.visible) .vf-r-off { animation: vf-ring 0.84s ease-out 0.84s; }
+.present .vf:has(.vf-c3.visible) .vf-w-off { animation: vf-on 0.21s ease 0.84s both; }
+.present .vf:has(.vf-c3.visible) .vf-w-de { animation: vf-on 0.21s ease 1.96s both; }
 
 /* 14 · Remote prover: attest, seal, prove, return (the canvas's 10 s story) */
 .pv .box { position: absolute; top: 300px; width: 296px; height: 148px; box-sizing: border-box; padding: 26px 28px; border-radius: 18px; background: var(--pine); }
@@ -720,11 +754,6 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .ps .ps-seg2 { animation: sl-wipe 0.96s linear 3.48s both; }
 .present .ps .ps-seg3 { animation: sl-wipe 0.96s linear 5.28s both; }
 .present .ps .ps-tok { animation: ps-tok 12s cubic-bezier(0.5, 0, 0.3, 1), ps-tint 12s linear; }
-.present .ps .ps-p1 { animation: sl-late 0.48s ease 6.96s both; }
-.present .ps .ps-p2 { animation: sl-late 0.48s ease 7.2s both; }
-.present .ps .ps-p3 { animation: sl-late 0.48s ease 7.44s both; }
-.present .ps .ps-p4 { animation: sl-late 0.48s ease 7.68s both; }
-.present .ps .ps-p5 { animation: sl-late 0.48s ease 7.92s both; }
 
 /* 20 · Call to action: the send states light up in order; a cursor blinks */
 .sl a { border-bottom: 0; }
@@ -741,7 +770,7 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }
 @keyframes sl-gap { 0% { opacity: 0; } 25% { opacity: 1; } 75% { opacity: 0.35; } }
-.present .sl .gap-ring { animation: sl-gap 1.92s ease 7.44s both; }
+.present .sl .visible > .gap-ring { animation: sl-gap 1.92s ease 0.4s both; }
 
 /* ---------- Persistent chrome (outside the scaled canvas) ------------ */
 .deck-chrome {
