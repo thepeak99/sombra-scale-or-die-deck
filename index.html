@@ -93,27 +93,27 @@
       </div>
     </section>
 
-    <section class="s-two-col" id="privacy-not-funds">
-      <div class="frame">
-        <div class="eyebrow">The split that decides everything</div>
-        <h2>Your funds will be fine. <em>Your privacy won&rsquo;t.</em></h2>
-        <div class="cols">
-          <div class="card ok">
-            <div class="card-top"><h3>Signatures — funds</h3><span class="badge live">Fixable</span></div>
-            <ul class="lux ok small">
-              <li>Chains are migrating to PQ-safe signatures — Ethereum&rsquo;s hash-based roadmap, Solana/Anza&rsquo;s PQ prototype.</li>
-              <li>A <strong>fork</strong> can rotate a key — migrate before Q-Day, and you&rsquo;re on time.</li>
-            </ul>
-          </div>
-          <div class="card warn">
-            <div class="card-top"><h3>Encryption — privacy</h3><span class="badge caution">Not fixable</span></div>
-            <ul class="lux warn small">
-              <li>Once a ciphertext is decrypted, <strong>no upgrade can re-encrypt it.</strong></li>
-              <li>Most of today&rsquo;s privacy protocols seal with elliptic-curve key exchange — shielded today, decrypted tomorrow.</li>
-            </ul>
-          </div>
+    <section id="privacy-not-funds">
+      <div class="sl">
+        <div class="cap eyebrow a1">The split that decides everything</div>
+        <h2 class="h1 a1"><span class="g">Your funds will be fine.</span> Your privacy won&rsquo;t.</h2>
+        <div class="card a2" style="position: absolute; left: 140px; top: 310px; width: 800px; height: 400px">
+          <div class="edge e1"></div>
+          <div class="row"><h3 class="ct">Signatures — funds</h3><span class="tag sk"><i></i>Fixable</span></div>
+          <ul class="bl" style="margin-top: 40px">
+            <li class="a4">Chains are migrating to PQ-safe signatures — Ethereum&rsquo;s hash-based roadmap, Solana/Anza&rsquo;s PQ prototype.</li>
+            <li class="a5">A <b>fork</b> can rotate a key — migrate before Q-Day, and you&rsquo;re on time.</li>
+          </ul>
         </div>
-        <p class="lede after" style="max-width:none">The blockchain is the harvester. Every node keeps a copy. <em>Forever.</em></p>
+        <div class="card a3" style="position: absolute; left: 980px; top: 310px; width: 800px; height: 400px">
+          <div class="edge c e2"></div>
+          <div class="row"><h3 class="ct">Encryption — privacy</h3><span class="tag cy shake"><i></i>Not fixable</span></div>
+          <ul class="bl c" style="margin-top: 40px">
+            <li class="a6">Once a ciphertext is decrypted, <b>no upgrade can re-encrypt it.</b></li>
+            <li class="a7">Most of today&rsquo;s privacy protocols seal with elliptic-curve key exchange — shielded today, decrypted tomorrow.</li>
+          </ul>
+        </div>
+        <p class="closer late" style="top: 780px"><span class="g">The blockchain is the harvester. Every node keeps a copy.</span> <span class="underline">Forever.</span></p>
         <aside class="notes">
           The thesis of the talk: funds have a migration path (signatures rotate with a fork), privacy does not (ciphertext, once decrypted, is done). Sources: Ethereum&rsquo;s hash-based (L1) signature roadmap; Solana/Anza post-quantum prototype — both public roadmap work.
         </aside>

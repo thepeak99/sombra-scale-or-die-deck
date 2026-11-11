@@ -504,6 +504,14 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
   .sl, .sl * { animation: none !important; }
 }
 
+/* ---------- v2 per-slide motion -------------------------------------- */
+/* 4 · The split: "Not fixable" shakes, "Forever." gets underlined */
+@keyframes sl-shake { 17% { transform: translateX(-4px); } 33% { transform: translateX(4px); } 50% { transform: translateX(-3px); } 67% { transform: translateX(2px); } }
+.present .sl .shake { animation: sl-shake 0.72s ease 3.6s; }
+.sl .underline { position: relative; display: inline-block; }
+.sl .underline::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--sky); transform-origin: left; }
+.present .sl .underline::after { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 8.4s both; }
+
 /* ---------- Persistent chrome (outside the scaled canvas) ------------ */
 .deck-chrome {
   position: fixed; left: 2.6vw; bottom: 2.2vh; z-index: 30;
