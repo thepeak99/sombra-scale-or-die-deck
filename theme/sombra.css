@@ -10,9 +10,9 @@
 
 /* ---------- Fonts (vendored, latin subset) -------------------------- */
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("../vendor/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");
-  font-weight: 300 700; font-style: normal; font-display: swap;
+  font-family: "APK Galeria Roman";
+  src: url("../vendor/fonts/apk-galeria-roman-400-normal.woff2") format("woff2");
+  font-weight: 100 900; font-style: normal; font-display: swap;
 }
 @font-face {
   font-family: "Inter";
@@ -59,7 +59,7 @@
 
   --radius: 22px;
 
-  --f-display: "Space Grotesk", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-display: "APK Galeria Roman", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   --f-serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;

@@ -167,6 +167,30 @@ FAVICON_LINK = '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 HERO_MARK_SVG = '<svg class="hero-mark" aria-hidden="true"><use href="#mark"/></svg>'
 CLOSING_LOCKUP_SVG = '<svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>'
 
+# Approved 2026-11-11: APK Galeria Roman replaces Space Grotesk as the display
+# face. Applied to the baseline so the font freezes (c05b, c22-c24) accept
+# exactly this swap and nothing else. Single static weight: the 100-900 range
+# stops browsers faking bold on 500-700 headings.
+FONT_SWAP = [
+    ('  font-family: "Space Grotesk";\n'
+     '  src: url("../vendor/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");\n'
+     '  font-weight: 300 700;',
+     '  font-family: "APK Galeria Roman";\n'
+     '  src: url("../vendor/fonts/apk-galeria-roman-400-normal.woff2") format("woff2");\n'
+     '  font-weight: 100 900;'),
+    ('--f-display: "Space Grotesk", "Inter",',
+     '--f-display: "APK Galeria Roman", "Inter",'),
+]
+DISPLAY_FONT_FILE = "vendor/fonts/apk-galeria-roman-400-normal.woff2"
+
+
+def apply_font_swap(css):
+    for old, new in FONT_SWAP:
+        assert css.count(old) == 1, f"font swap anchor not found once in baseline: {old!r}"
+        css = css.replace(old, new)
+    return css
+
+
 TYPO_PROPS = {
     "font-family", "font-size", "font-weight", "font-style",
     "letter-spacing", "line-height", "text-transform",
@@ -528,7 +552,7 @@ class Checker:
         css, htm = self.css_raw, self.html_raw
         css_nc = strip_comments(css) if css else ""
         css_scan = css_nc.replace("%23", "#")  # spec: %23 == # when scanning
-        bhtml, bcss = self.base_html, self.base_css
+        bhtml, bcss = self.base_html, apply_font_swap(self.base_css)
         bcss_nc = strip_comments(bcss)
 
         # ---- Contract 1: CSS hex literals in palette ------------------------
@@ -1004,6 +1028,10 @@ class Checker:
                      re.findall(r"@font-face\s*\{[^}]*\}", bcss, re.S),
                      "@font-face block(s) in theme/sombra.css differ from baseline"))
 
+        self.add("c22b_display_font_file_exists",
+                 (Path(self.root) / DISPLAY_FONT_FILE).is_file(),
+                 f"{DISPLAY_FONT_FILE} is missing")
+
         # ---- Contract 23: the four --f-* lines byte-identical ------------------
         fline = lambda c: re.findall(r"^[ \t]*--f-(?:display|body|serif|mono):[^\n]*",
                                      c, re.M)
@@ -1368,7 +1396,8 @@ CHECK_NAMES = (
        "c21a_favicon_no_transform_keywords",
        "c21b_html_no_preserve_aspect_ratio",
        "c21c_logo_css_rules_no_effect_props",
-       "c22_font_face_blocks_unchanged", "c23_font_token_lines_unchanged",
+       "c22_font_face_blocks_unchanged", "c22b_display_font_file_exists",
+       "c23_font_token_lines_unchanged",
        "c24_typography_declarations_unchanged",
        "c25a_exactly_21_top_level_sections",
        "c28_diagram_svgs_unchanged_minus_paint_attrs",
