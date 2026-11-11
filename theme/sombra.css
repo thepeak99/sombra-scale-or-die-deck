@@ -518,17 +518,14 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 /* ---------- v2 per-slide motion -------------------------------------- */
 @keyframes sl-fade { from { opacity: 0; } }
 
-/* 3 · Harvest now: the archive strip fills, then flips to decrypted */
+/* 3 · Harvest now: the archive strip fills, then flips to decrypted (the lock stays still) */
 .sl .strip-head { display: flex; justify-content: space-between; align-items: baseline; }
 .sl .strip-head small { margin-left: 12px; font-size: 18px; letter-spacing: 0.06em; text-transform: none; color: var(--text-3); }
-.sl .rev, .sl .shackle { transform-box: fill-box; transform-origin: left center; }
-.sl .shackle { transform-origin: left bottom; }
-@keyframes sl-unlock { to { transform: translateY(-3px) rotate(-18deg); } }
+.sl .rev { transform-box: fill-box; transform-origin: left center; }
 .present .sl .strip { animation: sl-fade 0.36s ease 2.34s both; }
 .present .sl .rev-h { animation: sl-grow 3.24s linear 2.7s both; }
 .present .sl .rev-d { animation: sl-grow 0.72s cubic-bezier(0.6, 0, 0.2, 1) 6.48s both; }
 .present .sl .later { animation: sl-fade 0.54s ease 6.66s both; }
-.present .sl .shackle { animation: sl-unlock 0.36s ease 6.66s both; }
 
 /* 5 · Q-Day: time runs past an unseen Q-Day; the public finds out late */
 .sl .qd-t { margin-top: 14px; font-size: 36px; letter-spacing: -0.02em; }
