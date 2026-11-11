@@ -501,6 +501,10 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .sl .e4 { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 2.52s both; }
 .present .sl .late { animation: sl-late 0.84s ease 6.6s both; }
 .present .sl .tag i { animation: sl-blink 2.2s ease-in-out infinite; }
+/* Icons drawn on: give each stroke pathLength="1" and class="draw" */
+@keyframes sl-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+.sl .draw { stroke-dasharray: 1; }
+.present .sl .draw { animation: sl-draw 1.2s ease 1.68s both; }
 @media (prefers-reduced-motion: reduce) {
   .sl, .sl * { animation: none !important; }
 }
@@ -526,7 +530,6 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .sl .qd-line { stroke-dasharray: 1; }
 .sl .qd-head, .sl .qd-flash, .sl .qd-ping { opacity: 0; }
 .sl .qd-eye, .sl .qd-shield { transform-box: fill-box; transform-origin: center; }
-@keyframes sl-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
 @keyframes sl-pop { 0% { opacity: 0; transform: scale(0.6); } 60% { opacity: 1; transform: scale(1.08); } }
 @keyframes sl-up8 { from { opacity: 0; transform: translateY(8px); } }
 @keyframes sl-band { from { opacity: 0; transform: scaleX(0.55); } }
