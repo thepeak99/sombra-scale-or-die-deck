@@ -12,6 +12,11 @@ compared the deck against the pre-re-theme baseline 66369c3 to prove phase 1
 changed no text and no geometry, and keeping them would forbid any
 legitimate content edit.
 
+The v2 slide system (2026-11-11) re-types the deck from the design canvas,
+so c24 (the phase-1 typography freeze) and c28 (the phase-1 diagram
+freeze) were retired with it. Palette,
+effects, logo and font-face contracts still hold.
+
 The e01–e19 contracts are the four approved content edits (divider
 numerals/eyebrows, the compliance card, the comparison-table row tags, the
 integration card). Written TDD-style BEFORE the edits: most are RED by
@@ -46,21 +51,21 @@ Contract -> check mapping (contract numbers from the phase-1 spec):
      c14c_no_sombra_mark_string
   15 c15_no_eclipse_or_corona
   16 c16_chrome_bar_markup_bytes
-  17 c17a_symbol_mark_exact, c17b_symbol_lockup_stacked_exact
+  17 c17a_symbol_mark_exact, c17b_symbol_wordmark_exact, c17c_no_lockup
   18 c18_favicon_svg_structure
-  19 c19a_first_section_has_hero_mark, c19b_last_section_has_closing_lockup,
+  19 c19a_first_section_has_hero_mark, c19b_last_section_has_mark_and_wordmark,
      c19c_use_reference_counts
-  20 c20a_hero_mark_520px, c20b_closing_lockup_rule_exact,
+  20 c20a_hero_mark_520px, c20b_closing_logo_rules_exact,
      c20c_deck_chrome_svg_rule_unchanged
   21 c21a_favicon_no_transform_keywords, c21b_html_no_preserve_aspect_ratio,
      c21c_logo_css_rules_no_effect_props
   22 c22_font_face_blocks_unchanged
   23 c23_font_token_lines_unchanged
-  24 c24_typography_declarations_unchanged
+  24 (retired: c24_typography_declarations_unchanged)
   25 c25a_exactly_21_top_level_sections
   26 (retired: c26_html_outside_svg_equals_baseline_two_subs)
   27 (retired: c27_non_paint_declarations_frozen)
-  28 c28_diagram_svgs_unchanged_minus_paint_attrs
+  28 (retired: c28_diagram_svgs_unchanged_minus_paint_attrs)
   29 c29a_icon_symbols_unchanged, c29b_markers_unchanged_apart_fill
   30 (retired: c30_inline_style_attrs_frozen)
   31 (retired: c31_deck_check_parity)
@@ -87,6 +92,10 @@ Verified facts baked into the checks (confirmed against the real files):
     /tmp/sombra-brand/proto/index.html:
       mark           7c4114063c89281884a53664106756618735d56e1a3497a682dcf04bbd6dcf3f
       lockup-stacked 784ef485746d8f78e066b3a16e34060226e63cec7299b5e4d694d32c32513622
+  * The wordmark symbol (2026-11-11) is the lockup's letterforms, unaltered:
+    the `d` up to the mark's "M204.39", hash
+      wordmark       1ce5c86e5eff127ffb9819c4f9c58134b40a2381dbebc25c5ba723a4cd0ce727
+    Logomark and wordmark are used apart; no stacked or standard lockup.
   * The baseline (66369c3) chrome bar bytes are exactly
       <svg><use href="#mark"/></svg><b>Sombra</b><span>·</span><span>Scale or Die</span>
     (no difference from the spec string, so the spec string is used).
@@ -129,7 +138,8 @@ PALETTE_RGB = {
     (177, 224, 255),   # sky
 }
 
-# The eleven colour tokens :root must define, with these values.
+# The thirteen colour tokens :root must define, with these values
+# (--text-dim and --sky-line came with the v2 slide system, 2026-11-11).
 ROOT_COLOUR_TOKENS = {
     "--white": "#FCF9F2",
     "--ink": "#1A1A1A",
@@ -142,6 +152,8 @@ ROOT_COLOUR_TOKENS = {
     "--text-3": "rgba(252, 249, 242, 0.60)",
     "--line": "rgba(252, 249, 242, 0.20)",
     "--line-strong": "rgba(252, 249, 242, 0.40)",
+    "--text-dim": "rgba(252, 249, 242, 0.50)",
+    "--sky-line": "rgba(177, 224, 255, 0.45)",
 }
 
 # Structural :root tokens that must be unchanged from baseline (contract 5).
@@ -157,7 +169,7 @@ LEGACY_TOKENS = (
 )
 
 MARK_HASH = "7c4114063c89281884a53664106756618735d56e1a3497a682dcf04bbd6dcf3f"
-LOCKUP_HASH = "784ef485746d8f78e066b3a16e34060226e63cec7299b5e4d694d32c32513622"
+WORDMARK_HASH = "1ce5c86e5eff127ffb9819c4f9c58134b40a2381dbebc25c5ba723a4cd0ce727"
 
 CHROME_BAR = ('<svg><use href="#mark"/></svg><b>Sombra</b>'
               '<span>·</span><span>Scale or Die</span>')
@@ -165,15 +177,35 @@ CHROME_BAR = ('<svg><use href="#mark"/></svg><b>Sombra</b>'
 FAVICON_LINK = '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">'
 
 HERO_MARK_SVG = '<svg class="hero-mark" aria-hidden="true"><use href="#mark"/></svg>'
-CLOSING_LOCKUP_SVG = '<svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>'
+CLOSING_MARK_SVG = '<svg class="closing-mark" aria-hidden="true"><use href="#mark"/></svg>'
+CLOSING_WORDMARK_SVG = '<svg class="closing-wordmark" role="img" aria-label="Sombra"><use href="#wordmark"/></svg>'
 
-TYPO_PROPS = {
-    "font-family", "font-size", "font-weight", "font-style",
-    "letter-spacing", "line-height", "text-transform",
-}
+# Approved 2026-11-11: APK Galeria Roman replaces Space Grotesk as the display
+# face. Applied to the baseline so the font freezes (c05b, c22, c23) accept
+# exactly this swap and nothing else. Single static weight: the 100-900 range
+# stops browsers faking bold on 500-700 headings.
+FONT_SWAP = [
+    ('  font-family: "Space Grotesk";\n'
+     '  src: url("../vendor/fonts/space-grotesk-latin-wght-normal.woff2") format("woff2");\n'
+     '  font-weight: 300 700;',
+     '  font-family: "APK Galeria Roman";\n'
+     '  src: url("../vendor/fonts/apk-galeria-roman-400-normal.woff2") format("woff2");\n'
+     '  font-weight: 100 900;'),
+    ('--f-display: "Space Grotesk", "Inter",',
+     '--f-display: "APK Galeria Roman", "Inter",'),
+]
+DISPLAY_FONT_FILE = "vendor/fonts/apk-galeria-roman-400-normal.woff2"
+
+
+def apply_font_swap(css):
+    for old, new in FONT_SWAP:
+        assert css.count(old) == 1, f"font swap anchor not found once in baseline: {old!r}"
+        css = css.replace(old, new)
+    return css
+
 
 # The ten declarations' owning selectors (for contract 21).
-LOGO_RULE_SELECTORS = (".s-title .hero-mark", ".s-closing .closing-lockup",
+LOGO_RULE_SELECTORS = (".s-title .hero-mark", ".s-closing .closing-mark", ".s-closing .closing-wordmark",
                        ".deck-chrome svg")
 
 # CSS named colours (the full CSS3/CSS4 list of 147). transparent,
@@ -272,7 +304,6 @@ HEX_RE = re.compile(r"(?<![\w&])#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8}
 RGB_RE = re.compile(r"\brgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([0-9.]+)\s*)?\)")
 EXOTIC_FN_RE = re.compile(r"\b(hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(")
 VAR_RE = re.compile(r"var\((--[\w-]+)\)")
-PAINT_ATTR_RE = re.compile(r'\s(?:fill|stroke|color|stroke-opacity|fill-opacity|filter)="[^"]*"')
 FILL_ATTR_RE = re.compile(r'\sfill="[^"]*"')
 
 # ---------------------------------------------------------------------------
@@ -528,7 +559,7 @@ class Checker:
         css, htm = self.css_raw, self.html_raw
         css_nc = strip_comments(css) if css else ""
         css_scan = css_nc.replace("%23", "#")  # spec: %23 == # when scanning
-        bhtml, bcss = self.base_html, self.base_css
+        bhtml, bcss = self.base_html, apply_font_swap(self.base_css)
         bcss_nc = strip_comments(bcss)
 
         # ---- Contract 1: CSS hex literals in palette ------------------------
@@ -869,8 +900,10 @@ class Checker:
         # ---- Contract 17: the two sprite symbols ------------------------------
         self._check_symbol("c17a_symbol_mark_exact", htm, "mark",
                            "0 0 148.59 148.59", MARK_HASH)
-        self._check_symbol("c17b_symbol_lockup_stacked_exact", htm,
-                           "lockup-stacked", "0 0 373.53 343.88", LOCKUP_HASH)
+        self._check_symbol("c17b_symbol_wordmark_exact", htm,
+                           "wordmark", "0 257 373.53 86.88", WORDMARK_HASH)
+        self.add("c17c_no_lockup", htm is not None and "lockup" not in htm.lower(),
+                 "index.html still mentions a lockup — logomark and wordmark are used apart")
 
         # ---- Contract 18: favicon structure -----------------------------------
         if fav is None:
@@ -909,7 +942,7 @@ class Checker:
         # ---- Contract 19: placements and use-ref counts -----------------------
         if htm is None:
             self._html_missing("c19a_first_section_has_hero_mark")
-            self._html_missing("c19b_last_section_has_closing_lockup")
+            self._html_missing("c19b_last_section_has_mark_and_wordmark")
             self._html_missing("c19c_use_reference_counts")
         else:
             secs = top_level_sections(htm)
@@ -917,20 +950,22 @@ class Checker:
                      bool(secs) and HERO_MARK_SVG in secs[0],
                      "first top-level <section> does not contain "
                      f"{HERO_MARK_SVG!r}" if secs else "no top-level <section> found")
-            self.add("c19b_last_section_has_closing_lockup",
-                     bool(secs) and CLOSING_LOCKUP_SVG in secs[-1],
-                     "last top-level <section> does not contain "
-                     f"{CLOSING_LOCKUP_SVG!r}" if secs else "no top-level <section> found")
-            nm, nl = htm.count('href="#mark"'), htm.count('href="#lockup-stacked"')
-            ok = nm == 2 and nl == 1
+            self.add("c19b_last_section_has_mark_and_wordmark",
+                     bool(secs) and CLOSING_MARK_SVG in secs[-1] and CLOSING_WORDMARK_SVG in secs[-1],
+                     "last top-level <section> must hold the logomark and the wordmark as "
+                     f"separate elements: {CLOSING_MARK_SVG!r} and {CLOSING_WORDMARK_SVG!r}"
+                     if secs else "no top-level <section> found")
+            nm, nl = htm.count('href="#mark"'), htm.count('href="#wordmark"')
+            # mark: title hero, chrome bar, value-flow tree root, closing slide
+            ok = nm == 4 and nl == 1
             self.add("c19c_use_reference_counts", ok,
-                     f'href="#mark" appears {nm}× (want 2), '
-                     f'href="#lockup-stacked" appears {nl}× (want 1) in index.html')
+                     f'href="#mark" appears {nm}× (want 4), '
+                     f'href="#wordmark" appears {nl}× (want 1) in index.html')
 
         # ---- Contract 20: logo rule sizes, chrome svg rule frozen -------------
         if css is None:
             self._css_missing("c20a_hero_mark_520px")
-            self._css_missing("c20b_closing_lockup_rule_exact")
+            self._css_missing("c20b_closing_logo_rules_exact")
             self._css_missing("c20c_deck_chrome_svg_rule_unchanged")
         else:
             rules = collections.defaultdict(dict)
@@ -944,12 +979,13 @@ class Checker:
                      f"height={hm.get('height')!r} (want 520px/520px)"
                      if not hm else
                      f".s-title .hero-mark rule missing in theme/sombra.css")
-            cl = rules.get(".s-closing .closing-lockup")
-            want_cl = {"width": "239px", "height": "220px", "margin-bottom": "40px"}
-            self.add("c20b_closing_lockup_rule_exact", cl == want_cl,
-                     f".s-closing .closing-lockup is {cl!r}, want exactly "
-                     f"{want_cl!r}" if cl is not None
-                     else ".s-closing .closing-lockup rule missing in theme/sombra.css")
+            cm = rules.get(".s-closing .closing-mark")
+            cw = rules.get(".s-closing .closing-wordmark", {})
+            want_cm = {"width": "140px", "height": "140px", "margin-bottom": "56px"}
+            ok = cm == want_cm and cw.get("width") == "258px" and cw.get("height") == "60px"
+            self.add("c20b_closing_logo_rules_exact", ok,
+                     f".s-closing .closing-mark is {cm!r} (want {want_cm!r}); "
+                     f".s-closing .closing-wordmark is {cw!r} (want width 258px, height 60px)")
 
             def rule_text(c):
                 m = re.search(r"\.deck-chrome svg\s*\{[^}]*\}", c)
@@ -1004,6 +1040,10 @@ class Checker:
                      re.findall(r"@font-face\s*\{[^}]*\}", bcss, re.S),
                      "@font-face block(s) in theme/sombra.css differ from baseline"))
 
+        self.add("c22b_display_font_file_exists",
+                 (Path(self.root) / DISPLAY_FONT_FILE).is_file(),
+                 f"{DISPLAY_FONT_FILE} is missing")
+
         # ---- Contract 23: the four --f-* lines byte-identical ------------------
         fline = lambda c: re.findall(r"^[ \t]*--f-(?:display|body|serif|mono):[^\n]*",
                                      c, re.M)
@@ -1013,17 +1053,6 @@ class Checker:
                  self._diff_detail(fline(css) if css else [], fline(bcss),
                                    "--f-* token line(s) in theme/sombra.css differ "
                                    "from baseline"))
-
-        # ---- Contract 24: typography declaration multiset ---------------------
-        self.add("c24_typography_declarations_unchanged",
-                 css is not None and
-                 self._typo_counter(parse_declarations(css_nc)) ==
-                 self._typo_counter(parse_declarations(bcss_nc)),
-                 self._counter_diff_detail(
-                     self._typo_counter(parse_declarations(css_nc)) if css else None,
-                     self._typo_counter(parse_declarations(bcss_nc)),
-                     "typography (selector, property, value) entries in "
-                     "theme/sombra.css differ from baseline"))
 
         # ---- Contract 25: 21 sections -----------------------------------------
         self.add("c25a_exactly_21_top_level_sections",
@@ -1047,17 +1076,8 @@ class Checker:
         # REMOVED_SELECTORS, PAINT_PROPS, EXPECTED_DECK_FAILS) were removed.
         # ------------------------------------------------------------------
 
-        # ---- Contract 28: diagram SVGs minus paint attrs -----------------------
-        diagram = lambda h: [PAINT_ATTR_RE.sub("", x)
-                             for x in re.findall(
-                                 r'<svg viewBox="0 0 1640 660".*?</svg>', h, re.S)]
-        self.add("c28_diagram_svgs_unchanged_minus_paint_attrs",
-                 htm is not None and diagram(htm) == diagram(bhtml)
-                 and len(diagram(htm)) == 2,
-                 f"diagram SVG(s) (viewBox 0 0 1640 660) differ from baseline after "
-                 f"stripping fill/stroke/color/stroke-opacity/fill-opacity/filter "
-                 f"attrs; candidate has "
-                 f"{0 if htm is None else len(diagram(htm))} diagram(s), want 2")
+        # RETIRED (2026-11-11): c28_diagram_svgs_unchanged_minus_paint_attrs
+        # froze the two phase-1 diagrams; the v2 slide system redraws them.
 
         # ---- Contract 29: icon symbols and markers -----------------------------
         icons = lambda h: re.findall(r'<symbol id="i-[^"]*"[^>]*>.*?</symbol>', h, re.S)
@@ -1275,25 +1295,12 @@ class Checker:
         self.add(name, got == want_hash,
                  f"symbol {sym_id!r} path d hash is {got}, want {want_hash}")
 
-    @staticmethod
-    def _typo_counter(decls):
-        return collections.Counter(
-            (s, p, " ".join(v.split())) for (s, p, v) in decls if p in TYPO_PROPS)
-
     def _diff_detail(self, got, want, prefix):
         if got == want:
             return ""
         extra = [x for x in got if x not in want][:2]
         missing = [x for x in want if x not in got][:2]
         return (f"{prefix} — candidate-only: {extra}; baseline-only: {missing}")
-
-    def _counter_diff_detail(self, got, want, prefix):
-        if got is None or got == want:
-            return ""
-        removed = want - got
-        added = got - want
-        return (f"{prefix} — missing: {sorted(removed)[:4]!r}; "
-                f"extra: {sorted(added)[:4]!r}")
 
 
 # Contract 10 / 12 token tables (one named check each).
@@ -1360,18 +1367,17 @@ CHECK_NAMES = (
     + ["c13_html_fragment_refs_resolve", "c14a_favicon_link_exactly_once",
        "c14b_favicon_file_exists", "c14c_no_sombra_mark_string",
        "c15_no_eclipse_or_corona", "c16_chrome_bar_markup_bytes",
-       "c17a_symbol_mark_exact", "c17b_symbol_lockup_stacked_exact",
+       "c17a_symbol_mark_exact", "c17b_symbol_wordmark_exact", "c17c_no_lockup",
        "c18_favicon_svg_structure", "c19a_first_section_has_hero_mark",
-       "c19b_last_section_has_closing_lockup", "c19c_use_reference_counts",
-       "c20a_hero_mark_520px", "c20b_closing_lockup_rule_exact",
+       "c19b_last_section_has_mark_and_wordmark", "c19c_use_reference_counts",
+       "c20a_hero_mark_520px", "c20b_closing_logo_rules_exact",
        "c20c_deck_chrome_svg_rule_unchanged",
        "c21a_favicon_no_transform_keywords",
        "c21b_html_no_preserve_aspect_ratio",
        "c21c_logo_css_rules_no_effect_props",
-       "c22_font_face_blocks_unchanged", "c23_font_token_lines_unchanged",
-       "c24_typography_declarations_unchanged",
+       "c22_font_face_blocks_unchanged", "c22b_display_font_file_exists",
+       "c23_font_token_lines_unchanged",
        "c25a_exactly_21_top_level_sections",
-       "c28_diagram_svgs_unchanged_minus_paint_attrs",
        "c29a_icon_symbols_unchanged", "c29b_markers_unchanged_apart_fill"]
     + list(E_NAMES)
 )
