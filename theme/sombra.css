@@ -731,7 +731,7 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .sl .fill.b2 { animation: sl-grow 1.44s cubic-bezier(0.3, 0, 0.2, 1) 1.8s both; }
 .present .sl .fill.b3 { animation: sl-grow 0.36s cubic-bezier(0.3, 0, 0.2, 1) 2.4s both; }
 
-/* 19 · Private swap: a token crosses shielded → public → shielded */
+/* 19 · Private swap: a token crosses shielded → public → shielded, a card per click */
 .ps .zone { position: absolute; top: 300px; height: 430px; box-sizing: border-box; padding-top: 24px; border-radius: 22px; text-align: center; background: var(--fjord); outline: 1.5px solid var(--sky); outline-offset: -1.5px; }
 .ps .zone.public { background: var(--pine); outline: 0; border: 1.5px dashed var(--sky-line); padding-top: 22.5px; }
 .ps .step { position: absolute; top: 388px; text-align: center; }
@@ -744,16 +744,29 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .ps .pill .n { font-size: 22px; }
 .ps .pill .d { font-size: 15px; color: var(--text-3); }
 .ps .ps-tok { width: 20px; height: 20px; border-radius: 50%; background: var(--sky); opacity: 0; }
-@keyframes ps-tok { 0%, 10% { opacity: 0; transform: none; } 12%, 14% { opacity: 1; transform: none; } 22%, 29% { transform: translateX(400px); } 37%, 44% { transform: translateX(830px); } 52% { opacity: 1; transform: translateX(1250px); } 56%, 100% { opacity: 0; transform: translateX(1250px); } }
-@keyframes ps-tint { 0%, 30% { background: var(--sky); } 33%, 42% { background: var(--white); } 46%, 100% { background: var(--sky); } }
-.present .ps .ps-st1 { animation: sl-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.72s both; }
-.present .ps .ps-st2 { animation: sl-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 2.52s both; }
-.present .ps .ps-st3 { animation: sl-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 4.32s both; }
-.present .ps .ps-st4 { animation: sl-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 6.12s both; }
-.present .ps .ps-seg1 { animation: sl-wipe 0.96s linear 1.68s both; }
-.present .ps .ps-seg2 { animation: sl-wipe 0.96s linear 3.48s both; }
-.present .ps .ps-seg3 { animation: sl-wipe 0.96s linear 5.28s both; }
-.present .ps .ps-tok { animation: ps-tok 12s cubic-bezier(0.5, 0, 0.3, 1), ps-tint 12s linear; }
+/* One click per card: 1 shielded (intent → proven), 2 public settlement,
+   3 shielded claim; the actors (pills) all land on click 4. */
+@media (prefers-reduced-motion: no-preference) {
+  .present .ps .ps-st1, .present .ps .ps-st2, .present .ps .ps-st3, .present .ps .ps-st4 { opacity: 0; }
+  .present .ps .ps-seg { clip-path: inset(0 100% 0 0); }
+}
+@keyframes ps-rise { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: none; } }
+@keyframes ps-wipe { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes ps-tok1 { 0% { opacity: 0; transform: none; } 13%, 33% { opacity: 1; transform: none; } 100% { opacity: 1; transform: translateX(400px); } }
+@keyframes ps-tok2 { from { opacity: 1; transform: translateX(400px); } to { opacity: 1; transform: translateX(830px); } }
+@keyframes ps-tok3 { 0% { opacity: 1; transform: translateX(830px); } 85% { opacity: 1; transform: translateX(1250px); } 100% { opacity: 0; transform: translateX(1250px); } }
+@keyframes ps-tint2 { 0%, 80% { background: var(--sky); } 100% { background: var(--white); } }
+@keyframes ps-tint3 { 0% { background: var(--white); } 40%, 100% { background: var(--sky); } }
+.present .ps:has(.ps-c1.visible) .ps-st1 { animation: ps-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
+.present .ps:has(.ps-c1.visible) .ps-seg1 { animation: ps-wipe 0.96s linear 0.5s both; }
+.present .ps:has(.ps-c1.visible) .ps-st2 { animation: ps-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 1.3s both; }
+.present .ps:has(.ps-c1.visible) .ps-tok { animation: ps-tok1 1.5s cubic-bezier(0.5, 0, 0.3, 1) both; }
+.present .ps:has(.ps-c2.visible) .ps-seg2 { animation: ps-wipe 0.96s linear both; }
+.present .ps:has(.ps-c2.visible) .ps-st3 { animation: ps-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both; }
+.present .ps:has(.ps-c2.visible) .ps-tok { animation: ps-tok2 0.96s cubic-bezier(0.5, 0, 0.3, 1) both, ps-tint2 0.96s linear both; }
+.present .ps:has(.ps-c3.visible) .ps-seg3 { animation: ps-wipe 0.96s linear both; }
+.present .ps:has(.ps-c3.visible) .ps-st4 { animation: ps-rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) 0.8s both; }
+.present .ps:has(.ps-c3.visible) .ps-tok { animation: ps-tok3 1.2s cubic-bezier(0.5, 0, 0.3, 1) both, ps-tint3 0.4s linear both; }
 
 /* 20 · Call to action: the send states light up in order; a cursor blinks */
 .sl a { border-bottom: 0; }

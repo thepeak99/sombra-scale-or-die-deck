@@ -702,6 +702,7 @@
         <div class="cap eyebrow a1">Private actions · worked example</div>
         <span class="tag ol a1" style="position: absolute; right: 140px; top: 96px"><i></i>Design partners open</span>
         <h2 class="h1 a1"><span class="g">A private swap,</span> step by step.</h2>
+        <span class="fragment ps-c1" data-fragment-index="1" aria-hidden="true"></span><span class="fragment ps-c2" data-fragment-index="2" aria-hidden="true"></span><span class="fragment ps-c3" data-fragment-index="3" aria-hidden="true"></span>
 
         <div class="zone a1" style="left: 140px; width: 800px"><div class="cap">Shielded</div></div>
         <div class="zone public a1" style="left: 980px; width: 380px"><div class="cap">Public · Solana</div></div>
@@ -741,11 +742,11 @@
         <div class="ps-tok" style="position: absolute; left: 330px; top: 430px"></div>
 
         <div style="position: absolute; left: 140px; top: 772px; width: 1640px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px">
-          <div class="pill fragment rise" data-fragment-index="1"><div class="n">Wallet</div><div class="d">builds the sealed intent</div></div>
-          <div class="pill fragment rise" data-fragment-index="1"><div class="n">Relayer</div><div class="d">submits · pays fees &amp; rent</div></div>
-          <div class="pill fragment rise" data-fragment-index="2"><div class="n">Prover (TEE)</div><div class="d">produces the STARK</div></div>
-          <div class="pill fragment rise" data-fragment-index="2"><div class="n">Verifiers</div><div class="d">check the proof · vote</div></div>
-          <div class="pill yours fragment rise" data-fragment-index="3"><div class="n">Your protocol</div><div class="d">settles the public leg</div></div>
+          <div class="pill fragment rise" data-fragment-index="4"><div class="n">Wallet</div><div class="d">builds the sealed intent</div></div>
+          <div class="pill fragment rise" data-fragment-index="4"><div class="n">Relayer</div><div class="d">submits · pays fees &amp; rent</div></div>
+          <div class="pill fragment rise" data-fragment-index="4"><div class="n">Prover (TEE)</div><div class="d">produces the STARK</div></div>
+          <div class="pill fragment rise" data-fragment-index="4"><div class="n">Verifiers</div><div class="d">check the proof · vote</div></div>
+          <div class="pill yours fragment rise" data-fragment-index="4"><div class="n">Your protocol</div><div class="d">settles the public leg</div></div>
         </div>
         <aside class="notes">
           A private action is a private contract call: the user&rsquo;s shielded funds drive a public protocol action, and the result returns as a shielded note. Flow: the wallet builds a sealed intent &rarr; the relayer submits it and pays fees/rent with an ephemeral key, so the user&rsquo;s wallet never appears &rarr; the prover in an attested TEE produces the STARK &rarr; verifier nodes check it off-chain and vote &rarr; the program settles the public leg (planned: a single allowlisted call into Jupiter) &rarr; finalize appends new note commitments &rarr; the wallet finds and decrypts its new note. If the action is rejected or times out, it is cancelled; no nullifiers are created, so the user&rsquo;s notes stay spendable (a full refund). HONESTY: the swap action is phase 2 — the program already reserves the swap fields but rejects them today. Do not claim batching/aggregation. Swaps are the first planned action kind; staking/lending/perps are design-partner use cases. Status: design partners open. Amounts become public wherever value crosses the private&rarr;public boundary (the public leg) — only identity/linkage stays hidden there.
