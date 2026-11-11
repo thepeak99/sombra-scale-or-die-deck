@@ -570,6 +570,12 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .sl .divider { height: 1.5px; background: var(--line); transform-origin: left; }
 .present .sl .divider { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 6.24s both; }
 
+/* 10 · Crypto agility: "Harvest risk" sends out one ring */
+.sl .urgent { position: relative; }
+.sl .urgent::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2px solid var(--canyon); opacity: 0; pointer-events: none; }
+@keyframes sl-ring { 30% { opacity: 0.8; transform: none; } 100% { opacity: 0; transform: scale(1.15, 1.6); } }
+.present .sl .urgent::after { animation: sl-ring 1.2s ease-out 2.64s; }
+
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }
 @keyframes sl-gap { 0% { opacity: 0; } 25% { opacity: 1; } 75% { opacity: 0.35; } }

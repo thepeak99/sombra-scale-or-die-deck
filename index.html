@@ -291,26 +291,26 @@
       </div>
     </section>
 
-    <section class="s-two-col" id="crypto-agility">
-      <div class="frame">
-        <div class="eyebrow">Crypto agility</div>
-        <h2>PQC where it&rsquo;s urgent. <em>No signatures where they&rsquo;re hard to swap.</em></h2>
-        <div class="cols">
-          <div class="card">
-            <div class="card-top"><h3>Encryption — the urgent half</h3><span class="badge caution">Harvest risk</span></div>
-            <ul class="lux small">
-              <li>Ciphertext faces harvest-now-decrypt-later — so PQC now (NIST IR 8547 calls this the urgent half).</li>
-              <li>The KEM lives outside the proof — swapping it is a wallet upgrade, not a new circuit.</li>
-              <li>Every envelope is versioned; NIST&rsquo;s non-lattice backup, <span class="mono">HQC</span>, is a named swap path.</li>
-            </ul>
-          </div>
-          <div class="card ok">
-            <div class="card-top"><h3>Signatures — nothing to chase</h3><span class="badge live">PQ</span></div>
-            <ul class="lux ok small">
-              <li>Spend authority uses no signature — nothing address-bound to migrate.</li>
-              <li>Still classical: Solana settlement (<span class="mono">Ed25519</span>) — it migrates with the chain.</li>
-            </ul>
-          </div>
+    <section id="crypto-agility">
+      <div class="sl">
+        <div class="cap eyebrow a1">Crypto agility</div>
+        <h2 class="h1 a1"><span class="g">PQC where it&rsquo;s urgent.</span><br>No signatures where they&rsquo;re hard to swap.</h2>
+        <div class="card a2" style="position: absolute; left: 140px; top: 400px; width: 800px; height: 470px">
+          <div class="edge c e1"></div>
+          <div class="row"><h3 class="ct">Encryption — the urgent half</h3><span class="tag cy urgent"><i></i>Harvest risk</span></div>
+          <ul class="bl" style="margin-top: 36px; gap: 20px">
+            <li class="a4">Ciphertext faces harvest-now-decrypt-later — <b>so PQC now</b> (NIST IR 8547 calls this the urgent half).</li>
+            <li class="a5">The KEM lives outside the proof — <b>swapping it is a wallet upgrade, not a new circuit.</b></li>
+            <li class="a6">Every envelope is versioned; NIST&rsquo;s non-lattice backup, <span class="tech">HQC</span>, is a named swap path.</li>
+          </ul>
+        </div>
+        <div class="card a3" style="position: absolute; left: 980px; top: 400px; width: 800px; height: 470px">
+          <div class="edge e2"></div>
+          <div class="row"><h3 class="ct">Signatures — nothing to chase</h3><span class="tag sk"><i></i>PQ</span></div>
+          <ul class="bl" style="margin-top: 36px; gap: 20px">
+            <li class="a7">Spend authority uses <b>no signature</b> — nothing address-bound to migrate.</li>
+            <li class="a8">Still classical: Solana settlement (<span class="tech">Ed25519</span>) — it migrates with the chain.</li>
+          </ul>
         </div>
         <aside class="notes">
           Sources — NIST IR 8547 (post-quantum crypto for mobile &amp; edge: against harvest-now-decrypt-later, encryption is the urgent half) · NIST CSWP 39 (crypto agility: algorithm identifiers make swaps easier; signatures bound to long-lived identity are the hardest to rotate).
