@@ -594,43 +594,42 @@
       </div>
     </section>
 
-    <section class="s-two-col" id="latency">
-      <div class="frame">
-        <div class="eyebrow">Latency</div>
-        <h2>Post-quantum costs <em>bytes, not time.</em></h2>
-        <div class="cols-3">
-          <div class="card">
-            <div class="card-top"><h3>Proof</h3><span class="badge caution">~2 s on GPU</span></div>
-            <p>STARK proven in an attested enclave. ~25 s on CPU, ~2 s on GPU &mdash; hardware sets the time.</p>
-            <div class="bar"><i style="width:100%"></i></div>
+    <section id="latency">
+      <div class="sl">
+        <div class="cap eyebrow a1">Latency</div>
+        <h2 class="h1 a1"><span class="g">Post-quantum costs</span> bytes, not time.</h2>
+        <div style="position: absolute; left: 140px; top: 290px; width: 1640px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px">
+          <div class="card a2" style="height: 310px">
+            <div class="row"><h3 class="ct">Proof</h3><span class="tag cy"><i></i>~2 s on GPU</span></div>
+            <p class="body" style="margin-top: 22px; font-size: 24px">STARK proven in an attested enclave. ~25 s on CPU, ~2 s on GPU &mdash; <b>hardware sets the time.</b></p>
+            <div class="track"><div class="fill b1"></div></div>
           </div>
-          <div class="card">
-            <div class="card-top"><h3>Verifier vote</h3><span class="badge design">~1&ndash;2 s</span></div>
-            <p>Verifier nodes check the proof off-chain and vote; the chain counts votes, never sees the proof.</p>
-            <div class="bar"><i style="width:75%"></i></div>
+          <div class="card a3" style="height: 310px">
+            <div class="row"><h3 class="ct">Verifier vote</h3><span class="tag ol"><i></i>~1&ndash;2 s</span></div>
+            <p class="body" style="margin-top: 22px; font-size: 24px">Verifier nodes check the proof off-chain and vote; <b>the chain counts votes, never sees the proof.</b></p>
+            <div class="track"><div class="fill b2"></div></div>
           </div>
-          <div class="card">
-            <div class="card-top"><h3>Settlement</h3><span class="badge live">&lt; 1 s</span></div>
-            <p>One Solana slot carries hashes and votes; Alpenglow finality, live on mainnet since Oct 2026.</p>
-            <div class="bar"><i style="width:10%"></i></div>
+          <div class="card a4" style="height: 310px">
+            <div class="row"><h3 class="ct">Settlement</h3><span class="tag sk"><i></i>&lt; 1 s</span></div>
+            <p class="body" style="margin-top: 22px; font-size: 24px">One Solana slot carries hashes and votes; Alpenglow finality, live on mainnet since Oct 2026.</p>
+            <div class="track"><div class="fill b3"></div></div>
           </div>
         </div>
-        <div class="cols" style="margin-top:34px">
-          <div class="card">
-            <div class="card-top" style="margin-bottom:6px"><h3>On-chain: 32-byte hashes</h3></div>
-            <ul class="lux small">
-              <li>No proof, ciphertext or signature touches the chain &mdash; ~1 KB per transfer, whatever the prover.</li>
-              <li>1,088 B note ciphertext (vs 32 B X25519), off-chain.</li>
-              <li>ML-DSA-65 sig (3,309 B), ~0.6 MB proof: off-chain.</li>
-            </ul>
-          </div>
-          <div class="card ok">
-            <div class="card-top" style="margin-bottom:6px"><h3>Full circle with Bunker Mode</h3></div>
-            <ul class="lux ok small">
-              <li>Vitalik&rsquo;s ask: keep encrypted notes off-chain. Sombra already does &mdash; only the hash is posted.</li>
-              <li>Faster hardware cuts the time; the on-chain bytes stay the same.</li>
-            </ul>
-          </div>
+        <div class="card a6" style="position: absolute; left: 140px; top: 640px; width: 800px; height: 350px">
+          <h3 class="ct">On-chain: 32-byte hashes</h3>
+          <ul class="bl" style="margin-top: 26px; gap: 14px">
+            <li style="font-size: 24px">No proof, ciphertext or signature touches the chain &mdash; <b>~1 KB per transfer</b>, whatever the prover.</li>
+            <li style="font-size: 24px"><span class="tech">1,088 B</span> note ciphertext (vs 32 B X25519), off-chain.</li>
+            <li style="font-size: 24px"><span class="tech">ML-DSA-65</span> sig (3,309 B), ~0.6 MB proof: off-chain.</li>
+          </ul>
+        </div>
+        <div class="card fj a7" style="position: absolute; left: 980px; top: 640px; width: 800px; height: 350px">
+          <div class="edge e4"></div>
+          <h3 class="ct">Full circle with Bunker Mode</h3>
+          <ul class="bl" style="margin-top: 26px; gap: 14px">
+            <li style="font-size: 24px">Vitalik&rsquo;s ask: keep encrypted notes off-chain. <b>Sombra already does &mdash; only the hash is posted.</b></li>
+            <li style="font-size: 24px">Faster hardware cuts the time; the on-chain bytes stay the same.</li>
+          </ul>
         </div>
         <aside class="notes">
           Measurement honesty &mdash; the ~1.8 s is the GPU proof spend inside the SEV-SNP confidential VM (RTX PRO 6000, devnet, a handful of proofs, proving only; excludes queue and network). ~24 s on the host CPU; ~55 s in the CPU-only CVM. The succinct receipt is ~586 KB.

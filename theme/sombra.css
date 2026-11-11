@@ -688,6 +688,15 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .pv .pv-prf { animation: pv-prf 1.6s cubic-bezier(0.5, 0, 0.3, 1) 6.4s; }
 .present .pv .pv-got { animation: sl-fade 0.2s ease 7.9s both; }
 
+/* 16 · Latency: each stage's bar fills to its share of the time */
+.sl .track { position: absolute; left: 44px; right: 44px; bottom: 40px; height: 6px; border-radius: 3px; background: var(--line); overflow: hidden; }
+.sl .fill { height: 100%; border-radius: 3px; background: var(--sky); transform-origin: left; }
+.sl .fill.b2 { transform: scaleX(0.75); }
+.sl .fill.b3 { transform: scaleX(0.1); }
+.present .sl .fill.b1 { animation: sl-grow 1.68s cubic-bezier(0.3, 0, 0.2, 1) 1.2s both; }
+.present .sl .fill.b2 { animation: sl-grow 1.44s cubic-bezier(0.3, 0, 0.2, 1) 1.8s both; }
+.present .sl .fill.b3 { animation: sl-grow 0.36s cubic-bezier(0.3, 0, 0.2, 1) 2.4s both; }
+
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }
 @keyframes sl-gap { 0% { opacity: 0; } 25% { opacity: 1; } 75% { opacity: 0.35; } }
