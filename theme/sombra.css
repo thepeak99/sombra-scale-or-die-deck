@@ -452,6 +452,8 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .sl .g { color: var(--text-dim); }
 .sl .sky { color: var(--sky); }
 .sl .wh { color: var(--text); }
+.sl .t2 { color: var(--text-2); }
+.sl .t3 { color: var(--text-3); }
 .sl .tech { color: var(--sky); letter-spacing: 0.02em; }
 .sl b { font-weight: 400; color: var(--text); }
 
@@ -581,6 +583,81 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 @keyframes sl-nudge-l { 50% { transform: translateX(-3px); } }
 .present .sl .nudge-r { animation: sl-nudge-r 2.4s ease-in-out infinite; }
 .present .sl .nudge-l { animation: sl-nudge-l 2.4s ease-in-out infinite; }
+
+/* 13 · Value flow: one deposit rides through the pool (the canvas's 14 s story) */
+.vf .eyebrow { left: 60px; top: 70px; }
+.vf .h1 { left: 60px; top: 96px; font-size: 64px; line-height: 1.08; letter-spacing: -0.03em; }
+.vf .cap { font-size: 12px; letter-spacing: 0.16em; }
+.vf .panel { position: absolute; top: 270px; height: 630px; box-sizing: border-box; padding: 28px 30px; border-radius: 16px; background: var(--pine); }
+.vf .panel.pool { padding: 28px 40px; background: var(--fjord); }
+.vf .nbox { position: absolute; left: 1180px; top: 296px; width: 250px; box-sizing: border-box; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--line); }
+.vf .nf { display: block; width: 30px; height: 10px; border-radius: 3px; background: var(--line); }
+.vf .nf.hit { background: var(--canyon); }
+.vf .coin { display: flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; border: 1.5px solid var(--text-2); font-size: 12px; letter-spacing: 0.1em; }
+.vf .lb { position: absolute; line-height: 1.2; }
+.vf .lb b { display: block; font-size: 20px; letter-spacing: -0.01em; }
+.vf .lb i { display: block; margin-top: 4px; font-size: 15px; font-style: normal; color: var(--text-3); }
+.vf .lb .cap { margin-bottom: 6px; }
+.vf .chip { height: 70px; box-sizing: border-box; padding: 0 22px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; gap: 3px; background: var(--pine); }
+.vf .chip.prog { background: var(--fjord); }
+.vf .chip small { font-size: 14px; color: var(--text-3); }
+.vf .pill-label { display: inline-block; padding: 7px 12px; border-radius: 999px; background: var(--sky); color: var(--ink); }
+.vf .vf-token {
+  position: absolute; left: 0; top: 0; width: 20px; height: 20px; box-sizing: border-box;
+  border-radius: 50%; border: 3px solid var(--sky); background: var(--sky);
+  offset-path: path("M140 470 H360 C440 470, 470 640, 490 780 C500 815, 530 830, 570 830 H1020 C1060 830, 1086 800, 1086 720 C1100 790, 1184 790, 1198 720 C1230 820, 1420 830, 1440 620 C1460 510, 1490 470, 1540 470 H1780");
+  offset-rotate: 0deg; offset-anchor: 50% 50%;
+}
+.vf .vf-route, .vf .vf-rp, .vf .vf-arc { stroke-dasharray: 1; }
+.vf .vf-pop, .vf .vf-ring { transform-box: fill-box; transform-origin: center; }
+.vf .vf-rp, .vf .vf-ring, .vf .vf-l1, .vf .vf-l2, .vf .vf-l3, .vf .vf-dim, .vf .vf-box, .vf .vf-arc { opacity: 0; }
+.vf .vf-s21, .vf .vf-s22, .vf .vf-s23 { opacity: 0.55; }
+@keyframes vf-route { 0%, 5.71% { stroke-dashoffset: 1; } 10% { stroke-dashoffset: 0.8482; } 22%, 36% { stroke-dashoffset: 0.4342; } 42%, 58% { stroke-dashoffset: 0.36; } 64% { stroke-dashoffset: 0.1383; } 72%, 100% { stroke-dashoffset: 0; } }
+@keyframes vf-move { 0%, 5.71% { offset-distance: 0%; } 10% { offset-distance: 15.18%; } 22%, 36% { offset-distance: 56.58%; } 42%, 58% { offset-distance: 64%; } 64% { offset-distance: 86.17%; } 72%, 100% { offset-distance: 100%; } }
+@keyframes vf-look { 0%, 21% { background: var(--sky); border-color: var(--sky); } 22.5%, 35.5% { background: var(--fjord); border-color: var(--sky); } 36.8%, 57.5% { background: var(--white); border-color: var(--white); } 59%, 100% { background: var(--canyon); border-color: var(--white); } }
+@keyframes vf-rp { 0% { opacity: 1; stroke-dashoffset: 1; } 36% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
+@keyframes vf-pop { 0% { opacity: 0; transform: scale(0.3); } 50% { transform: scale(1.4); } }
+@keyframes vf-drop { from { opacity: 0; transform: translateY(-8px); } }
+@keyframes vf-ring { 0% { opacity: 0; transform: scale(0.5); } 10% { opacity: 0.9; transform: none; } 100% { opacity: 0; transform: scale(2.8); } }
+@keyframes vf-wake { from { opacity: 0.32; } }
+@keyframes vf-l1 { 0% { opacity: 0; } 30%, 80% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes vf-l2 { 0% { opacity: 0; } 16%, 89% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes vf-l3 { 0% { opacity: 0; } 7%, 95% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes vf-dim { 0% { opacity: 0; } 11%, 89% { opacity: 0.6; } 100% { opacity: 0; } }
+@keyframes vf-box { 0% { opacity: 0; } 9%, 89% { opacity: 1; } 100% { opacity: 0; } }
+@keyframes vf-arc { 0% { opacity: 1; stroke-dashoffset: 1; } 27% { stroke-dashoffset: 0; } 89% { opacity: 1; stroke-dashoffset: 0; } 100% { opacity: 0; stroke-dashoffset: 0; } }
+.present .vf .vf-route { animation: vf-route 14s ease-in-out both; }
+.present .vf .vf-token { animation: vf-move 14s ease-in-out both, vf-look 14s linear both; }
+.present .vf .vf-rp1 { animation: vf-rp 1.54s ease-out 3.08s; }
+.present .vf .vf-rp2 { animation: vf-rp 1.54s ease-out 5.88s; }
+.present .vf .vf-s20 { animation: vf-pop 0.42s ease-out 3.08s both; }
+.present .vf .vf-s21 { animation: vf-pop 0.35s ease-out 3.71s both; }
+.present .vf .vf-s22 { animation: vf-pop 0.35s ease-out 4.13s both; }
+.present .vf .vf-s23 { animation: vf-pop 0.35s ease-out 4.55s both; }
+.present .vf .vf-s24 { animation: vf-pop 0.42s ease-out 5.88s both; }
+.present .vf .vf-n1 { animation: vf-drop 0.28s ease-out 5.11s both; }
+.present .vf .vf-n2 { animation: vf-drop 0.28s ease-out 8.19s both; }
+.present .vf .vf-r-on { animation: vf-ring 0.84s ease-out 1.4s; }
+.present .vf .vf-r-rt1 { animation: vf-ring 0.84s ease-out 3.64s; }
+.present .vf .vf-r-rt2 { animation: vf-ring 0.84s ease-out 6.44s; }
+.present .vf .vf-r-off { animation: vf-ring 0.84s ease-out 8.96s; }
+.present .vf .vf-w-pl { animation: vf-wake 0.21s ease 0.8s both; }
+.present .vf .vf-w-on { animation: vf-wake 0.21s ease 1.4s both; }
+.present .vf .vf-w-p { animation: vf-wake 0.21s ease 4.76s both; }
+.present .vf .vf-w-pn { animation: vf-wake 0.21s ease 4.9s both; }
+.present .vf .vf-w-sp { animation: vf-wake 0.21s ease 5.18s both; }
+.present .vf .vf-w-ix { animation: vf-wake 0.21s ease 6.02s both; }
+.present .vf .vf-w-hid { animation: vf-wake 0.42s ease 6.72s both; }
+.present .vf .vf-w-off { animation: vf-wake 0.21s ease 8.96s both; }
+.present .vf .vf-w-de { animation: vf-wake 0.21s ease 10.08s both; }
+.present .vf .vf-l1 { animation: vf-l1 0.7s ease 3.01s; }
+.present .vf .vf-l2 { animation: vf-l2 1.33s ease 3.64s; }
+.present .vf .vf-l3 { animation: vf-l3 3.08s ease 4.97s; }
+.present .vf .vf-l4 { animation: sl-fade 0.21s ease 8.05s both; }
+.present .vf .vf-lr { animation: sl-fade 0.28s ease 5.88s both; }
+.present .vf .vf-dim { animation: vf-dim 3.29s ease 4.9s; }
+.present .vf .vf-box { animation: vf-box 3.22s ease 4.97s; }
+.present .vf .vf-arc { animation: vf-arc 3.15s ease-in-out 5.04s; }
 
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }

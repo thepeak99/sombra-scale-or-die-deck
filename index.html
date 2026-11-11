@@ -352,113 +352,105 @@
       </div>
     </section>
 
-    <section class="s-diagram">
-      <div class="frame">
-        <div class="row" style="justify-content:space-between; align-items:flex-start">
-          <div>
-            <div class="eyebrow">Value flow</div>
-            <h2>In, around, and out of the <em>shielded pool.</em></h2>
-          </div>
-          <span class="badge design" style="margin-top:6px">Sombra V2 design</span>
+    <section data-state="no-chrome">
+      <div class="sl vf">
+        <div class="cap eyebrow a1">Value flow</div>
+        <h2 class="h1 a1"><span class="g">How value moves</span> through the shielded pool.</h2>
+        <span class="tag ol a1" style="position: absolute; right: 60px; top: 70px">Sombra V2 design</span>
+
+        <div class="panel" style="left: 60px; width: 360px"><div class="cap">Solana · public</div></div>
+        <div class="panel pool" style="left: 460px; width: 1000px">
+          <div class="cap">Shielded pool</div>
+          <div style="margin-top: 12px; font-size: 28px; letter-spacing: -0.02em">Global commitment tree</div>
+          <div class="t3" style="margin-top: 4px; font-size: 17px">anonymity set = every note in the tree</div>
         </div>
-        <div class="stage">
-          <svg viewBox="0 0 1640 660" role="img" aria-label="Value enters the shielded pool via onramp, moves privately inside it, and exits via offramp. Components: wallet, prover, prover nodes, indexer, Solana program.">
-            <g>
-              <rect class="d-box" x="0" y="70" width="270" height="380" rx="24"/>
-              <text class="d-mono" x="28" y="116" font-size="18">Solana</text>
-              <text class="d-label" x="28" y="164" font-size="29">Public liquidity</text>
-              <text class="d-sub" x="28" y="198" font-size="20">any registered SPL token</text>
-              <g transform="translate(0 300)">
-                <circle cx="66" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
-                <circle cx="135" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
-                <circle cx="204" cy="0" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
-                <text class="d-mono" x="66" y="6" font-size="15" text-anchor="middle">SPL</text>
-                <text class="d-mono" x="135" y="6" font-size="15" text-anchor="middle">SPL</text>
-                <text class="d-mono" x="204" y="6" font-size="15" text-anchor="middle">LST</text>
-              </g>
-              <text class="d-sub" x="28" y="404" font-size="20">wallets · DEXs · LSTs</text>
-            </g>
+        <div class="panel" style="left: 1500px; width: 360px"><div class="cap">Solana · public</div></div>
 
-            <g>
-              <rect x="440" y="30" width="760" height="460" rx="36" fill="#2A2954" stroke="#B1E0FF" stroke-width="2"/>
-              <text class="d-mono" x="480" y="80" font-size="18">Shielded pool</text>
-              <text class="d-label" x="480" y="124" font-size="32">Global commitment tree</text>
-              <text class="d-sub" x="480" y="158" font-size="21">anonymity set = every note in the tree</text>
-              <g stroke="#FCF9F2" stroke-opacity="0.4" stroke-width="1.5" fill="none">
-                <path d="M820 215L680 280M820 215L960 280"/>
-                <path d="M680 280L610 345M680 280L750 345M960 280L890 345M960 280L1030 345"/>
-                <path d="M610 345L575 409M610 345L645 409M750 345L715 409M750 345L785 409M890 345L855 409M890 345L925 409M1030 345L995 409M1030 345L1065 409"/>
-              </g>
-              <g fill="#2A2954" stroke="#B1E0FF" stroke-width="1.5">
-                <circle cx="820" cy="215" r="9"/>
-                <circle cx="680" cy="280" r="8"/><circle cx="960" cy="280" r="8"/>
-                <circle cx="610" cy="345" r="7"/><circle cx="750" cy="345" r="7"/><circle cx="890" cy="345" r="7"/><circle cx="1030" cy="345" r="7"/>
-              </g>
-              <g fill="#B1E0FF">
-                <circle cx="645" cy="409" r="10"/><circle cx="715" cy="409" r="10"/><circle cx="785" cy="409" r="10"/>
-                <circle cx="855" cy="409" r="10"/><circle cx="995" cy="409" r="10"/><circle cx="1065" cy="409" r="10"/>
-              </g>
-              <text class="d-mono" x="820" y="199" font-size="13" text-anchor="middle">root</text>
-            </g>
+        <div class="nbox">
+          <div class="cap">Nullifier set</div>
+          <div class="t3" style="margin-top: 4px; font-size: 14px">spent markers, unlinkable to any leaf</div>
+          <div style="margin-top: 12px; display: flex; gap: 6px">
+            <span class="nf"></span><span class="nf"></span><span class="nf"></span><span class="nf"></span><span class="nf hit vf-n1"></span><span class="nf hit vf-n2"></span>
+          </div>
+        </div>
 
-            <g class="fragment" data-fragment-index="1">
-              <path class="d-flow-c d-dash d-pulse" d="M270 262 C 390 262, 500 300, 567 397" marker-end="url(#m-arrow-c)"/>
-              <circle cx="575" cy="409" r="12" fill="#B1E0FF"/>
-              <text class="d-mono d-cyan" x="355" y="186" font-size="18" text-anchor="middle">Onramp</text>
-              <text class="d-sub" x="355" y="216" font-size="18" text-anchor="middle">public: depositor,</text>
-              <text class="d-sub" x="355" y="240" font-size="18" text-anchor="middle">token, amount</text>
-            </g>
+        <div style="position: absolute; left: 90px; top: 640px; display: flex; gap: 6px"><span class="coin">SPL</span><span class="coin">SPL</span><span class="coin">LST</span></div>
+        <div class="t2" style="position: absolute; left: 90px; top: 846px; font-size: 16px">wallets · DEXs · LSTs</div>
+        <div style="position: absolute; left: 1530px; top: 640px"><span class="coin">SPL</span></div>
+        <div class="t2" style="position: absolute; left: 1530px; top: 846px; font-size: 16px">plain SPL tokens out</div>
 
-            <g class="fragment" data-fragment-index="2">
-              <circle cx="715" cy="409" r="13" fill="#A73D13" stroke="#A73D13" stroke-width="2.5"/>
-              <path d="M709 403l12 12M721 403l-12 12" stroke="#FCF9F2" stroke-width="2"/>
-              <path class="d-flow" d="M722 392 C 770 322, 870 322, 918 392" marker-end="url(#m-arrow)"/>
-              <circle cx="925" cy="409" r="12" fill="#FCF9F2"/>
-              <text class="d-mono d-knock" x="820" y="318" font-size="16" text-anchor="middle">private transfer</text>
-              <text class="d-sub d-amber" x="715" y="458" font-size="17" text-anchor="middle">nullifier marks spent</text>
-              <text class="d-sub d-mint" x="925" y="458" font-size="17" text-anchor="middle">new encrypted note</text>
-              <text class="d-sub" x="820" y="530" font-size="21" text-anchor="middle">hidden: sender · recipient · amount · which note was spent</text>
-            </g>
+        <svg width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+          <g fill="none" stroke="#FCF9F2" stroke-opacity="0.16" stroke-width="2" stroke-linecap="round">
+            <path d="M960 420 C960 495, 624 485, 624 560 M960 420 C960 495, 848 485, 848 560 M960 420 C960 495, 1072 485, 1072 560 M960 420 C960 495, 1296 485, 1296 560 M624 560 C624 650, 526 630, 526 720 M624 560 C624 650, 554 630, 554 720 M624 560 C624 650, 582 630, 582 720 M624 560 C624 650, 610 630, 610 720 M624 560 C624 650, 638 630, 638 720 M624 560 C624 650, 666 630, 666 720 M624 560 C624 650, 694 630, 694 720 M624 560 C624 650, 722 630, 722 720 M848 560 C848 650, 750 630, 750 720 M848 560 C848 650, 778 630, 778 720 M848 560 C848 650, 806 630, 806 720 M848 560 C848 650, 834 630, 834 720 M848 560 C848 650, 862 630, 862 720 M848 560 C848 650, 890 630, 890 720 M848 560 C848 650, 918 630, 918 720 M848 560 C848 650, 946 630, 946 720 M1072 560 C1072 650, 974 630, 974 720 M1072 560 C1072 650, 1002 630, 1002 720 M1072 560 C1072 650, 1030 630, 1030 720 M1072 560 C1072 650, 1058 630, 1058 720 M1072 560 C1072 650, 1086 630, 1086 720 M1072 560 C1072 650, 1114 630, 1114 720 M1072 560 C1072 650, 1142 630, 1142 720 M1072 560 C1072 650, 1170 630, 1170 720 M1296 560 C1296 650, 1198 630, 1198 720 M1296 560 C1296 650, 1226 630, 1226 720 M1296 560 C1296 650, 1254 630, 1254 720 M1296 560 C1296 650, 1282 630, 1282 720 M1296 560 C1296 650, 1310 630, 1310 720 M1296 560 C1296 650, 1338 630, 1338 720 M1296 560 C1296 650, 1366 630, 1366 720 M1296 560 C1296 650, 1394 630, 1394 720"/>
+          </g>
+          <g fill="none" stroke="#B1E0FF" stroke-width="3" stroke-linecap="round">
+            <path class="vf-rp vf-rp1" pathLength="1" d="M1086 720 C1086 630, 1072 650, 1072 560 C1072 485, 960 495, 960 420"/>
+            <path class="vf-rp vf-rp2" pathLength="1" d="M1198 720 C1198 630, 1296 650, 1296 560 C1296 485, 960 495, 960 420" stroke="#FCF9F2"/>
+          </g>
+          <circle cx="960" cy="420" r="17" fill="#2A2954"/>
+          <use href="#mark" x="948" y="408" width="24" height="24"/>
+          <g fill="#B1E0FF"><circle cx="624" cy="560" r="7"/><circle cx="848" cy="560" r="7"/><circle cx="1072" cy="560" r="7"/><circle cx="1296" cy="560" r="7"/></g>
+          <g fill="#B1E0FF" fill-opacity="0.55">
+            <circle cx="526" cy="720" r="6"/><circle cx="554" cy="720" r="6"/><circle cx="582" cy="720" r="6"/><circle cx="610" cy="720" r="6"/><circle cx="638" cy="720" r="6"/><circle cx="666" cy="720" r="6"/><circle cx="694" cy="720" r="6"/><circle cx="722" cy="720" r="6"/><circle cx="750" cy="720" r="6"/><circle cx="778" cy="720" r="6"/><circle cx="806" cy="720" r="6"/><circle cx="834" cy="720" r="6"/><circle cx="862" cy="720" r="6"/><circle cx="890" cy="720" r="6"/><circle cx="918" cy="720" r="6"/><circle cx="946" cy="720" r="6"/><circle cx="974" cy="720" r="6"/><circle cx="1002" cy="720" r="6"/><circle cx="1030" cy="720" r="6"/><circle cx="1058" cy="720" r="6"/>
+          </g>
+          <g fill="none" stroke="#FCF9F2" stroke-opacity="0.45" stroke-width="1.4" stroke-dasharray="3 3">
+            <circle cx="1086" cy="720" r="6"/><circle cx="1114" cy="720" r="6"/><circle cx="1142" cy="720" r="6"/><circle cx="1170" cy="720" r="6"/><circle cx="1198" cy="720" r="6"/><circle cx="1226" cy="720" r="6"/><circle cx="1254" cy="720" r="6"/><circle cx="1282" cy="720" r="6"/><circle cx="1310" cy="720" r="6"/><circle cx="1338" cy="720" r="6"/><circle cx="1366" cy="720" r="6"/><circle cx="1394" cy="720" r="6"/>
+          </g>
+          <circle class="vf-pop vf-s20" cx="1086" cy="720" r="8" fill="#B1E0FF"/>
+          <circle class="vf-pop vf-s21" cx="1114" cy="720" r="6" fill="#B1E0FF"/>
+          <circle class="vf-pop vf-s22" cx="1142" cy="720" r="6" fill="#B1E0FF"/>
+          <circle class="vf-pop vf-s23" cx="1170" cy="720" r="6" fill="#B1E0FF"/>
+          <circle class="vf-pop vf-s24" cx="1198" cy="720" r="8" fill="#FCF9F2"/>
 
-            <g class="fragment" data-fragment-index="3">
-              <circle cx="1065" cy="409" r="13" fill="#A73D13" stroke="#A73D13" stroke-width="2.5"/>
-              <path d="M1059 403l12 12M1071 403l-12 12" stroke="#FCF9F2" stroke-width="2"/>
-              <path class="d-flow-c d-dash d-pulse" d="M1073 396 C 1140 300, 1250 262, 1368 262" marker-end="url(#m-arrow-c)"/>
-              <text class="d-mono d-cyan" x="1285" y="186" font-size="18" text-anchor="middle">Offramp</text>
-              <text class="d-sub" x="1285" y="216" font-size="18" text-anchor="middle">public: amount,</text>
-              <text class="d-sub" x="1285" y="240" font-size="18" text-anchor="middle">destination</text>
-            </g>
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M140 470 H360 C440 470, 470 640, 490 780 C500 815, 530 830, 570 830 H1020 C1060 830, 1086 800, 1086 720" stroke="#B1E0FF" stroke-opacity="0.3" stroke-width="7"/>
+            <path d="M1086 720 C1100 790, 1184 790, 1198 720" stroke="#FCF9F2" stroke-opacity="0.35" stroke-width="2" stroke-dasharray="4 5"/>
+            <path d="M1198 720 C1230 820, 1420 830, 1440 620 C1460 510, 1490 470, 1540 470 H1780" stroke="#A73D13" stroke-opacity="0.75" stroke-width="7"/>
+          </g>
+          <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path class="vf-route" pathLength="1" d="M140 470 H360 C440 470, 470 640, 490 780 C500 815, 530 830, 570 830 H1020 C1060 830, 1086 800, 1086 720 C1100 790, 1184 790, 1198 720 C1230 820, 1420 830, 1440 620 C1460 510, 1490 470, 1540 470 H1780" stroke="#B1E0FF" stroke-width="12" stroke-opacity="0.22"/>
+            <path class="vf-route" pathLength="1" d="M140 470 H360 C440 470, 470 640, 490 780 C500 815, 530 830, 570 830 H1020 C1060 830, 1086 800, 1086 720 C1100 790, 1184 790, 1198 720 C1230 820, 1420 830, 1440 620 C1460 510, 1490 470, 1540 470 H1780" stroke="#FCF9F2" stroke-width="2.5"/>
+          </g>
 
-            <g>
-              <rect class="d-box" x="1370" y="70" width="270" height="380" rx="24"/>
-              <text class="d-mono" x="1398" y="116" font-size="18">Solana</text>
-              <text class="d-label" x="1398" y="164" font-size="29">Any SPL account</text>
-              <text class="d-sub" x="1398" y="198" font-size="20">plain SPL tokens out</text>
-              <circle cx="1505" cy="300" r="32" fill="#1A1A1A" stroke="#B1E0FF" stroke-width="2.5"/>
-              <text class="d-mono" x="1505" y="306" font-size="15" text-anchor="middle">SPL</text>
-              <text class="d-sub" x="1398" y="404" font-size="20">back into DeFi</text>
-            </g>
+          <g fill="none" stroke-width="2">
+            <circle class="vf-ring vf-r-on" cx="440" cy="552" r="16" stroke="#B1E0FF"/>
+            <circle class="vf-ring vf-r-rt1" cx="960" cy="420" r="18" stroke="#B1E0FF"/>
+            <circle class="vf-ring vf-r-rt2" cx="960" cy="420" r="18" stroke="#FCF9F2"/>
+            <circle class="vf-ring vf-r-off" cx="1480" cy="502" r="16" stroke="#FCF9F2"/>
+          </g>
+          <g class="vf-w-pl"><circle cx="140" cy="470" r="11" fill="#FCF9F2"/></g>
+          <g class="vf-w-on"><circle cx="440" cy="552" r="12" fill="#1A1A1A" stroke="#FCF9F2" stroke-width="4"/><circle cx="440" cy="552" r="5" fill="#B1E0FF"/></g>
+          <g class="vf-w-off"><circle cx="1480" cy="502" r="12" fill="#1A1A1A" stroke="#FCF9F2" stroke-width="4"/><circle cx="1480" cy="502" r="5" fill="#A73D13"/></g>
+          <g class="vf-w-de"><circle cx="1780" cy="470" r="11" fill="#FCF9F2"/></g>
+        </svg>
 
-            <g class="fragment" data-fragment-index="4">
-              <g transform="translate(0 566)">
-                <rect class="d-box" x="0" y="0" width="300" height="88" rx="44"/>
-                <text class="d-label" x="150" y="38" font-size="24" text-anchor="middle">Wallet / client</text>
-                <text class="d-sub" x="150" y="66" font-size="17" text-anchor="middle">keys · encrypt · scan</text>
-                <rect class="d-box" x="335" y="0" width="300" height="88" rx="44"/>
-                <text class="d-label" x="485" y="38" font-size="24" text-anchor="middle">Prover</text>
-                <text class="d-sub" x="485" y="66" font-size="17" text-anchor="middle">RISC0 STARK proofs</text>
-                <rect class="d-box" x="670" y="0" width="300" height="88" rx="44"/>
-                <text class="d-label" x="820" y="38" font-size="24" text-anchor="middle">Prover nodes</text>
-                <text class="d-sub" x="820" y="66" font-size="17" text-anchor="middle">verify off-chain · attest</text>
-                <rect class="d-box" x="1005" y="0" width="300" height="88" rx="44"/>
-                <text class="d-label" x="1155" y="38" font-size="24" text-anchor="middle">Indexer</text>
-                <text class="d-sub" x="1155" y="66" font-size="17" text-anchor="middle">ciphertexts · tree data</text>
-                <rect class="d-box-hi" x="1340" y="0" width="300" height="88" rx="44"/>
-                <text class="d-label" x="1490" y="38" font-size="24" text-anchor="middle">Solana program</text>
-                <text class="d-sub" x="1490" y="66" font-size="17" text-anchor="middle">roots · nullifiers · custody</text>
-              </g>
-            </g>
-          </svg>
+        <svg width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true" style="position: absolute; left: 0; top: 0; pointer-events: none">
+          <defs><mask id="vf-focus"><rect x="0" y="0" width="1920" height="1080" fill="#FCF9F2"/><rect x="1060" y="682" width="164" height="126" rx="14" fill="#1A1A1A"/><rect x="1176" y="292" width="258" height="100" rx="12" fill="#1A1A1A"/></mask></defs>
+          <rect class="vf-dim" x="460" y="270" width="1000" height="630" rx="16" fill="#1A1A1A" mask="url(#vf-focus)"/>
+          <g class="vf-box" fill="none" stroke="#B1E0FF" stroke-width="1.5"><rect x="1060" y="682" width="164" height="126" rx="14"/><rect x="1176" y="292" width="258" height="100" rx="12" stroke-dasharray="4 4"/></g>
+          <path class="vf-arc" pathLength="1" d="M1086 720 C1100 790, 1184 790, 1198 720" fill="none" stroke="#B1E0FF" stroke-width="3.5" stroke-linecap="round"/>
+        </svg>
+        <div class="vf-l3" style="position: absolute; left: 1060px; top: 640px; width: 164px; text-align: center"><span class="cap pill-label">Private transfer</span></div>
+        <div class="vf-token"></div>
+
+        <div class="cap t2" style="position: absolute; left: 920px; top: 378px; width: 80px; text-align: center; font-size: 11px">Root</div>
+        <div class="lb vf-w-pl" style="left: 110px; top: 494px; width: 220px"><b>Public liquidity</b><i>any registered SPL token</i></div>
+        <div class="lb vf-w-on" style="left: 199px; top: 376px; width: 210px; text-align: right"><div class="cap">Onramp</div><i>public: depositor,<br>token, amount</i></div>
+        <div class="lb vf-l1" style="left: 560px; top: 848px; width: 510px; text-align: right"><i style="margin-top: 0"><span class="cap" style="margin-right: 10px">Commitment</span>the deposit becomes a note in the next free leaf</i></div>
+        <div class="lb vf-l2" style="left: 560px; top: 848px; width: 510px; text-align: right"><i style="margin-top: 0"><span class="cap" style="margin-right: 10px">Other notes join</span>the anonymity set keeps growing</i></div>
+        <div class="lb vf-l3" style="left: 560px; top: 848px; width: 510px; text-align: right"><i style="margin-top: 0"><span class="cap wh" style="margin-right: 10px">Private transfer</span>old note nullified · link seen only by sender &amp; recipient</i></div>
+        <div class="lb vf-l4" style="left: 560px; top: 848px; width: 510px; text-align: right"><i style="margin-top: 0"><span class="cap wh" style="margin-right: 10px">Withdrawal</span>recipient&rsquo;s note nullified, tokens leave</i></div>
+        <div class="lb vf-lr" style="left: 1212px; top: 848px; width: 240px"><i style="margin-top: 0"><span class="cap wh" style="margin-right: 8px">Recipient&rsquo;s note</span>encrypted</i></div>
+        <div class="lb vf-w-off" style="left: 1514px; top: 380px; width: 220px"><div class="cap">Offramp</div><i>public: amount,<br>destination</i></div>
+        <div class="lb vf-w-de" style="left: 1630px; top: 494px; width: 200px; text-align: right"><b>Back into DeFi</b></div>
+        <div class="t3 vf-w-hid" style="position: absolute; left: 460px; top: 914px; width: 1000px; text-align: center; font-size: 18px"><span class="sky">Hidden:</span> sender · recipient · amount · which note was spent</div>
+
+        <div style="position: absolute; left: 60px; top: 966px; width: 1800px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 20px">
+          <div class="chip vf-w-pl"><div style="font-size: 19px">Wallet / client</div><small>keys · encrypt · scan</small></div>
+          <div class="chip vf-w-p"><div style="font-size: 19px">Prover</div><small>RISC0 STARK proofs</small></div>
+          <div class="chip vf-w-pn"><div style="font-size: 19px">Prover nodes</div><small>verify off-chain · attest</small></div>
+          <div class="chip vf-w-ix"><div style="font-size: 19px">Indexer</div><small>ciphertexts · tree data</small></div>
+          <div class="chip prog vf-w-sp"><div style="font-size: 19px">Solana program</div><small>roots · nullifiers · custody</small></div>
         </div>
       </div>
     </section>

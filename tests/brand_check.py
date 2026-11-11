@@ -13,7 +13,8 @@ changed no text and no geometry, and keeping them would forbid any
 legitimate content edit.
 
 The v2 slide system (2026-11-11) re-types the deck from the design canvas,
-so c24 (the phase-1 typography freeze) was retired with it. Palette,
+so c24 (the phase-1 typography freeze) and c28 (the phase-1 diagram
+freeze) were retired with it. Palette,
 effects, logo and font-face contracts still hold.
 
 The e01–e19 contracts are the four approved content edits (divider
@@ -64,7 +65,7 @@ Contract -> check mapping (contract numbers from the phase-1 spec):
   25 c25a_exactly_21_top_level_sections
   26 (retired: c26_html_outside_svg_equals_baseline_two_subs)
   27 (retired: c27_non_paint_declarations_frozen)
-  28 c28_diagram_svgs_unchanged_minus_paint_attrs
+  28 (retired: c28_diagram_svgs_unchanged_minus_paint_attrs)
   29 c29a_icon_symbols_unchanged, c29b_markers_unchanged_apart_fill
   30 (retired: c30_inline_style_attrs_frozen)
   31 (retired: c31_deck_check_parity)
@@ -298,7 +299,6 @@ HEX_RE = re.compile(r"(?<![\w&])#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8}
 RGB_RE = re.compile(r"\brgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*(?:,\s*([0-9.]+)\s*)?\)")
 EXOTIC_FN_RE = re.compile(r"\b(hsla?|hwb|lab|lch|oklab|oklch|color-mix|color)\(")
 VAR_RE = re.compile(r"var\((--[\w-]+)\)")
-PAINT_ATTR_RE = re.compile(r'\s(?:fill|stroke|color|stroke-opacity|fill-opacity|filter)="[^"]*"')
 FILL_ATTR_RE = re.compile(r'\sfill="[^"]*"')
 
 # ---------------------------------------------------------------------------
@@ -948,9 +948,10 @@ class Checker:
                      "last top-level <section> does not contain "
                      f"{CLOSING_LOCKUP_SVG!r}" if secs else "no top-level <section> found")
             nm, nl = htm.count('href="#mark"'), htm.count('href="#lockup-stacked"')
-            ok = nm == 2 and nl == 1
+            # mark: title hero, chrome bar, value-flow tree root (v2)
+            ok = nm == 3 and nl == 1
             self.add("c19c_use_reference_counts", ok,
-                     f'href="#mark" appears {nm}× (want 2), '
+                     f'href="#mark" appears {nm}× (want 3), '
                      f'href="#lockup-stacked" appears {nl}× (want 1) in index.html')
 
         # ---- Contract 20: logo rule sizes, chrome svg rule frozen -------------
@@ -1066,17 +1067,8 @@ class Checker:
         # REMOVED_SELECTORS, PAINT_PROPS, EXPECTED_DECK_FAILS) were removed.
         # ------------------------------------------------------------------
 
-        # ---- Contract 28: diagram SVGs minus paint attrs -----------------------
-        diagram = lambda h: [PAINT_ATTR_RE.sub("", x)
-                             for x in re.findall(
-                                 r'<svg viewBox="0 0 1640 660".*?</svg>', h, re.S)]
-        self.add("c28_diagram_svgs_unchanged_minus_paint_attrs",
-                 htm is not None and diagram(htm) == diagram(bhtml)
-                 and len(diagram(htm)) == 2,
-                 f"diagram SVG(s) (viewBox 0 0 1640 660) differ from baseline after "
-                 f"stripping fill/stroke/color/stroke-opacity/fill-opacity/filter "
-                 f"attrs; candidate has "
-                 f"{0 if htm is None else len(diagram(htm))} diagram(s), want 2")
+        # RETIRED (2026-11-11): c28_diagram_svgs_unchanged_minus_paint_attrs
+        # froze the two phase-1 diagrams; the v2 slide system redraws them.
 
         # ---- Contract 29: icon symbols and markers -----------------------------
         icons = lambda h: re.findall(r'<symbol id="i-[^"]*"[^>]*>.*?</symbol>', h, re.S)
@@ -1377,7 +1369,6 @@ CHECK_NAMES = (
        "c22_font_face_blocks_unchanged", "c22b_display_font_file_exists",
        "c23_font_token_lines_unchanged",
        "c25a_exactly_21_top_level_sections",
-       "c28_diagram_svgs_unchanged_minus_paint_attrs",
        "c29a_icon_symbols_unchanged", "c29b_markers_unchanged_apart_fill"]
     + list(E_NAMES)
 )
