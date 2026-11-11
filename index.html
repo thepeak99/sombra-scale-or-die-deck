@@ -455,28 +455,66 @@
       </div>
     </section>
 
-    <section class="s-two-col">
-      <div class="frame">
-        <div class="eyebrow">Remote prover</div>
-        <h2>Like having our GPU <em>plugged into your phone.</em></h2>
-        <div class="cols-3" style="margin-top:22px">
-          <div class="card glow fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-lock"/></svg></div>
-            <h3>Enclave</h3>
-            <p>Proving runs inside a TEE. The witness &mdash; spend key and all &mdash; never leaves it; the operator can&rsquo;t see what&rsquo;s being proven.</p>
+    <section>
+      <div class="sl pv">
+        <div class="cap eyebrow a1">Remote prover</div>
+        <h2 class="h1 a1"><span class="g">Like having our GPU</span> plugged into your phone.</h2>
+
+        <div class="box" style="left: 140px">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10.5 18.5 H13.5"/></svg>
+          <div class="name">Your wallet</div>
+          <div class="where">on your phone</div>
+          <div class="pill pv-got" style="position: absolute; right: 22px; top: 22px">Proof</div>
+          <svg class="pv-ok" width="34" height="34" viewBox="0 0 30 30" aria-hidden="true" style="position: absolute; right: 20px; bottom: 20px"><circle cx="15" cy="15" r="14" fill="#B1E0FF"/><path d="M9 15.5 L13.5 20 L21 11" fill="none" stroke="#1A1A1A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+
+        <div class="box gpu" style="left: 1484px">
+          <div class="pv-busy"></div>
+          <div class="enclave"></div>
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position: relative"><rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M9 2 V4 M15 2 V4 M9 20 V22 M15 20 V22 M2 9 H4 M2 15 H4 M20 9 H22 M20 15 H22"/></svg>
+          <div class="name" style="position: relative">Sombra GPU</div>
+          <div class="where" style="position: relative">proving inside a TEE</div>
+        </div>
+
+        <svg width="1048" height="40" viewBox="0 0 1048 40" aria-hidden="true" style="position: absolute; left: 436px; top: 354px"><path d="M0 20 H1048" stroke="#FCF9F2" stroke-opacity="0.25" stroke-width="2" stroke-dasharray="3 7" stroke-linecap="round"/></svg>
+        <div class="cap pv-t1" style="position: absolute; left: 436px; top: 318px; width: 1048px; text-align: center">Remote attestation · code and GPU verified</div>
+        <div class="cap pv-t2" style="position: absolute; left: 436px; top: 318px; width: 1048px; text-align: center">Sealed with ML-KEM-768 · operator sees ciphertext only</div>
+        <div class="cap pv-t3" style="position: absolute; left: 436px; top: 318px; width: 1048px; text-align: center">Proof generated in the enclave · witness never leaves</div>
+
+        <div class="pv-att" style="position: absolute; left: 1466px; top: 363px"></div>
+        <div class="pv-pkt" style="position: absolute; left: 448px; top: 355px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 0 1 8 0 V11"/></svg>Sealed
+        </div>
+        <div class="pill pv-prf" style="position: absolute; left: 1404px; top: 359px">Proof</div>
+
+        <div style="position: absolute; left: 140px; top: 520px; width: 1640px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px">
+          <div class="card pv-k1" style="height: 330px; display: flex; flex-direction: column">
+            <div class="row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 L19 6 V11.5 C19 16 16 19.5 12 21 C8 19.5 5 16 5 11.5 V6 Z"/><path d="M9 12 L11.2 14.2 L15.2 10"/></svg>
+              <span class="cap g">01 · before sending</span>
+            </div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">Attested</h3>
+            <p class="body" style="margin-top: 14px; font-size: 22px">Before your wallet sends anything, remote attestation verifies the exact code and GPU that will run the proof.</p>
           </div>
-          <div class="card glow fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-key"/></svg></div>
-            <h3>End-to-end sealed</h3>
-            <p>Your device seals the request with <span class="mono">ML-KEM-768</span> on the way in &mdash; post-quantum; the operator only ever sees ciphertext.</p>
+          <div class="card pv-k2" style="height: 330px; display: flex; flex-direction: column">
+            <div class="row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 L20 3 M17 6 L19.5 8.5 M14.5 8.5 L16.5 10.5"/></svg>
+              <span class="cap g">02 · in transit</span>
+            </div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">End-to-end sealed</h3>
+            <p class="body" style="margin-top: 14px; font-size: 22px">Your device seals the request with <span class="tech">ML-KEM-768</span> on the way in &mdash; post-quantum; the operator only ever sees ciphertext.</p>
           </div>
-          <div class="card glow fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-shield"/></svg></div>
-            <h3>Attested</h3>
-            <p>Before your wallet sends anything, remote attestation verifies the exact code and GPU that will run the proof.</p>
+          <div class="card fj pv-k3" style="height: 330px; display: flex; flex-direction: column">
+            <div class="row">
+              <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11 V7 a4 4 0 0 1 8 0 V11"/></svg>
+              <span class="cap g">03 · on the GPU</span>
+            </div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">Enclave</h3>
+            <p class="body" style="margin-top: 14px; font-size: 22px">Proving runs inside a TEE. The witness &mdash; spend key and all &mdash; never leaves it; the operator can&rsquo;t see what&rsquo;s being proven.</p>
           </div>
         </div>
-        <p class="lede after" style="max-width:none">Fast proofs, no trusting the operator&rsquo;s hardware &mdash; <em>the GPU is ours, the secrets stay yours.</em></p>
+
+        <p class="closer late" style="top: 898px; font-size: 32px; letter-spacing: -0.01em; line-height: 1.3"><span class="g">Fast proofs, no trusting the operator&rsquo;s hardware &mdash;</span> the GPU is ours, the secrets stay yours.</p>
       </div>
     </section>
 
