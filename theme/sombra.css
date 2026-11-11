@@ -566,6 +566,10 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .sl .underline::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--sky); transform-origin: left; }
 .present .sl .underline::after { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 8.4s both; }
 
+/* 9 · Post-quantum: a rule draws across before "Our rule" lands */
+.sl .divider { height: 1.5px; background: var(--line); transform-origin: left; }
+.present .sl .divider { animation: sl-grow 0.96s cubic-bezier(0.6, 0, 0.2, 1) 6.24s both; }
+
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }
 @keyframes sl-gap { 0% { opacity: 0; } 25% { opacity: 1; } 75% { opacity: 0.35; } }

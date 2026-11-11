@@ -262,31 +262,31 @@
       </div>
     </section>
 
-    <section class="s-two-col">
-      <div class="frame">
-        <div class="eyebrow">Precise about "post-quantum"</div>
-        <h2>What's quantum-safe — <em>and what isn’t yet.</em></h2>
-        <div class="cols">
-          <div class="card ok">
-            <div class="card-top"><h3>Quantum-safe in Sombra</h3><span class="badge live">PQ</span></div>
-            <ul class="lux ok small">
-              <li><strong>Note contents</strong> — ML-KEM-768 + AES-256-GCM (key via HKDF-SHA256). Harvested ciphertext stays sealed.</li>
-              <li><strong>Ownership &amp; spend proofs</strong> — hash-based STARKs over SHA-256 commitments.</li>
-              <li><strong>No signature to spend</strong> — authority is knowledge of your key, proven in zero knowledge.</li>
-              <li><strong>All calls to our infra</strong> — remote prover, indexer, QFire (our RPC). ML-DSA-65 (FIPS 204) signed: an extra PQ layer on already-safe traffic.</li>
-              <li><strong>Remote prover in enclaves</strong> — attestation lets you verify the code that proves.</li>
-            </ul>
-          </div>
-          <div class="card warn fragment rise">
-            <div class="card-top"><h3>Still classical — Solana layer</h3><span class="badge caution">Ed25519</span></div>
-            <ul class="lux warn small">
-              <li><strong>Settlement &amp; consensus</strong> on Solana.</li>
-              <li><strong>Transaction signing &amp; fee payers.</strong></li>
-              <li><strong>Prover-node voting keys</strong> — rotated after every use to limit exposure.</li>
-            </ul>
-            <div class="rule"></div>
-            <p class="small" style="color:var(--text)">Our rule: <em>if the authorization path is Ed25519, we don’t call it post-quantum.</em></p>
-          </div>
+    <section>
+      <div class="sl">
+        <div class="cap eyebrow a1">Precise about &ldquo;post-quantum&rdquo;</div>
+        <h2 class="h1 a1"><span class="g">What&rsquo;s quantum-safe —</span> and what isn&rsquo;t yet.</h2>
+        <div class="card a2" style="position: absolute; left: 140px; top: 290px; width: 800px; height: 720px">
+          <div class="edge e1"></div>
+          <div class="row"><h3 class="ct">Quantum-safe in Sombra</h3><span class="tag sk"><i></i>PQ</span></div>
+          <ul class="bl" style="margin-top: 34px; gap: 20px">
+            <li class="a3" style="font-size: 25px"><b>Note contents</b> — <span class="tech">ML-KEM-768 + AES-256-GCM</span> (key via HKDF-SHA256). Harvested ciphertext stays sealed.</li>
+            <li class="a4" style="font-size: 25px"><b>Ownership &amp; spend proofs</b> — hash-based STARKs over SHA-256 commitments.</li>
+            <li class="a5" style="font-size: 25px"><b>No signature to spend</b> — authority is knowledge of your key, proven in zero knowledge.</li>
+            <li class="a6" style="font-size: 25px"><b>All calls to our infra</b> — remote prover, indexer, QFire (our RPC). <span class="tech">ML-DSA-65</span> (FIPS 204) signed: an extra PQ layer on already-safe traffic.</li>
+            <li class="a7" style="font-size: 25px"><b>Remote prover in enclaves</b> — attestation lets you verify the code that proves.</li>
+          </ul>
+        </div>
+        <div class="card a3" style="position: absolute; left: 980px; top: 290px; width: 800px; height: 720px">
+          <div class="edge c e2"></div>
+          <div class="row"><h3 class="ct">Still classical — Solana layer</h3><span class="tag cy"><i></i>Ed25519</span></div>
+          <ul class="bl c" style="margin-top: 34px; gap: 20px">
+            <li class="a5" style="font-size: 25px"><b>Settlement &amp; consensus</b> on Solana.</li>
+            <li class="a6" style="font-size: 25px"><b>Transaction signing &amp; fee payers.</b></li>
+            <li class="a7" style="font-size: 25px"><b>Prover-node voting keys</b> — rotated after every use to limit exposure.</li>
+          </ul>
+          <div class="divider" style="margin-top: 40px"></div>
+          <p class="late" style="margin: 36px 0 0; font-size: 30px; line-height: 1.4; letter-spacing: -0.01em"><span class="g">Our rule:</span> if the authorization path is Ed25519, <span class="sky">we don&rsquo;t call it post-quantum.</span></p>
         </div>
       </div>
     </section>
