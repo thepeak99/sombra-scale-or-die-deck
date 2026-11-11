@@ -12,6 +12,10 @@ compared the deck against the pre-re-theme baseline 66369c3 to prove phase 1
 changed no text and no geometry, and keeping them would forbid any
 legitimate content edit.
 
+The v2 slide system (2026-11-11) re-types the deck from the design canvas,
+so c24 (the phase-1 typography freeze) was retired with it. Palette,
+effects, logo and font-face contracts still hold.
+
 The e01–e19 contracts are the four approved content edits (divider
 numerals/eyebrows, the compliance card, the comparison-table row tags, the
 integration card). Written TDD-style BEFORE the edits: most are RED by
@@ -56,7 +60,7 @@ Contract -> check mapping (contract numbers from the phase-1 spec):
      c21c_logo_css_rules_no_effect_props
   22 c22_font_face_blocks_unchanged
   23 c23_font_token_lines_unchanged
-  24 c24_typography_declarations_unchanged
+  24 (retired: c24_typography_declarations_unchanged)
   25 c25a_exactly_21_top_level_sections
   26 (retired: c26_html_outside_svg_equals_baseline_two_subs)
   27 (retired: c27_non_paint_declarations_frozen)
@@ -129,7 +133,8 @@ PALETTE_RGB = {
     (177, 224, 255),   # sky
 }
 
-# The eleven colour tokens :root must define, with these values.
+# The thirteen colour tokens :root must define, with these values
+# (--text-dim and --sky-line came with the v2 slide system, 2026-11-11).
 ROOT_COLOUR_TOKENS = {
     "--white": "#FCF9F2",
     "--ink": "#1A1A1A",
@@ -142,6 +147,8 @@ ROOT_COLOUR_TOKENS = {
     "--text-3": "rgba(252, 249, 242, 0.60)",
     "--line": "rgba(252, 249, 242, 0.20)",
     "--line-strong": "rgba(252, 249, 242, 0.40)",
+    "--text-dim": "rgba(252, 249, 242, 0.50)",
+    "--sky-line": "rgba(177, 224, 255, 0.45)",
 }
 
 # Structural :root tokens that must be unchanged from baseline (contract 5).
@@ -168,7 +175,7 @@ HERO_MARK_SVG = '<svg class="hero-mark" aria-hidden="true"><use href="#mark"/></
 CLOSING_LOCKUP_SVG = '<svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>'
 
 # Approved 2026-11-11: APK Galeria Roman replaces Space Grotesk as the display
-# face. Applied to the baseline so the font freezes (c05b, c22-c24) accept
+# face. Applied to the baseline so the font freezes (c05b, c22, c23) accept
 # exactly this swap and nothing else. Single static weight: the 100-900 range
 # stops browsers faking bold on 500-700 headings.
 FONT_SWAP = [
@@ -190,11 +197,6 @@ def apply_font_swap(css):
         css = css.replace(old, new)
     return css
 
-
-TYPO_PROPS = {
-    "font-family", "font-size", "font-weight", "font-style",
-    "letter-spacing", "line-height", "text-transform",
-}
 
 # The ten declarations' owning selectors (for contract 21).
 LOGO_RULE_SELECTORS = (".s-title .hero-mark", ".s-closing .closing-lockup",
@@ -1042,17 +1044,6 @@ class Checker:
                                    "--f-* token line(s) in theme/sombra.css differ "
                                    "from baseline"))
 
-        # ---- Contract 24: typography declaration multiset ---------------------
-        self.add("c24_typography_declarations_unchanged",
-                 css is not None and
-                 self._typo_counter(parse_declarations(css_nc)) ==
-                 self._typo_counter(parse_declarations(bcss_nc)),
-                 self._counter_diff_detail(
-                     self._typo_counter(parse_declarations(css_nc)) if css else None,
-                     self._typo_counter(parse_declarations(bcss_nc)),
-                     "typography (selector, property, value) entries in "
-                     "theme/sombra.css differ from baseline"))
-
         # ---- Contract 25: 21 sections -----------------------------------------
         self.add("c25a_exactly_21_top_level_sections",
                  htm is not None and len(top_level_sections(htm)) == 21,
@@ -1303,25 +1294,12 @@ class Checker:
         self.add(name, got == want_hash,
                  f"symbol {sym_id!r} path d hash is {got}, want {want_hash}")
 
-    @staticmethod
-    def _typo_counter(decls):
-        return collections.Counter(
-            (s, p, " ".join(v.split())) for (s, p, v) in decls if p in TYPO_PROPS)
-
     def _diff_detail(self, got, want, prefix):
         if got == want:
             return ""
         extra = [x for x in got if x not in want][:2]
         missing = [x for x in want if x not in got][:2]
         return (f"{prefix} — candidate-only: {extra}; baseline-only: {missing}")
-
-    def _counter_diff_detail(self, got, want, prefix):
-        if got is None or got == want:
-            return ""
-        removed = want - got
-        added = got - want
-        return (f"{prefix} — missing: {sorted(removed)[:4]!r}; "
-                f"extra: {sorted(added)[:4]!r}")
 
 
 # Contract 10 / 12 token tables (one named check each).
@@ -1398,7 +1376,6 @@ CHECK_NAMES = (
        "c21c_logo_css_rules_no_effect_props",
        "c22_font_face_blocks_unchanged", "c22b_display_font_file_exists",
        "c23_font_token_lines_unchanged",
-       "c24_typography_declarations_unchanged",
        "c25a_exactly_21_top_level_sections",
        "c28_diagram_svgs_unchanged_minus_paint_attrs",
        "c29a_icon_symbols_unchanged", "c29b_markers_unchanged_apart_fill"]
