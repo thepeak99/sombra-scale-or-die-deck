@@ -434,7 +434,9 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .s-closing h2 { font-size: 132px; letter-spacing: -0.05em; }
 .s-closing .lede { margin: 30px auto 0; text-align: center; }
 .s-closing .links { margin-top: 64px; display: flex; gap: 56px; justify-content: center; font-family: var(--f-mono); font-size: 26px; color: var(--text-2); letter-spacing: 0.04em; }
-.s-closing .closing-lockup { width: 239px; height: 220px; margin-bottom: 40px; }
+/* logomark and wordmark stand apart — no lockup */
+.s-closing .closing-mark { width: 140px; height: 140px; margin-bottom: 56px; }
+.s-closing .closing-wordmark { position: absolute; left: var(--pad-x); bottom: 96px; width: 258px; height: 60px; }
 
 /* =====================================================================
    SLIDE SYSTEM v2 — from the Sombra design canvas (2026-11-11)

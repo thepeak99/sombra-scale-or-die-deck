@@ -51,11 +51,11 @@ Contract -> check mapping (contract numbers from the phase-1 spec):
      c14c_no_sombra_mark_string
   15 c15_no_eclipse_or_corona
   16 c16_chrome_bar_markup_bytes
-  17 c17a_symbol_mark_exact, c17b_symbol_lockup_stacked_exact
+  17 c17a_symbol_mark_exact, c17b_symbol_wordmark_exact, c17c_no_lockup
   18 c18_favicon_svg_structure
-  19 c19a_first_section_has_hero_mark, c19b_last_section_has_closing_lockup,
+  19 c19a_first_section_has_hero_mark, c19b_last_section_has_mark_and_wordmark,
      c19c_use_reference_counts
-  20 c20a_hero_mark_520px, c20b_closing_lockup_rule_exact,
+  20 c20a_hero_mark_520px, c20b_closing_logo_rules_exact,
      c20c_deck_chrome_svg_rule_unchanged
   21 c21a_favicon_no_transform_keywords, c21b_html_no_preserve_aspect_ratio,
      c21c_logo_css_rules_no_effect_props
@@ -92,6 +92,10 @@ Verified facts baked into the checks (confirmed against the real files):
     /tmp/sombra-brand/proto/index.html:
       mark           7c4114063c89281884a53664106756618735d56e1a3497a682dcf04bbd6dcf3f
       lockup-stacked 784ef485746d8f78e066b3a16e34060226e63cec7299b5e4d694d32c32513622
+  * The wordmark symbol (2026-11-11) is the lockup's letterforms, unaltered:
+    the `d` up to the mark's "M204.39", hash
+      wordmark       1ce5c86e5eff127ffb9819c4f9c58134b40a2381dbebc25c5ba723a4cd0ce727
+    Logomark and wordmark are used apart; no stacked or standard lockup.
   * The baseline (66369c3) chrome bar bytes are exactly
       <svg><use href="#mark"/></svg><b>Sombra</b><span>·</span><span>Scale or Die</span>
     (no difference from the spec string, so the spec string is used).
@@ -165,7 +169,7 @@ LEGACY_TOKENS = (
 )
 
 MARK_HASH = "7c4114063c89281884a53664106756618735d56e1a3497a682dcf04bbd6dcf3f"
-LOCKUP_HASH = "784ef485746d8f78e066b3a16e34060226e63cec7299b5e4d694d32c32513622"
+WORDMARK_HASH = "1ce5c86e5eff127ffb9819c4f9c58134b40a2381dbebc25c5ba723a4cd0ce727"
 
 CHROME_BAR = ('<svg><use href="#mark"/></svg><b>Sombra</b>'
               '<span>·</span><span>Scale or Die</span>')
@@ -173,7 +177,8 @@ CHROME_BAR = ('<svg><use href="#mark"/></svg><b>Sombra</b>'
 FAVICON_LINK = '<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">'
 
 HERO_MARK_SVG = '<svg class="hero-mark" aria-hidden="true"><use href="#mark"/></svg>'
-CLOSING_LOCKUP_SVG = '<svg class="closing-lockup" aria-hidden="true"><use href="#lockup-stacked"/></svg>'
+CLOSING_MARK_SVG = '<svg class="closing-mark" aria-hidden="true"><use href="#mark"/></svg>'
+CLOSING_WORDMARK_SVG = '<svg class="closing-wordmark" role="img" aria-label="Sombra"><use href="#wordmark"/></svg>'
 
 # Approved 2026-11-11: APK Galeria Roman replaces Space Grotesk as the display
 # face. Applied to the baseline so the font freezes (c05b, c22, c23) accept
@@ -200,7 +205,7 @@ def apply_font_swap(css):
 
 
 # The ten declarations' owning selectors (for contract 21).
-LOGO_RULE_SELECTORS = (".s-title .hero-mark", ".s-closing .closing-lockup",
+LOGO_RULE_SELECTORS = (".s-title .hero-mark", ".s-closing .closing-mark", ".s-closing .closing-wordmark",
                        ".deck-chrome svg")
 
 # CSS named colours (the full CSS3/CSS4 list of 147). transparent,
@@ -895,8 +900,10 @@ class Checker:
         # ---- Contract 17: the two sprite symbols ------------------------------
         self._check_symbol("c17a_symbol_mark_exact", htm, "mark",
                            "0 0 148.59 148.59", MARK_HASH)
-        self._check_symbol("c17b_symbol_lockup_stacked_exact", htm,
-                           "lockup-stacked", "0 0 373.53 343.88", LOCKUP_HASH)
+        self._check_symbol("c17b_symbol_wordmark_exact", htm,
+                           "wordmark", "0 257 373.53 86.88", WORDMARK_HASH)
+        self.add("c17c_no_lockup", htm is not None and "lockup" not in htm.lower(),
+                 "index.html still mentions a lockup — logomark and wordmark are used apart")
 
         # ---- Contract 18: favicon structure -----------------------------------
         if fav is None:
@@ -935,7 +942,7 @@ class Checker:
         # ---- Contract 19: placements and use-ref counts -----------------------
         if htm is None:
             self._html_missing("c19a_first_section_has_hero_mark")
-            self._html_missing("c19b_last_section_has_closing_lockup")
+            self._html_missing("c19b_last_section_has_mark_and_wordmark")
             self._html_missing("c19c_use_reference_counts")
         else:
             secs = top_level_sections(htm)
@@ -943,21 +950,22 @@ class Checker:
                      bool(secs) and HERO_MARK_SVG in secs[0],
                      "first top-level <section> does not contain "
                      f"{HERO_MARK_SVG!r}" if secs else "no top-level <section> found")
-            self.add("c19b_last_section_has_closing_lockup",
-                     bool(secs) and CLOSING_LOCKUP_SVG in secs[-1],
-                     "last top-level <section> does not contain "
-                     f"{CLOSING_LOCKUP_SVG!r}" if secs else "no top-level <section> found")
-            nm, nl = htm.count('href="#mark"'), htm.count('href="#lockup-stacked"')
-            # mark: title hero, chrome bar, value-flow tree root (v2)
-            ok = nm == 3 and nl == 1
+            self.add("c19b_last_section_has_mark_and_wordmark",
+                     bool(secs) and CLOSING_MARK_SVG in secs[-1] and CLOSING_WORDMARK_SVG in secs[-1],
+                     "last top-level <section> must hold the logomark and the wordmark as "
+                     f"separate elements: {CLOSING_MARK_SVG!r} and {CLOSING_WORDMARK_SVG!r}"
+                     if secs else "no top-level <section> found")
+            nm, nl = htm.count('href="#mark"'), htm.count('href="#wordmark"')
+            # mark: title hero, chrome bar, value-flow tree root, closing slide
+            ok = nm == 4 and nl == 1
             self.add("c19c_use_reference_counts", ok,
-                     f'href="#mark" appears {nm}× (want 3), '
-                     f'href="#lockup-stacked" appears {nl}× (want 1) in index.html')
+                     f'href="#mark" appears {nm}× (want 4), '
+                     f'href="#wordmark" appears {nl}× (want 1) in index.html')
 
         # ---- Contract 20: logo rule sizes, chrome svg rule frozen -------------
         if css is None:
             self._css_missing("c20a_hero_mark_520px")
-            self._css_missing("c20b_closing_lockup_rule_exact")
+            self._css_missing("c20b_closing_logo_rules_exact")
             self._css_missing("c20c_deck_chrome_svg_rule_unchanged")
         else:
             rules = collections.defaultdict(dict)
@@ -971,12 +979,13 @@ class Checker:
                      f"height={hm.get('height')!r} (want 520px/520px)"
                      if not hm else
                      f".s-title .hero-mark rule missing in theme/sombra.css")
-            cl = rules.get(".s-closing .closing-lockup")
-            want_cl = {"width": "239px", "height": "220px", "margin-bottom": "40px"}
-            self.add("c20b_closing_lockup_rule_exact", cl == want_cl,
-                     f".s-closing .closing-lockup is {cl!r}, want exactly "
-                     f"{want_cl!r}" if cl is not None
-                     else ".s-closing .closing-lockup rule missing in theme/sombra.css")
+            cm = rules.get(".s-closing .closing-mark")
+            cw = rules.get(".s-closing .closing-wordmark", {})
+            want_cm = {"width": "140px", "height": "140px", "margin-bottom": "56px"}
+            ok = cm == want_cm and cw.get("width") == "258px" and cw.get("height") == "60px"
+            self.add("c20b_closing_logo_rules_exact", ok,
+                     f".s-closing .closing-mark is {cm!r} (want {want_cm!r}); "
+                     f".s-closing .closing-wordmark is {cw!r} (want width 258px, height 60px)")
 
             def rule_text(c):
                 m = re.search(r"\.deck-chrome svg\s*\{[^}]*\}", c)
@@ -1358,10 +1367,10 @@ CHECK_NAMES = (
     + ["c13_html_fragment_refs_resolve", "c14a_favicon_link_exactly_once",
        "c14b_favicon_file_exists", "c14c_no_sombra_mark_string",
        "c15_no_eclipse_or_corona", "c16_chrome_bar_markup_bytes",
-       "c17a_symbol_mark_exact", "c17b_symbol_lockup_stacked_exact",
+       "c17a_symbol_mark_exact", "c17b_symbol_wordmark_exact", "c17c_no_lockup",
        "c18_favicon_svg_structure", "c19a_first_section_has_hero_mark",
-       "c19b_last_section_has_closing_lockup", "c19c_use_reference_counts",
-       "c20a_hero_mark_520px", "c20b_closing_lockup_rule_exact",
+       "c19b_last_section_has_mark_and_wordmark", "c19c_use_reference_counts",
+       "c20a_hero_mark_520px", "c20b_closing_logo_rules_exact",
        "c20c_deck_chrome_svg_rule_unchanged",
        "c21a_favicon_no_transform_keywords",
        "c21b_html_no_preserve_aspect_ratio",
