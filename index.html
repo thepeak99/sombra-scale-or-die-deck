@@ -138,39 +138,58 @@
       </div>
     </section>
 
-    <section class="s-diagram" data-auto-animate>
-      <div class="frame">
-        <div class="eyebrow" data-id="eb-q">Q-Day is a moving target</div>
-        <h2 data-id="h-q">You won't know it happened <em>until long after.</em></h2>
-        <div class="stage">
-          <div class="tl">
-            <div class="tl-line" data-id="tl-line"></div>
-            <div class="tl-node" data-id="tl-today" style="left:60px">
-              <div class="tl-dot"><svg><use href="#i-lock"/></svg></div>
-              <div class="tl-k">Today</div>
-              <div class="tl-t">Data encrypted</div>
-              <div class="tl-s">and archived on-chain</div>
-            </div>
-            <div class="qday-band" data-id="tl-qday"></div>
-            <div class="tl-band-label">
-              <div class="tl-k warn">Q-Day</div>
-              <div class="tl-t">Somewhere in here?</div>
-              <div class="tl-s">first capable machine — quietly</div>
-            </div>
-            <div class="tl-node" style="left:1300px">
-              <div class="tl-dot pub-dot"><svg><use href="#i-eye"/></svg></div>
-              <div class="tl-k cyan">Public</div>
-              <div class="tl-t">We find out</div>
-              <div class="tl-s">long after the fact</div>
-            </div>
-            <div class="tl-window fragment rise">
-              <span>Unobservable impact window</span>
-            </div>
+    <section>
+      <div class="sl">
+        <div class="cap eyebrow a1">Q-Day is a moving target</div>
+        <h2 class="h1 a1"><span class="g">You won&rsquo;t know it happened</span> until long after.</h2>
+
+        <svg width="1920" height="1080" viewBox="0 0 1920 1080" aria-hidden="true" style="position: absolute; left: 0; top: 0">
+          <path class="qd-line" pathLength="1" d="M140 476 H1780" stroke="#FCF9F2" stroke-opacity="0.3" stroke-width="2"/>
+        </svg>
+
+        <div class="qd-band" style="position: absolute; left: 740px; top: 428px; width: 602px; height: 96px; border-radius: 48px; background: #A73D13; overflow: hidden">
+          <div class="qd-wander" style="position: absolute; left: 34px; top: 34px; width: 28px; height: 28px">
+            <div style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid #FCF9F2"></div>
+            <div style="position: absolute; left: 9px; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: #FCF9F2"></div>
+            <div class="qd-flash" style="position: absolute; inset: -14px; border-radius: 50%; border: 2px solid #FCF9F2"></div>
           </div>
         </div>
-        <div class="card ok glow payoff fragment rise">
-          <svg class="icon"><use href="#i-shield"/></svg>
-          <p><strong>With Sombra, your privacy is safe from quantum attacks</strong> — <br>what&rsquo;s sealed today <em>stays sealed</em> after Q-Day.</p>
+
+        <div class="qd-head" style="position: absolute; left: 369px; top: 469px; width: 14px; height: 14px; border-radius: 50%; background: #B1E0FF"></div>
+
+        <div class="qd-today" style="position: absolute; left: 326px; top: 426px; width: 100px; height: 100px; box-sizing: border-box; border-radius: 50%; background: #233A35; border: 2px solid #B1E0FF; display: flex; align-items: center; justify-content: center">
+          <svg width="36" height="36" style="color: #B1E0FF"><use href="#i-lock"/></svg>
+        </div>
+        <div class="qd-label" style="position: absolute; left: 226px; top: 554px; width: 300px; text-align: center">
+          <div class="cap">Today</div>
+          <div class="qd-t">Data encrypted</div>
+          <div class="qd-s">and archived on-chain</div>
+        </div>
+
+        <div class="qd-label qd-band-label" style="position: absolute; left: 741px; top: 554px; width: 600px; text-align: center">
+          <div class="cap wh">Q-Day</div>
+          <div class="qd-t">Somewhere in here?</div>
+          <div class="qd-s">first capable machine — quietly</div>
+        </div>
+
+        <div class="qd-pub" style="position: absolute; left: 1574px; top: 426px; width: 100px; height: 100px">
+          <div class="qd-ping" style="position: absolute; inset: 0; border-radius: 50%; border: 2px solid #B1E0FF"></div>
+          <div style="position: absolute; inset: 0; box-sizing: border-box; border-radius: 50%; background: #233A35; border: 2px solid #B1E0FF; display: flex; align-items: center; justify-content: center">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><g class="qd-eye"><path d="M2 12 C4.5 7.5 8 5.5 12 5.5 C16 5.5 19.5 7.5 22 12 C19.5 16.5 16 18.5 12 18.5 C8 18.5 4.5 16.5 2 12 Z"/><circle cx="12" cy="12" r="3"/></g></svg>
+          </div>
+        </div>
+        <div class="qd-pub" style="position: absolute; left: 1474px; top: 554px; width: 300px; text-align: center">
+          <div class="cap">Public</div>
+          <div class="qd-t">We find out</div>
+          <div class="qd-s">long after the fact</div>
+        </div>
+
+        <svg class="qd-brk" width="896" height="34" viewBox="0 0 896 34" aria-hidden="true" style="position: absolute; left: 734px; top: 742px"><path d="M6 32 V8 Q6 4 10 4 H886 Q890 4 890 8 V32" fill="none" stroke="#A73D13" stroke-width="2" stroke-dasharray="3 5" stroke-linecap="round"/></svg>
+        <div class="cap wh qd-brk-label" style="position: absolute; left: 734px; top: 786px; width: 896px; text-align: center; font-size: 17px; letter-spacing: 0.3em">Unobservable impact window</div>
+
+        <div class="qd-call" style="position: absolute; left: 140px; top: 852px; width: 1640px; height: 134px; box-sizing: border-box; padding: 0 44px; border-radius: 18px; background: #233A35; border: 1.5px solid #B1E0FF; display: flex; align-items: center; gap: 36px">
+          <svg width="46" height="46" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path class="qd-shield" d="M12 2.5 L19.5 5.5 V11.5 C19.5 16.2 16.4 19.8 12 21.5 C7.6 19.8 4.5 16.2 4.5 11.5 V5.5 Z"/></svg>
+          <p style="margin: 0; font-size: 36px; line-height: 1.3; letter-spacing: -0.02em">With Sombra, your privacy is safe from quantum attacks —<br><span class="qd-s" style="font-size: inherit">what&rsquo;s sealed today</span> <span class="sky">stays sealed</span> <span class="qd-s" style="font-size: inherit">after Q-Day.</span></p>
         </div>
       </div>
     </section>
