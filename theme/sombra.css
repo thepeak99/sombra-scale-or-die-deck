@@ -726,6 +726,18 @@ svg .d-pulse  { animation: d-dash 1.6s linear infinite; }
 .present .ps .ps-p4 { animation: sl-late 0.48s ease 7.68s both; }
 .present .ps .ps-p5 { animation: sl-late 0.48s ease 7.92s both; }
 
+/* 20 · Call to action: the send states light up in order; a cursor blinks */
+.sl a { border-bottom: 0; }
+.sl .flow span:last-child { color: var(--sky); }
+.present .sl .flow span { animation: sl-wake 0.24s ease both; }
+.present .sl .flow span:nth-child(1) { animation-delay: 2.64s; }
+.present .sl .flow span:nth-child(2) { animation-delay: 3.24s; }
+.present .sl .flow span:nth-child(3) { animation-delay: 3.84s; }
+.present .sl .flow span:nth-child(4) { animation-delay: 4.44s; }
+.sl .cursor { display: inline-block; width: 3px; height: 44px; margin-left: 6px; vertical-align: -6px; background: var(--sky); }
+@keyframes sl-cursor { 50% { opacity: 0; } }
+.present .sl .cursor { animation: sl-cursor 1s steps(1) infinite; }
+
 /* 6 · Bunker Mode: the takeaway's outline flickers on — "the gap" */
 .sl .gap-ring { position: absolute; inset: 0; border-radius: 18px; outline: 2px solid var(--sky); outline-offset: -2px; pointer-events: none; }
 @keyframes sl-gap { 0% { opacity: 0; } 25% { opacity: 1; } 75% { opacity: 0.35; } }
