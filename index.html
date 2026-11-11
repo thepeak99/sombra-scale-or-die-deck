@@ -69,26 +69,44 @@
       </div>
     </section>
 
-    <section class="s-statement">
-      <div class="frame">
-        <div class="eyebrow">Harvest now, decrypt later</div>
-        <p class="statement">No major privacy protocol is <em>quantum-safe end to end.</em></p>
-        <div class="cols-3 support">
-          <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-key"/></svg></div>
-            <h3>Classical math underneath</h3>
-            <p>Zcash, Monero and most of the rest hide data behind elliptic-curve cryptography — the exact math a quantum computer breaks.</p>
+    <section>
+      <div class="sl">
+        <div class="cap eyebrow a1">Harvest now, decrypt later</div>
+        <h2 class="h1 a1"><span class="g">No major privacy protocol is</span><br>quantum-safe end to end.</h2>
+        <div style="position: absolute; left: 140px; top: 420px; width: 1640px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px">
+          <div class="card a2" style="height: 360px; display: flex; flex-direction: column">
+            <div class="row"><svg class="ico"><use href="#i-key"/></svg><span class="cap g">01</span></div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">Classical math underneath</h3>
+            <p class="body" style="margin-top: 16px; font-size: 24px">Zcash, Monero and most of the rest hide data behind elliptic-curve cryptography — the exact math a quantum computer breaks.</p>
           </div>
-          <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-archive"/></svg></div>
-            <h3>The chain is the harvester</h3>
-            <p>A public ledger is a permanent, replicated archive of every ciphertext. No one even has to intercept anything.</p>
+          <div class="card a3" style="height: 360px; display: flex; flex-direction: column">
+            <div class="row"><svg class="ico"><use href="#i-archive"/></svg><span class="cap g">02</span></div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">The chain is the harvester</h3>
+            <p class="body" style="margin-top: 16px; font-size: 24px">A public ledger is a permanent, replicated archive of every ciphertext. No one even has to intercept anything.</p>
           </div>
-          <div class="card fragment rise">
-            <div class="card-top"><svg class="icon"><use href="#i-unlock"/></svg></div>
-            <h3>Tomorrow: an open book</h3>
-            <p>Today&rsquo;s &ldquo;private&rdquo; transactions are readable the day a capable machine arrives — all of them at once.</p>
+          <div class="card fj a4" style="height: 360px; display: flex; flex-direction: column">
+            <div class="row"><svg class="ico" viewBox="0 0 24 24" fill="none" stroke="#B1E0FF" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="overflow: visible"><rect x="4" y="11" width="16" height="10" rx="2"/><path class="shackle" d="M8 11 V7 a4 4 0 0 1 8 0 V11"/></svg><span class="cap g">03</span></div>
+            <h3 class="ct" style="margin-top: auto; font-size: 36px">Tomorrow: an open book</h3>
+            <p class="body" style="margin-top: 16px; font-size: 24px">Today&rsquo;s &ldquo;private&rdquo; transactions are readable the day a capable machine arrives — all of them at once.</p>
           </div>
+        </div>
+        <div class="strip" style="position: absolute; left: 140px; top: 850px; width: 1640px">
+          <div class="strip-head">
+            <div class="cap">Harvested today<small>every ciphertext, archived on-chain</small></div>
+            <div class="cap wh later">Decrypted later<small>all at once</small></div>
+          </div>
+          <svg width="1640" height="32" viewBox="0 0 1440 28" aria-hidden="true" style="display: block; margin-top: 18px">
+            <defs>
+              <pattern id="hv-slot" width="30" height="28" patternUnits="userSpaceOnUse"><rect x="0" y="2" width="24" height="24" rx="3" fill="#FCF9F2" fill-opacity="0.08"/></pattern>
+              <pattern id="hv-kept" width="30" height="28" patternUnits="userSpaceOnUse"><rect x="0" y="2" width="24" height="24" rx="3" fill="#B1E0FF" fill-opacity="0.55"/></pattern>
+              <pattern id="hv-open" width="30" height="28" patternUnits="userSpaceOnUse"><rect x="0" y="2" width="24" height="24" rx="3" fill="#A73D13"/><path d="M7 14 H17" stroke="#FCF9F2" stroke-width="1.6" stroke-linecap="round"/></pattern>
+              <clipPath id="hv-clip-kept"><rect class="rev rev-h" x="0" y="0" width="1440" height="28"/></clipPath>
+              <clipPath id="hv-clip-open"><rect class="rev rev-d" x="0" y="0" width="1440" height="28"/></clipPath>
+            </defs>
+            <rect x="0" y="0" width="1440" height="28" fill="url(#hv-slot)"/>
+            <rect x="0" y="0" width="1440" height="28" fill="url(#hv-kept)" clip-path="url(#hv-clip-kept)"/>
+            <rect x="0" y="0" width="1440" height="28" fill="url(#hv-open)" clip-path="url(#hv-clip-open)"/>
+          </svg>
         </div>
       </div>
     </section>
